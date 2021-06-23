@@ -1,0 +1,23 @@
+{
+  "auth": {
+    "developcalle1ff3ddf": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
+  "predictions": {
+    "transcription0d5dc072": {
+      "providerPlugin": "awscloudformation",
+      "service": "Transcribe",
+      "convertType": "transcription"
+    }
+  },
+  "storage": {
+    "s369e71b4c": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  }
+}
