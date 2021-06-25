@@ -1,19 +1,38 @@
 {
   "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-developcall-staging-104304-authRole",
-      "UnauthRoleArn": "arn:aws:iam::804049472649:role/amplify-developcall-staging-104304-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::804049472649:role/amplify-developcall-staging-104304-authRole",
+      "AuthRoleName": "amplify-developcall-staging-81038-authRole",
+      "UnauthRoleArn": "arn:aws:iam::804049472649:role/amplify-developcall-staging-81038-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::804049472649:role/amplify-developcall-staging-81038-authRole",
       "Region": "ap-northeast-2",
-      "DeploymentBucketName": "amplify-developcall-staging-104304-deployment",
-      "UnauthRoleName": "amplify-developcall-staging-104304-unauthRole",
-      "StackName": "amplify-developcall-staging-104304",
-      "StackId": "arn:aws:cloudformation:ap-northeast-2:804049472649:stack/amplify-developcall-staging-104304/2cdc77e0-ab33-11eb-a795-0a8f326ae7f6",
-      "AmplifyAppId": "d3q8kklun96bx1"
+      "DeploymentBucketName": "amplify-developcall-staging-81038-deployment",
+      "UnauthRoleName": "amplify-developcall-staging-81038-unauthRole",
+      "StackName": "amplify-developcall-staging-81038",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:804049472649:stack/amplify-developcall-staging-81038/a935d200-d4c3-11eb-a20a-0213bac89a98",
+      "AmplifyAppId": "dku9cudul4km9"
     },
     "categories": {
       "auth": {
-        "developcalle1ff3ddf": {}
+        "developcalle1ff3ddf": {},
+        "developCall": {}
+      }
+    }
+  },
+  "backend": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-developcall-backend-130509-authRole",
+      "UnauthRoleArn": "arn:aws:iam::804049472649:role/amplify-developcall-backend-130509-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::804049472649:role/amplify-developcall-backend-130509-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-developcall-backend-130509-deployment",
+      "UnauthRoleName": "amplify-developcall-backend-130509-unauthRole",
+      "StackName": "amplify-developcall-backend-130509",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:804049472649:stack/amplify-developcall-backend-130509/89594230-d56a-11eb-9dad-0698fe1788d8",
+      "AmplifyAppId": "dku9cudul4km9"
+    },
+    "categories": {
+      "auth": {
+        "developCall": {}
       }
     }
   }
