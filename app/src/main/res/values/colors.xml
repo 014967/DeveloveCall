@@ -21,4 +21,11 @@
     <color name="navy">#2E3E5C</color>
 
 
+    <color name ="purple_700">#DA70D6</color>
+    <color name ="purple_200">#BA55D3</color>
+    <color name ="teal_700">#13C7A3</color>
+    <color name ="teal_200">#2CE0BC</color>
+
+
+
 </resources>
