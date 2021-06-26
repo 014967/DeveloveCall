@@ -1,6 +1,6 @@
 {
     "identityPoolName": "developcalle5708add_identitypool_e5708add",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "develoe5708add",
     "userPoolName": "developcalle5708add_userpool_e5708add",
     "autoVerifiedAttributes": [
