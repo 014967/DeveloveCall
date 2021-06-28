@@ -3,6 +3,9 @@ subscription OnCreateUser {
   onCreateUser {
     id
     name
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
     owner
@@ -12,6 +15,9 @@ subscription OnUpdateUser {
   onUpdateUser {
     id
     name
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
     owner
@@ -21,6 +27,9 @@ subscription OnDeleteUser {
   onDeleteUser {
     id
     name
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
     owner

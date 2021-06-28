@@ -6,6 +6,9 @@ mutation CreateUser(
   createUser(input: $input, condition: $condition) {
     id
     name
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
     owner
@@ -18,6 +21,9 @@ mutation UpdateUser(
   updateUser(input: $input, condition: $condition) {
     id
     name
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
     owner
@@ -30,6 +36,9 @@ mutation DeleteUser(
   deleteUser(input: $input, condition: $condition) {
     id
     name
+    _version
+    _deleted
+    _lastChangedAt
     createdAt
     updatedAt
     owner

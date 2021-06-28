@@ -28,7 +28,7 @@ public final class User implements Model {
   public static final QueryField ID = field("User", "id");
   public static final QueryField NAME = field("User", "name");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  private final @ModelField(targetType="String", isRequired = true) String name;
+  private final @ModelField(targetType="String") String name;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
@@ -90,7 +90,7 @@ public final class User implements Model {
       .toString();
   }
   
-  public static NameStep builder() {
+  public static BuildStep builder() {
       return new Builder();
   }
   
@@ -123,18 +123,14 @@ public final class User implements Model {
     return new CopyOfBuilder(id,
       name);
   }
-  public interface NameStep {
+  public interface BuildStep {
+    User build();
+    BuildStep id(String id) throws IllegalArgumentException;
     BuildStep name(String name);
   }
   
 
-  public interface BuildStep {
-    User build();
-    BuildStep id(String id) throws IllegalArgumentException;
-  }
-  
-
-  public static class Builder implements NameStep, BuildStep {
+  public static class Builder implements BuildStep {
     private String id;
     private String name;
     @Override
@@ -148,7 +144,6 @@ public final class User implements Model {
     
     @Override
      public BuildStep name(String name) {
-        Objects.requireNonNull(name);
         this.name = name;
         return this;
     }

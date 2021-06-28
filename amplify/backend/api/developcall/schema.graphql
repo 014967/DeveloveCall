@@ -2,7 +2,7 @@ type User @model
  @auth(rules:[{ allow: owner, operations: [ create , delete , update ]}])
  {
   id: ID
-   name: String!
+   name: String
 
  }
 
