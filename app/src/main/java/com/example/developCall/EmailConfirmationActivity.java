@@ -84,6 +84,8 @@ public class EmailConfirmationActivity extends AppCompatActivity {
     }
 
     private void onError(DataStoreException e) {
+        runOnUiThread(()->
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show());
     }
 
     private <T extends Model> void onSavedSuccess(DataStoreItemChange<T> tDataStoreItemChange)
