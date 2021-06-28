@@ -34,7 +34,7 @@ public class Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        getSupportActionBar().hide();
+      //  getSupportActionBar().hide();
 
 
         Bundle b = getIntent().getExtras();
