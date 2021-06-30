@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "developcallea090920_identitypool_ea090920",
+    "identityPoolName": "devf2047c1c_identitypool_f2047c1c",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "develoea090920",
-    "userPoolName": "developcallea090920_userpool_ea090920",
+    "resourceNameTruncated": "devf2047c1c",
+    "userPoolName": "devf2047c1c_userpool_f2047c1c",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -18,8 +18,7 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-        "email",
-        "name"
+        "email"
     ],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
@@ -29,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "develoea090920_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "devf20f2047c1c_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "ea090920",
-    "resourceName": "developcallea090920",
+    "sharedId": "f2047c1c",
+    "resourceName": "devf2047c1c",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -48,16 +47,9 @@
     },
     "useDefault": "default",
     "usernameAttributes": [
-        "email, phone_number"
+        "email"
     ],
-    "triggers": "{}",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
-    "usernameCaseSensitive": false,
-    "parentStack": {
-        "Ref": "AWS::StackId"
-    },
-    "breakCircularDependency": true,
-    "permissions": [],
     "dependsOn": []
 }

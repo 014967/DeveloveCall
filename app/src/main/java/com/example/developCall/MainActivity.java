@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     Gson gson = new Gson();
     Button upload;
     Button btn_s3Upload;
+    Button btn_logout;
 
 
 
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         upload = findViewById(R.id.upload);
         btn_s3Upload = findViewById(R.id.s3Upload);
-
+        btn_logout  = findViewById(R.id.btn_logout);
 
 
 
@@ -105,6 +106,20 @@ public class MainActivity extends AppCompatActivity {
         client = new AmazonTranscribeClient(basicAWSCendentials);
 
 
+
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Amplify.Auth.signOut(
+                        () -> Log.i("AuthQuickstart", "Signed out successfully"),
+                        error -> Log.e("AuthQuickstart", error.toString()));
+
+                Intent in = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(in);
+                finish();
+
+            }
+        });
 
         btn_s3Upload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 request = new StartTranscriptionJobRequest();
                                 request.withLanguageCode(LanguageCode.KoKR);
+                                // s3 버킷 주소
                                 media.setMediaFileUri("s3://developcallaudiofile212551-dev/public/" + filename);
                                 settings.setShowSpeakerLabels(true);
                                 settings.setMaxSpeakerLabels(2);

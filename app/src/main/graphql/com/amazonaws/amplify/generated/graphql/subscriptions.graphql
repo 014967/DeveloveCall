@@ -8,7 +8,6 @@ subscription OnCreateUser {
     _lastChangedAt
     createdAt
     updatedAt
-    owner
   }
 }
 subscription OnUpdateUser {
@@ -20,7 +19,6 @@ subscription OnUpdateUser {
     _lastChangedAt
     createdAt
     updatedAt
-    owner
   }
 }
 subscription OnDeleteUser {
@@ -32,6 +30,5 @@ subscription OnDeleteUser {
     _lastChangedAt
     createdAt
     updatedAt
-    owner
   }
 }

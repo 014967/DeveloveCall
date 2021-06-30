@@ -1,36 +1,4 @@
 # this is an auto generated file. This will be overwritten
-query GetUser($id: ID!) {
-  getUser(id: $id) {
-    id
-    name
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-    owner
-  }
-}
-query ListUsers(
-  $filter: ModelUserFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      name
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-      owner
-    }
-    nextToken
-    startedAt
-  }
-}
 query SyncUsers(
   $filter: ModelUserFilterInput
   $limit: Int
@@ -51,7 +19,36 @@ query SyncUsers(
       _lastChangedAt
       createdAt
       updatedAt
-      owner
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    name
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
     }
     nextToken
     startedAt

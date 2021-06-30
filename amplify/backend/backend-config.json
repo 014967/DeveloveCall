@@ -1,24 +1,14 @@
 {
   "auth": {
-    "developcalle5708add": {
+    "devf2047c1c": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "developcalle5708addPostConfirmation",
-          "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        }
-      ],
+      "dependsOn": [],
       "customAuth": false
     }
   },
   "api": {
-    "developcall": {
+    "dev": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -26,40 +16,18 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authdevelopcalle5708add_userpool_e5708add"
+              "userPoolId": "authdevf2047c1c"
             }
           },
-          "additionalAuthenticationProviders": [
-            {
-              "authenticationType": "AWS_IAM"
-            }
-          ]
+          "additionalAuthenticationProviders": []
         }
       }
     }
   },
-  "function": {
-    "developcalle5708addPostConfirmation": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
-  },
   "storage": {
-    "s32b5f6b64": {
+    "s33c72f622": {
       "service": "S3",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "developcalle5708addPostConfirmation",
-          "attributes": [
-            "Name",
-            "Arn",
-            "LambdaExecutionRole"
-          ]
-        }
-      ]
+      "providerPlugin": "awscloudformation"
     }
   }
 }

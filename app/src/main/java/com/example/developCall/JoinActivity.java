@@ -21,7 +21,7 @@ public class JoinActivity extends AppCompatActivity {
     EditText sign_Email;
     EditText sign_Password;
     EditText sign_Name;
-
+    AuthSignUpOptions options;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +35,18 @@ public class JoinActivity extends AppCompatActivity {
 
 
         btn_Join = (Button)findViewById(R.id.btn_Join);
+
         btn_Join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                 options = AuthSignUpOptions.builder()
+                        .userAttribute(AuthUserAttributeKey.email(),sign_Email.getText().toString())
+                        .build();
                 Amplify.Auth.signUp(
                         sign_Email.getText().toString(),
                         sign_Password.getText().toString(),
-                        AuthSignUpOptions.builder().userAttribute(
-
-                                AuthUserAttributeKey.email(), sign_Email.getText().toString()
-
-                        )
-                                .userAttribute(AuthUserAttributeKey.name(), sign_Name.getText().toString()
-
-                        ).build(),
+                        options,
                         this::onJoinSuccess,
                         this::onJoinError 
 
@@ -61,7 +58,7 @@ public class JoinActivity extends AppCompatActivity {
 
                 runOnUiThread(()->
                 {
-                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"join error",Toast.LENGTH_LONG).show();
                 });
             }
 
