@@ -64,7 +64,7 @@ dependencies {
 
     //s3 java sdk
     implementation group: 'com.amazonaws', name: 'aws-android-sdk-s3', version: '2.23.0'
-    //transcrbie java sdk
+    //transcribe java sdk
     implementation group: 'com.amazonaws', name: 'aws-android-sdk-transcribe', version: '2.23.0'
 
     //firebase
