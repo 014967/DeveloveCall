@@ -1,27 +1,25 @@
-package com.example.developCall;
+package com.example.developCall.Fragment;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.transcribe.AmazonTranscribeClient;
 import com.amazonaws.services.transcribe.model.GetTranscriptionJobRequest;
 import com.amazonaws.services.transcribe.model.LanguageCode;
@@ -31,33 +29,27 @@ import com.amazonaws.services.transcribe.model.StartTranscriptionJobRequest;
 import com.amazonaws.services.transcribe.model.TranscriptionJob;
 import com.amazonaws.services.transcribe.model.TranscriptionJobStatus;
 import com.amplifyframework.core.Amplify;
+import com.example.developCall.BuildConfig;
+import com.example.developCall.ChatActivity;
 import com.example.developCall.Function.S3Upload;
 
 import com.example.developCall.Function.TranscribeTask;
+import com.example.developCall.LoginActivity;
 import com.example.developCall.Object.AmazonTranscription;
-import com.google.android.play.core.tasks.Task;
+import com.example.developCall.R;
 
 import com.google.gson.Gson;
 
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
-import java.util.Observable;
 import java.util.concurrent.Executors;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Scheduler;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 import jodd.http.HttpResponse;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainFragment extends Fragment {
 
 
     Gson gson = new Gson();
@@ -114,18 +106,19 @@ public class MainActivity extends AppCompatActivity {
     int changeCount=0;
 
 
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState ) {
+
+        View view = inflater.inflate(R.layout.activity_main,container, false);
 
 
-        upload = findViewById(R.id.upload);
-        btn_s3Upload = findViewById(R.id.s3Upload);
-        btn_logout  = findViewById(R.id.btn_logout);
 
-        btn_addGroup  = findViewById(R.id.btn_addGroup);
+        upload = view.findViewById(R.id.upload);
+        btn_s3Upload = view.findViewById(R.id.s3Upload);
+        btn_logout  = view.findViewById(R.id.btn_logout);
+
+        btn_addGroup  = view.findViewById(R.id.btn_addGroup);
 
 
 
@@ -145,9 +138,9 @@ public class MainActivity extends AppCompatActivity {
                         () -> Log.i("AuthQuickstart", "Signed out successfully"),
                         error -> Log.e("AuthQuickstart", error.toString()));
 
-                Intent in = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(in);
-                finish();
+                Intent in = new Intent(requireActivity().getApplicationContext(), LoginActivity.class);
+                requireActivity().startActivity(in);
+                requireActivity().finish();
 
             }
         });
@@ -356,7 +349,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                                Intent in = new Intent(getApplicationContext(), Chat.class);
+                                Intent in = new Intent(requireActivity().getApplicationContext(), ChatActivity.class);
                                 in.putExtra("chatArray", modifyArray);
                                 startActivity(in);
                             }
@@ -374,6 +367,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        return view;
 
     }
 
@@ -390,7 +384,7 @@ public class MainActivity extends AppCompatActivity {
             Uri uri = data.getData();
             filename = getFileName(uri);
             try {
-                InputStream inputStream = getContentResolver().openInputStream(uri);
+                InputStream inputStream = getActivity().getContentResolver().openInputStream(uri);
                 s3Upload.upload(filename, inputStream);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -412,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
     {
         String result = null;
         if (uri.getScheme().equals("content")) {
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
             try {
                 if (cursor != null && cursor.moveToFirst()) {
                     result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));

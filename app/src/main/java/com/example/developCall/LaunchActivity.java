@@ -29,7 +29,7 @@ public class LaunchActivity extends AppCompatActivity {
         {
             //Go to the Main Page
 
-             intent = new Intent(getApplicationContext(), MainActivity.class);
+             intent = new Intent(getApplicationContext(), HomeActivity.class);
         }
         startActivity(intent);
         finish();

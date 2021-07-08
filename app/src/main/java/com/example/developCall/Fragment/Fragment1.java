@@ -1,4 +1,4 @@
-package com.example.developCall;
+package com.example.developCall.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.developCall.R;
 
 public class Fragment1 extends Fragment {
     @Nullable

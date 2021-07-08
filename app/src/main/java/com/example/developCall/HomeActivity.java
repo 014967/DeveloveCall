@@ -1,17 +1,16 @@
 package com.example.developCall;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.developCall.R;
-import com.google.android.material.bottomnavigation.BottomNavigationMenu;
+import com.example.developCall.Fragment.Fragment1;
+import com.example.developCall.Fragment.Fragment2;
+import com.example.developCall.Fragment.MainFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
@@ -20,6 +19,7 @@ public class HomeActivity extends AppCompatActivity {
     FragmentManager fragmentManager;
     Fragment1 fragment1;
     Fragment2 fragment2;
+    MainFragment mainFragment;
     FragmentTransaction transaction;
 
     @Override
@@ -31,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
 
         fragment1 = new Fragment1();
         fragment2 = new Fragment2();
+        mainFragment = new MainFragment();
 
         transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.home_frame, fragment1).commitAllowingStateLoss();
@@ -44,6 +45,9 @@ public class HomeActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.navigation_1:
                         transaction.replace(R.id.home_frame, fragment1).commitAllowingStateLoss();
+                        break;
+                    case R.id.navigation_3:
+                        transaction.replace(R.id.home_frame, mainFragment).commitAllowingStateLoss();
                         break;
                     case R.id.navigation_5:
                         transaction.replace(R.id.home_frame, fragment2).commitAllowingStateLoss();

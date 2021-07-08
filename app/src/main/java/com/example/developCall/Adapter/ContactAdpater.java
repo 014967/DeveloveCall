@@ -1,6 +1,5 @@
-package com.example.developCall.RecyclerView;
+package com.example.developCall.Adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

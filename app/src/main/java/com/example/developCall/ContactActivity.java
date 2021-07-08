@@ -16,7 +16,7 @@ import android.provider.ContactsContract;
 import android.widget.Toast;
 
 import com.example.developCall.Object.ContactModel;
-import com.example.developCall.RecyclerView.ContactAdpater;
+import com.example.developCall.Adapter.ContactAdpater;
 
 import java.util.ArrayList;
 

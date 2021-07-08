@@ -1,7 +1,6 @@
-package com.example.developCall.RecyclerView;
+package com.example.developCall.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.developCall.R;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ChatRecyclerAdapter  extends RecyclerView.Adapter<ChatRecyclerAdapter.ViewHolder> {
