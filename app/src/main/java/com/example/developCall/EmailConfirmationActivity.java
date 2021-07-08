@@ -17,7 +17,6 @@ import com.amplifyframework.core.model.Model;
 import com.amplifyframework.datastore.DataStoreException;
 import com.amplifyframework.datastore.DataStoreItemChange;
 import com.amplifyframework.datastore.generated.model.User;
-import com.amplifyframework.datastore.generated.model.User.Builder;
 
 public class EmailConfirmationActivity extends AppCompatActivity {
 
@@ -100,7 +99,7 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
             private <T extends Model> void onSavedSuccess(DataStoreItemChange<T> tDataStoreItemChange)
             {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
             }
             private String getEmail(){
@@ -117,11 +116,6 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
-
 
 
 

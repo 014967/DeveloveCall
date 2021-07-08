@@ -17,12 +17,12 @@
         android:title="화면 3" />
 
     <item
-        android:id="@+id/navigation_3"
+        android:id="@+id/navigation_4"
         android:icon="@drawable/ic_baseline_notifications_none_24"
         android:title="화면 4" />
 
     <item
-        android:id="@+id/navigation_3"
+        android:id="@+id/navigation_5"
         android:icon="@drawable/ic_baseline_person_24"
         android:title="화면 5" />
 
