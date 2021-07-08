@@ -6,6 +6,7 @@ mutation CreateUser(
   createUser(input: $input, condition: $condition) {
     id
     name
+
     owner
     _version
     _deleted
@@ -21,6 +22,7 @@ mutation UpdateUser(
   updateUser(input: $input, condition: $condition) {
     id
     name
+
     owner
     _version
     _deleted
@@ -36,6 +38,7 @@ mutation DeleteUser(
   deleteUser(input: $input, condition: $condition) {
     id
     name
+
     owner
     _version
     _deleted

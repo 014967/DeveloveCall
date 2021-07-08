@@ -16,6 +16,7 @@
                 "description": null,
                 "fields": [
                     {
+
                         "name": "getUser",
                         "description": null,
                         "args": [
@@ -75,6 +76,7 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+
                             }
                         ],
                         "type": {
@@ -86,7 +88,9 @@
                         "deprecationReason": null
                     },
                     {
+
                         "name": "syncUsers",
+
                         "description": null,
                         "args": [
                             {
@@ -118,6 +122,7 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+
                             },
                             {
                                 "name": "lastSync",
@@ -128,6 +133,7 @@
                                     "ofType": null
                                 },
                                 "defaultValue": null
+
                             }
                         ],
                         "type": {
@@ -145,6 +151,7 @@
                 "possibleTypes": null
             },
             {
+
                 "kind": "SCALAR",
                 "name": "ID",
                 "description": "The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `\"4\"`) or integer (such as `4`) input value will be accepted as an ID.",
@@ -362,6 +369,7 @@
                         "defaultValue": null
                     },
                     {
+
                         "name": "owner",
                         "description": null,
                         "type": {
@@ -560,6 +568,7 @@
                 "possibleTypes": null
             },
             {
+
                 "kind": "ENUM",
                 "name": "ModelAttributeTypes",
                 "description": null,
@@ -716,6 +725,7 @@
                 "possibleTypes": null
             },
             {
+
                 "kind": "INPUT_OBJECT",
                 "name": "ModelStringInput",
                 "description": null,
@@ -861,6 +871,7 @@
                 "possibleTypes": null
             },
             {
+
                 "kind": "OBJECT",
                 "name": "ModelUserConnection",
                 "description": null,
@@ -913,6 +924,7 @@
             },
             {
                 "kind": "OBJECT",
+
                 "name": "Mutation",
                 "description": null,
                 "fields": [
@@ -1064,6 +1076,7 @@
                         "defaultValue": null
                     },
                     {
+
                         "name": "owner",
                         "description": null,
                         "type": {
@@ -1178,6 +1191,7 @@
                         "defaultValue": null
                     },
                     {
+
                         "name": "owner",
                         "description": null,
                         "type": {

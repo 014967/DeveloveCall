@@ -19,6 +19,7 @@
               "userPoolId": "authdevf2047c1c"
             }
           },
+
           "additionalAuthenticationProviders": [
             {
               "authenticationType": "API_KEY",
@@ -40,6 +41,7 @@
       "service": "S3",
       "providerPlugin": "awscloudformation"
     }
+
   },
   "function": {
     "fetchUser": {

@@ -21,6 +21,15 @@
             android:layout_height="wrap_content"
             android:text="@string/edit"/>
 
+
+        <TextView
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="로그아웃"/>
+
+
     </LinearLayout>
 
 
@@ -29,7 +38,9 @@
         android:layout_width="match_parent"
         android:layout_weight="0.3"
         android:gravity="center"
-        android:orientation="vertical">
+
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/txt_pf_name"
             android:layout_width="wrap_content"
@@ -156,14 +167,18 @@
                         android:textSize="11.5dp" />
 
                     <ImageView
-                        android:id="@+id/ic_menu"
+
+                        android:id="@+id/ic_menu2"
+
                         android:layout_width="20dp"
                         android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
                         android:src="@drawable/ic_menu" />
 
                     <TextView
-                        android:id="@+id/txt_category"
+
+                        android:id="@+id/txt_category2"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
@@ -186,31 +201,35 @@
     </LinearLayout>
 
 
-    <LinearLayout
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab"
         android:layout_width="match_parent"
-        android:layout_weight="0.57"
-        android:background="@color/white">
+        android:layout_height="wrap_content">
 
-        <!--탭뷰-->
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_Item1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="1dp"
-            app:tabMode="fixed"
-            app:tabGravity="fill"
-            app:tabTextColor="@color/colorPrimary"
-            app:tabSelectedTextColor="@color/colorAccent" />
+            android:text="통화 내역" />
 
-        <FrameLayout
-            android:id="@+id/container"
-            android:layout_below="@id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_Item2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="메모" />
 
-        </FrameLayout>
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_Item3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="기타" />
+    </com.google.android.material.tabs.TabLayout>
 
-    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/tabFrame"
+        android:layout_width="match_parent"
+        android:layout_height="350dp" />
 
 
 

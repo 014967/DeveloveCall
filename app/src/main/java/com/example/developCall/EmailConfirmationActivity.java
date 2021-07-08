@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.auth.AuthException;
@@ -19,6 +21,7 @@ import com.amplifyframework.core.model.Model;
 import com.amplifyframework.datastore.DataStoreException;
 import com.amplifyframework.datastore.DataStoreItemChange;
 import com.amplifyframework.datastore.generated.model.User;
+
 import com.amplifyframework.datastore.generated.model.User.Builder;
 
 public class EmailConfirmationActivity extends AppCompatActivity {
@@ -42,10 +45,6 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
         Confirmation_Code = (EditText)findViewById(R.id.Confirmation_Code);
         btn_Confirm = (Button)findViewById(R.id.btn_Confirm);
-
-
-
-
 
 
 
@@ -89,6 +88,7 @@ public class EmailConfirmationActivity extends AppCompatActivity {
                 );
             }
             private void onLoginSuccess(AuthSignInResult authSignInResult) {
+
                 if(!Amplify.Auth.getCurrentUser().getUserId().equals(""))
                 {
                     String userId = Amplify.Auth.getCurrentUser().getUserId();  //name = null userId="asfasdf"
@@ -119,6 +119,7 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
 
 
+
             }
 
             private void onError(DataStoreException e) {
@@ -132,7 +133,9 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
 
 
+
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+
                 startActivity(intent);
             }
             private String getEmail(){
@@ -149,10 +152,6 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
 
 
 

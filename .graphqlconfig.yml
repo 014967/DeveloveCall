@@ -3,6 +3,7 @@ projects:
     schemaPath: app/src/main/graphql/schema.json
     includes:
       - app/src/main/graphql/**/*.graphql
+
       - amplify/backend/api/dev
     excludes:
       - ./amplify/**

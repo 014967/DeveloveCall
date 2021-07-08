@@ -1,4 +1,5 @@
 # this is an auto generated file. This will be overwritten
+
 query GetUser($id: ID!) {
   getUser(id: $id) {
     id
@@ -21,6 +22,7 @@ query ListUsers(
       id
       name
       owner
+
       _version
       _deleted
       _lastChangedAt
@@ -31,6 +33,7 @@ query ListUsers(
     startedAt
   }
 }
+
 query SyncUsers(
   $filter: ModelUserFilterInput
   $limit: Int
@@ -47,6 +50,7 @@ query SyncUsers(
       id
       name
       owner
+
       _version
       _deleted
       _lastChangedAt

@@ -53,7 +53,9 @@ public class LoginActivity extends AppCompatActivity {
 
             private void onLoginSuccess(AuthSignInResult authSignInResult) {
 
+
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
                 startActivity(intent);
             }
 

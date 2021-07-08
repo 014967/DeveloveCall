@@ -32,9 +32,11 @@ import com.amazonaws.services.transcribe.model.TranscriptionJob;
 import com.amazonaws.services.transcribe.model.TranscriptionJobStatus;
 import com.amplifyframework.core.Amplify;
 import com.example.developCall.Function.S3Upload;
+
 import com.example.developCall.Function.TranscribeTask;
 import com.example.developCall.Object.AmazonTranscription;
 import com.google.android.play.core.tasks.Task;
+
 import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
@@ -44,12 +46,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+
 import java.util.Observable;
 import java.util.concurrent.Executors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+
 import jodd.http.HttpResponse;
 
 
@@ -60,12 +64,14 @@ public class MainActivity extends AppCompatActivity {
     Button upload;
     Button btn_s3Upload;
     Button btn_logout;
+
     Button btn_addGroup;
 
 
     S3Upload s3Upload = new S3Upload();
     TranscribeTask transcribeTask = new TranscribeTask();
     String filename="";
+
 
 
 
@@ -95,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
     String[][] array2;
 
 
+
     String[][] modifyArray;
 
     String preSpk="";
@@ -117,7 +124,9 @@ public class MainActivity extends AppCompatActivity {
         upload = findViewById(R.id.upload);
         btn_s3Upload = findViewById(R.id.s3Upload);
         btn_logout  = findViewById(R.id.btn_logout);
+
         btn_addGroup  = findViewById(R.id.btn_addGroup);
+
 
 
 
@@ -151,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
        /* btn_addGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,7 +185,9 @@ public class MainActivity extends AppCompatActivity {
                                 request = new StartTranscriptionJobRequest();
                                 request.withLanguageCode(LanguageCode.KoKR);
                                 // s3 버킷 주소
+
                                 media.setMediaFileUri("s3://dev2734152e23e74f3d8dc72ea901c878c6144123-dev/public/" + filename);
+
                                 settings.setShowSpeakerLabels(true);
                                 settings.setMaxSpeakerLabels(2);
 
@@ -251,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
                                 for (int i = 0; i < array1.length; i++) {
                                     for (int j = 0; j < array2.length; j++) {
                                         if (array1[i][0].equals(array2[j][0])) {
@@ -261,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     }
                                 }
+
                                 for(int i=0; i<array1.length; i++)
                                 {
 
@@ -354,6 +368,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
                     }
                 });
 
@@ -417,7 +432,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
    private AmazonTranscription download(String uri) throws IOException {
+
 
 
         jodd.http.HttpRequest httpRequest = jodd.http.HttpRequest.get(uri);

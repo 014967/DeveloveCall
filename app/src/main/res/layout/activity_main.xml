@@ -28,6 +28,7 @@
 
     </Button>
 
+
     <Button
         android:id="@+id/btn_addGroup"
         android:layout_width="wrap_content"
@@ -36,5 +37,4 @@
 
 
     </Button>
-
 </LinearLayout>
