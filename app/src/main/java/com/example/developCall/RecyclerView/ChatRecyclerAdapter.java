@@ -20,8 +20,6 @@ public class ChatRecyclerAdapter  extends RecyclerView.Adapter<ChatRecyclerAdapt
     List<List<String>> data;
     Context context;
 
-
-
     public ChatRecyclerAdapter(Context context , List<List<String>> data) {
         System.out.println(data);
         this.data = data;
@@ -34,8 +32,12 @@ public class ChatRecyclerAdapter  extends RecyclerView.Adapter<ChatRecyclerAdapt
 
 
 
+
         if(data.get(position).get(2).equals("spk_0"))
+        {
             return 1;
+        }
+
         else
         {
             return 2;
@@ -70,9 +72,13 @@ public class ChatRecyclerAdapter  extends RecyclerView.Adapter<ChatRecyclerAdapt
     @Override
     public void onBindViewHolder(@NonNull ChatRecyclerAdapter.ViewHolder holder, int position) {
 
+            holder.textView.setText(data.get(position).get(3));
 
 
-        holder.textView.setText(data.get(position).get(3));
+
+
+
+
 
 
     }

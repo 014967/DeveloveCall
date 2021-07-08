@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.auth.AuthException;
 import com.amplifyframework.auth.result.AuthSignInResult;
 import com.amplifyframework.auth.result.AuthSignUpResult;
@@ -29,7 +31,7 @@ public class EmailConfirmationActivity extends AppCompatActivity {
     String password;
     String name;
 
-    User user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,11 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
         Confirmation_Code = (EditText)findViewById(R.id.Confirmation_Code);
         btn_Confirm = (Button)findViewById(R.id.btn_Confirm);
+
+
+
+
+
 
 
 
@@ -82,15 +89,36 @@ public class EmailConfirmationActivity extends AppCompatActivity {
                 );
             }
             private void onLoginSuccess(AuthSignInResult authSignInResult) {
-                String userId = Amplify.Auth.getCurrentUser().getUserId();
+                if(!Amplify.Auth.getCurrentUser().getUserId().equals(""))
+                {
+                    String userId = Amplify.Auth.getCurrentUser().getUserId();  //name = null userId="asfasdf"
 
-                name = getName();
+                    name = getName();
 
-                Amplify.DataStore.save(
-                        user.builder().name(name).id(userId).build(),
-                        this::onSavedSuccess,
-                        this::onError
-                );
+                    User user = User.builder().name(name).id(userId).build(); //name = 김현국
+
+
+
+                    Amplify.DataStore.save(
+                            user,
+                            this::onSavedSuccess,
+                            this::onError
+                    );
+
+
+
+                }
+/*
+*
+* GraphQLResponse{data='null', errors='[GraphQLResponse.Error{message='Validation error of type FieldUndefined:
+*  Field 'owner' in type 'User' is undefined @ 'createUser/owner'', locations
+* ='[GraphQLLocation{line='5', column='5'}]', path='null', extensions='null'}]'}
+*
+* */
+
+
+
+
             }
 
             private void onError(DataStoreException e) {
@@ -100,6 +128,10 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
             private <T extends Model> void onSavedSuccess(DataStoreItemChange<T> tDataStoreItemChange)
             {
+
+
+
+
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
             }

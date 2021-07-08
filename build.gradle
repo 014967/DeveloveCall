@@ -18,8 +18,11 @@ buildscript {
 
 allprojects {
     repositories {
+
         google()
         jcenter()
+        maven { url "https://oss.jfrog.org/libs-snapshot" }
+
     }
 }
 task clean(type: Delete) {

@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "devf2047c1c": {}
+      },
+      "function": {
+        "fetchUser": {
+          "deploymentBucketName": "amplify-dev-dev-144123-deployment",
+          "s3Key": "amplify-builds/fetchUser-434a786d4c665038346d-build.zip"
+        }
       }
     }
   }

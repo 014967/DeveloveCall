@@ -28,4 +28,13 @@
 
     </Button>
 
+    <Button
+        android:id="@+id/btn_addGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="주소록추가">
+
+
+    </Button>
+
 </LinearLayout>

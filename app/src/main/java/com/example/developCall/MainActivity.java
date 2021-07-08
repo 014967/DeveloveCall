@@ -32,7 +32,9 @@ import com.amazonaws.services.transcribe.model.TranscriptionJob;
 import com.amazonaws.services.transcribe.model.TranscriptionJobStatus;
 import com.amplifyframework.core.Amplify;
 import com.example.developCall.Function.S3Upload;
+import com.example.developCall.Function.TranscribeTask;
 import com.example.developCall.Object.AmazonTranscription;
+import com.google.android.play.core.tasks.Task;
 import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
@@ -42,8 +44,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Observable;
 import java.util.concurrent.Executors;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import jodd.http.HttpResponse;
 
 
@@ -54,11 +60,12 @@ public class MainActivity extends AppCompatActivity {
     Button upload;
     Button btn_s3Upload;
     Button btn_logout;
-
+    Button btn_addGroup;
 
 
     S3Upload s3Upload = new S3Upload();
-    String filename;
+    TranscribeTask transcribeTask = new TranscribeTask();
+    String filename="";
 
 
 
@@ -87,6 +94,20 @@ public class MainActivity extends AppCompatActivity {
     String[] dummy2;
     String[][] array2;
 
+
+    String[][] modifyArray;
+
+    String preSpk="";
+    String preContent="";
+    String postSpk="";
+    String postContent="";
+    int preIndex=0;
+    String preEndtime="";
+    String postEndtime="";
+    int changeCount=0;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         upload = findViewById(R.id.upload);
         btn_s3Upload = findViewById(R.id.s3Upload);
         btn_logout  = findViewById(R.id.btn_logout);
-
+        btn_addGroup  = findViewById(R.id.btn_addGroup);
 
 
 
@@ -104,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         Secretkey = BuildConfig.SECRETKEY;
         basicAWSCendentials = new BasicAWSCredentials(Accesskey, Secretkey);
         client = new AmazonTranscribeClient(basicAWSCendentials);
+
 
 
 
@@ -128,6 +150,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+       /* btn_addGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent in = new Intent(getApplicationContext(),ContactActivity.class);
+                startActivity(in);
+            }
+        });
+       */
+
+
+
         upload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -140,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                                 request = new StartTranscriptionJobRequest();
                                 request.withLanguageCode(LanguageCode.KoKR);
                                 // s3 버킷 주소
-                                media.setMediaFileUri("s3://developcallaudiofile212551-dev/public/" + filename);
+                                media.setMediaFileUri("s3://dev2734152e23e74f3d8dc72ea901c878c6144123-dev/public/" + filename);
                                 settings.setShowSpeakerLabels(true);
                                 settings.setMaxSpeakerLabels(2);
 
@@ -214,8 +249,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
 
 
-                                System.out.println(Arrays.deepToString(array1));
-                                System.out.println(Arrays.deepToString(array2));
 
 
                                 for (int i = 0; i < array1.length; i++) {
@@ -228,14 +261,98 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     }
                                 }
-                                System.out.println(Arrays.deepToString(array1));
+                                for(int i=0; i<array1.length; i++)
+                                {
+
+
+
+                                        if(preSpk.equals(""))
+                                        {
+                                            preSpk= array1[i][2];
+                                            preContent = array1[i][3];
+                                            preIndex = i;
+                                            preEndtime = array1[i][1];
+                                        }
+                                        else
+                                        {
+                                            postSpk = array1[i][2];
+                                            postContent = array1[i][3];
+                                            postEndtime= array1[i][1];
+                                            if(preSpk.equals(postSpk))
+                                            {
+                                                //뒤에 오는 spk와 같은 경우
+                                             preContent = preContent +" " +postContent;
+                                             preEndtime = postEndtime;
+                                            }
+                                            else
+                                            {
+                                                //!preSpk.equals(array[i][2])
+                                                array1[preIndex][3] = preContent;
+                                                array1[preIndex][1] = postEndtime;
+
+                                                preSpk = postSpk;
+                                                preContent = postContent;
+                                                preEndtime = postEndtime;
+                                                preIndex = i;
+                                                changeCount++;
+
+                                            }
+                                        }
+
+
+                                }
+
+                                preSpk="";
+                                modifyArray = new String[changeCount+1][4];
+                                int k = 0;
+                                for(int i =0; i< array1.length; i++) //array1 탐색
+                                {
+
+
+                                     if(preSpk.equals(""))  //맨처음에
+                                     {
+
+                                         for(int j =0; j<4 ; j++)
+                                         {
+                                             modifyArray[k][j]= array1[i][j]; //modifyArray[0][0]에 array1[0]의 값는 넣는다.
+                                         }
+                                         k++;    //k = 1
+                                         preSpk = array1[i][2];  // prespk = array[0][2];
+                                     }
+                                     else // i =2 부터 시작
+                                     {
+                                         postSpk = array1[i][2];  //array1[2][2];
+                                         if(!preSpk.equals(postSpk))  // preSpk = array[0][2]; 둘은 spk가 같아. 그래서 modifiy에 넣을 필요 x
+                                         {
+                                             //spk가 달라진 순간에
+                                             for(int m = 0; m<4; m++)
+                                             {
+                                                 modifyArray[k][m] = array1[i][m];
+                                             }
+                                             k++;
+                                             preSpk = postSpk;
+
+                                         }
+                                     }
+
+
+                                }
+
+
+
+
+
                                 Intent in = new Intent(getApplicationContext(), Chat.class);
-                                in.putExtra("chatArray", array1);
+                                in.putExtra("chatArray", modifyArray);
                                 startActivity(in);
-
-
                             }
                         });
+
+
+
+
+
+
 
                     }
                 });
@@ -300,7 +417,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private AmazonTranscription download(String uri) throws IOException {
+   private AmazonTranscription download(String uri) throws IOException {
 
 
         jodd.http.HttpRequest httpRequest = jodd.http.HttpRequest.get(uri);
