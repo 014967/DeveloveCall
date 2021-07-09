@@ -31,6 +31,7 @@ import com.amazonaws.services.transcribe.model.TranscriptionJobStatus;
 import com.amplifyframework.core.Amplify;
 import com.example.developCall.BuildConfig;
 import com.example.developCall.ChatActivity;
+import com.example.developCall.ContactActivity;
 import com.example.developCall.Function.S3Upload;
 
 import com.example.developCall.Function.TranscribeTask;
@@ -154,15 +155,16 @@ public class MainFragment extends Fragment {
 
 
 
-       /* btn_addGroup.setOnClickListener(new View.OnClickListener() {
+       btn_addGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent in = new Intent(getApplicationContext(),ContactActivity.class);
+
+                Intent in = new Intent(getActivity(), ContactActivity.class);
                 startActivity(in);
             }
         });
-       */
+
 
 
 

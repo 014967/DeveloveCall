@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,17 +16,26 @@ import com.example.developCall.Object.ContactModel;
 import com.example.developCall.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ContactAdpater extends RecyclerView.Adapter<ContactAdpater.ViewHodler> {
 
 
+    public interface AdapterCallback{
+        void onItemClicked(HashMap<String,String> list);
+    }
+    AdapterCallback callback;
+
+
     Context context;
     ArrayList<ContactModel> arrayList;
+    HashMap<String , String > friendList = new HashMap<>();
 
-    public ContactAdpater(Context context, ArrayList<ContactModel> arrayList)
+    public ContactAdpater(Context context, ArrayList<ContactModel> arrayList , AdapterCallback callback)
     {
         this.context = context;
         this.arrayList = arrayList;
+        this.callback = callback;
         notifyDataSetChanged();
     }
     @NonNull
@@ -46,6 +57,31 @@ public class ContactAdpater extends RecyclerView.Adapter<ContactAdpater.ViewHodl
         holder.tv_name.setText(contactModel.getName());
         holder.tv_number.setText(contactModel.getNumber());
 
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(!friendList.equals(""))
+                {
+                    if(isChecked)
+                    {
+                        friendList.put(contactModel.getNumber(),contactModel.getName());
+                    }
+                    else
+                    {
+                        friendList.remove(contactModel.getNumber());
+                    }
+                }
+                if(callback != null)
+                {
+                    callback.onItemClicked(friendList);
+                }
+
+            }
+        });
+
+
     }
 
     @Override
@@ -64,6 +100,8 @@ public class ContactAdpater extends RecyclerView.Adapter<ContactAdpater.ViewHodl
             tv_name = itemView.findViewById(R.id.tv_name);
             tv_number = itemView.findViewById(R.id.tv_number);
             checkBox = itemView.findViewById(R.id.checkBox);
+
+
 
         }
     }

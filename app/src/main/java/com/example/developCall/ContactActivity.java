@@ -13,19 +13,26 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.amplifyframework.core.Amplify;
 import com.example.developCall.Object.ContactModel;
 import com.example.developCall.Adapter.ContactAdpater;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class ContactActivity extends AppCompatActivity {
+public class ContactActivity extends AppCompatActivity implements ContactAdpater.AdapterCallback {
 
 
     RecyclerView recyclerView;
     ArrayList<ContactModel> arrayList = new ArrayList<ContactModel>();
     ContactAdpater contactAdpater;
+    HashMap<String,String> friendList;
+
+    Button pushData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +40,22 @@ public class ContactActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contact);
 
 
-        recyclerView = findViewById(R.id.recylcerView);
+        pushData = findViewById(R.id.pushData);
+        recyclerView = findViewById(R.id.conTactRecyclerView);
         checkPermission();
+
+
+
+        pushData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+
+                    System.out.println(friendList);
+
+
+                    finish();
+            }
+        });
 
 
     }
@@ -103,9 +124,9 @@ public class ContactActivity extends AppCompatActivity {
              cursor.close();;
         }
         //set layout manager
-        recyclerView.setLayoutManager((new LinearLayoutManager(this)));
+        recyclerView.setLayoutManager((new LinearLayoutManager(getApplicationContext())));
 
-        contactAdpater = new ContactAdpater(this, arrayList);
+        contactAdpater = new ContactAdpater(getApplicationContext(), arrayList , ContactActivity.this);
 
         recyclerView.setAdapter(contactAdpater);
     }
@@ -124,5 +145,10 @@ public class ContactActivity extends AppCompatActivity {
             Toast.makeText(this,"permission denied", Toast.LENGTH_SHORT).show();
             checkPermission();
         }
+    }
+
+    @Override
+    public void onItemClicked(HashMap<String, String> list) {
+        friendList= list;
     }
 }
