@@ -1,7 +1,17 @@
-
-type User @model @auth(rules: [ {allow : owner , operations : [create, delete , update ]}]) {
-  id: ID!
-  name: String!
-  owner : String
+type User @model
+  @auth(rules : [{allow : owner, operations:[create ,delete, update]}])
+{
+  id : ID!
+  name : String
+  owner: String
+  friend : [Friend] @connection(keyName : "userFriendId", fields :["id"])
 }
- 
+
+type Friend @model
+  @key(name : "userFriendId" , fields : ["userID"])
+{
+  userID : ID!
+  id : ID!
+  number : String
+  name : String
+}

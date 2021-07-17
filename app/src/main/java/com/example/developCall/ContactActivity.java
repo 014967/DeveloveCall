@@ -13,16 +13,25 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.amplifyframework.api.graphql.MutationType;
+import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.auth.AuthUserAttribute;
+import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.core.model.query.Where;
+import com.amplifyframework.datastore.generated.model.Friend;
+import com.amplifyframework.datastore.generated.model.User;
 import com.example.developCall.Object.ContactModel;
 import com.example.developCall.Adapter.ContactAdpater;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ContactActivity extends AppCompatActivity implements ContactAdpater.AdapterCallback {
 
@@ -33,6 +42,8 @@ public class ContactActivity extends AppCompatActivity implements ContactAdpater
     HashMap<String,String> friendList;
 
     Button pushData;
+
+    String userId = Amplify.Auth.getCurrentUser().getUserId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +61,32 @@ public class ContactActivity extends AppCompatActivity implements ContactAdpater
             @Override
             public void onClick(View v){
 
-                    System.out.println(friendList);
+// TODO: 7/10/21
 
 
-                    finish();
+            String userId = Amplify.Auth.getCurrentUser().getUserId();
+
+
+
+                for(Map.Entry<String,String> entry : friendList.entrySet())
+                {
+
+
+                     Friend friend  = Friend.builder().userId(userId).number(entry.getKey()).name(entry.getValue()).build();
+                     Amplify.DataStore.save( friend
+                     ,success -> Log.d( "success","success")
+                     ,error -> Log.e("fail" , "fail", error));
+
+
+
+
+
+                };
+
+                }
+
             }
-        });
+        );
 
 
     }

@@ -1,10 +1,54 @@
 # this is an auto generated file. This will be overwritten
-
+query SyncUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncUsers(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      name
+      owner
+      friend {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
 query GetUser($id: ID!) {
   getUser(id: $id) {
     id
     name
     owner
+    friend {
+      items {
+        userID
+        id
+        number
+        name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -22,7 +66,10 @@ query ListUsers(
       id
       name
       owner
-
+      friend {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -33,24 +80,57 @@ query ListUsers(
     startedAt
   }
 }
-
-query SyncUsers(
-  $filter: ModelUserFilterInput
+query SyncFriends(
+  $filter: ModelFriendFilterInput
   $limit: Int
   $nextToken: String
   $lastSync: AWSTimestamp
 ) {
-  syncUsers(
+  syncFriends(
     filter: $filter
     limit: $limit
     nextToken: $nextToken
     lastSync: $lastSync
   ) {
     items {
+      userID
       id
+      number
       name
-      owner
-
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetFriend($id: ID!) {
+  getFriend(id: $id) {
+    userID
+    id
+    number
+    name
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListFriends(
+  $filter: ModelFriendFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listFriends(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      userID
+      id
+      number
+      name
       _version
       _deleted
       _lastChangedAt

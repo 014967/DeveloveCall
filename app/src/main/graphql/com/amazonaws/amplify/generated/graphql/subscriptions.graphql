@@ -3,8 +3,22 @@ subscription OnCreateUser {
   onCreateUser {
     id
     name
-
     owner
+    friend {
+      items {
+        userID
+        id
+        number
+        name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -16,8 +30,22 @@ subscription OnUpdateUser {
   onUpdateUser {
     id
     name
-
     owner
+    friend {
+      items {
+        userID
+        id
+        number
+        name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -29,8 +57,61 @@ subscription OnDeleteUser {
   onDeleteUser {
     id
     name
-
     owner
+    friend {
+      items {
+        userID
+        id
+        number
+        name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateFriend {
+  onCreateFriend {
+    userID
+    id
+    number
+    name
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateFriend {
+  onUpdateFriend {
+    userID
+    id
+    number
+    name
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteFriend {
+  onDeleteFriend {
+    userID
+    id
+    number
+    name
     _version
     _deleted
     _lastChangedAt

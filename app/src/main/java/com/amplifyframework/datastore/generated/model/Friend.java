@@ -15,32 +15,40 @@ import com.amplifyframework.core.model.query.predicate.QueryField;
 
 import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
-/** This is an auto generated class representing the Todo type in your schema. */
+/** This is an auto generated class representing the Friend type in your schema. */
 @SuppressWarnings("all")
-@ModelConfig(pluralName = "Todos")
-public final class Todo implements Model {
+@ModelConfig(pluralName = "Friends")
+@Index(name = "userFriendId", fields = {"userID"})
+public final class Friend implements Model {
   public static final QueryField ID = field("id");
+  public static final QueryField USER_ID = field("userID");
+  public static final QueryField NUMBER = field("number");
   public static final QueryField NAME = field("name");
-  public static final QueryField DESCRIPTION = field("description");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  private final @ModelField(targetType="String", isRequired = true) String name;
-  private final @ModelField(targetType="String") String description;
+  private final @ModelField(targetType="ID", isRequired = true) String userID;
+  private final @ModelField(targetType="String") String number;
+  private final @ModelField(targetType="String") String name;
   public String getId() {
       return id;
+  }
+  
+  public String getUserId() {
+      return userID;
+  }
+  
+  public String getNumber() {
+      return number;
   }
   
   public String getName() {
       return name;
   }
   
-  public String getDescription() {
-      return description;
-  }
-  
-  private Todo(String id, String name, String description) {
+  private Friend(String id, String userID, String number, String name) {
     this.id = id;
+    this.userID = userID;
+    this.number = number;
     this.name = name;
-    this.description = description;
   }
   
   @Override
@@ -50,10 +58,11 @@ public final class Todo implements Model {
       } else if(obj == null || getClass() != obj.getClass()) {
         return false;
       } else {
-      Todo todo = (Todo) obj;
-      return ObjectsCompat.equals(getId(), todo.getId()) &&
-              ObjectsCompat.equals(getName(), todo.getName()) &&
-              ObjectsCompat.equals(getDescription(), todo.getDescription());
+      Friend friend = (Friend) obj;
+      return ObjectsCompat.equals(getId(), friend.getId()) &&
+              ObjectsCompat.equals(getUserId(), friend.getUserId()) &&
+              ObjectsCompat.equals(getNumber(), friend.getNumber()) &&
+              ObjectsCompat.equals(getName(), friend.getName());
       }
   }
   
@@ -61,8 +70,9 @@ public final class Todo implements Model {
    public int hashCode() {
     return new StringBuilder()
       .append(getId())
+      .append(getUserId())
+      .append(getNumber())
       .append(getName())
-      .append(getDescription())
       .toString()
       .hashCode();
   }
@@ -70,15 +80,16 @@ public final class Todo implements Model {
   @Override
    public String toString() {
     return new StringBuilder()
-      .append("Todo {")
+      .append("Friend {")
       .append("id=" + String.valueOf(getId()) + ", ")
-      .append("name=" + String.valueOf(getName()) + ", ")
-      .append("description=" + String.valueOf(getDescription()))
+      .append("userID=" + String.valueOf(getUserId()) + ", ")
+      .append("number=" + String.valueOf(getNumber()) + ", ")
+      .append("name=" + String.valueOf(getName()))
       .append("}")
       .toString();
   }
   
-  public static NameStep builder() {
+  public static UserIdStep builder() {
       return new Builder();
   }
   
@@ -91,7 +102,7 @@ public final class Todo implements Model {
    * @return an instance of this model with only ID populated
    * @throws IllegalArgumentException Checks that ID is in the proper format
    */
-  public static Todo justId(String id) {
+  public static Friend justId(String id) {
     try {
       UUID.fromString(id); // Check that ID is in the UUID format - if not an exception is thrown
     } catch (Exception exception) {
@@ -101,8 +112,9 @@ public final class Todo implements Model {
               "creating a new object, use the standard builder method and leave the ID field blank."
       );
     }
-    return new Todo(
+    return new Friend(
       id,
+      null,
       null,
       null
     );
@@ -110,45 +122,55 @@ public final class Todo implements Model {
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
-      name,
-      description);
+      userID,
+      number,
+      name);
   }
-  public interface NameStep {
-    BuildStep name(String name);
+  public interface UserIdStep {
+    BuildStep userId(String userId);
   }
   
 
   public interface BuildStep {
-    Todo build();
+    Friend build();
     BuildStep id(String id) throws IllegalArgumentException;
-    BuildStep description(String description);
+    BuildStep number(String number);
+    BuildStep name(String name);
   }
   
 
-  public static class Builder implements NameStep, BuildStep {
+  public static class Builder implements UserIdStep, BuildStep {
     private String id;
+    private String userID;
+    private String number;
     private String name;
-    private String description;
     @Override
-     public Todo build() {
+     public Friend build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
-        return new Todo(
+        return new Friend(
           id,
-          name,
-          description);
+          userID,
+          number,
+          name);
     }
     
     @Override
-     public BuildStep name(String name) {
-        Objects.requireNonNull(name);
-        this.name = name;
+     public BuildStep userId(String userId) {
+        Objects.requireNonNull(userId);
+        this.userID = userId;
         return this;
     }
     
     @Override
-     public BuildStep description(String description) {
-        this.description = description;
+     public BuildStep number(String number) {
+        this.number = number;
+        return this;
+    }
+    
+    @Override
+     public BuildStep name(String name) {
+        this.name = name;
         return this;
     }
     
@@ -175,20 +197,26 @@ public final class Todo implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String name, String description) {
+    private CopyOfBuilder(String id, String userId, String number, String name) {
       super.id(id);
-      super.name(name)
-        .description(description);
+      super.userId(userId)
+        .number(number)
+        .name(name);
+    }
+    
+    @Override
+     public CopyOfBuilder userId(String userId) {
+      return (CopyOfBuilder) super.userId(userId);
+    }
+    
+    @Override
+     public CopyOfBuilder number(String number) {
+      return (CopyOfBuilder) super.number(number);
     }
     
     @Override
      public CopyOfBuilder name(String name) {
       return (CopyOfBuilder) super.name(name);
-    }
-    
-    @Override
-     public CopyOfBuilder description(String description) {
-      return (CopyOfBuilder) super.description(description);
     }
   }
   

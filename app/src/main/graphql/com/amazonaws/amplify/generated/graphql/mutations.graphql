@@ -6,8 +6,22 @@ mutation CreateUser(
   createUser(input: $input, condition: $condition) {
     id
     name
-
     owner
+    friend {
+      items {
+        userID
+        id
+        number
+        name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -22,8 +36,22 @@ mutation UpdateUser(
   updateUser(input: $input, condition: $condition) {
     id
     name
-
     owner
+    friend {
+      items {
+        userID
+        id
+        number
+        name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -38,8 +66,70 @@ mutation DeleteUser(
   deleteUser(input: $input, condition: $condition) {
     id
     name
-
     owner
+    friend {
+      items {
+        userID
+        id
+        number
+        name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateFriend(
+  $input: CreateFriendInput!
+  $condition: ModelFriendConditionInput
+) {
+  createFriend(input: $input, condition: $condition) {
+    userID
+    id
+    number
+    name
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateFriend(
+  $input: UpdateFriendInput!
+  $condition: ModelFriendConditionInput
+) {
+  updateFriend(input: $input, condition: $condition) {
+    userID
+    id
+    number
+    name
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteFriend(
+  $input: DeleteFriendInput!
+  $condition: ModelFriendConditionInput
+) {
+  deleteFriend(input: $input, condition: $condition) {
+    userID
+    id
+    number
+    name
     _version
     _deleted
     _lastChangedAt

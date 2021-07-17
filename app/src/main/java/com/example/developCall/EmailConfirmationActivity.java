@@ -95,7 +95,8 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
                     name = getName();
 
-                    User user = User.builder().name(name).id(userId).build(); //name = 김현국
+
+                    User user = User.builder().name(name).id(userId).build();//name = 김현국
 
 
 
@@ -129,9 +130,6 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
             private <T extends Model> void onSavedSuccess(DataStoreItemChange<T> tDataStoreItemChange)
             {
-
-
-
 
 
                 Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
