@@ -15,10 +15,9 @@ public class LaunchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
 
-
-        AuthUser currentUser = Amplify.Auth.getCurrentUser();
+        //AuthUser currentUser = Amplify.Auth.getCurrentUser();
         Intent intent;
-        if(currentUser == null )
+        /*if(currentUser == null )
         {
             //Go to the Login Page
 
@@ -30,7 +29,9 @@ public class LaunchActivity extends AppCompatActivity {
             //Go to the Main Page
 
              intent = new Intent(getApplicationContext(), HomeActivity.class);
-        }
+
+        }*/
+        intent = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(intent);
         finish();
     }

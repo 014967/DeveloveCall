@@ -3,6 +3,7 @@ subscription OnCreateUser {
   onCreateUser {
     id
     name
+
     owner
     friend {
       items {
@@ -30,6 +31,7 @@ subscription OnUpdateUser {
   onUpdateUser {
     id
     name
+
     owner
     friend {
       items {
@@ -57,6 +59,7 @@ subscription OnDeleteUser {
   onDeleteUser {
     id
     name
+
     owner
     friend {
       items {

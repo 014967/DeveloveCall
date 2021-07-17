@@ -1,20 +1,28 @@
 # this is an auto generated file. This will be overwritten
-query SyncUsers(
+
+query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    name
+    owner
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListUsers(
   $filter: ModelUserFilterInput
   $limit: Int
   $nextToken: String
-  $lastSync: AWSTimestamp
 ) {
-  syncUsers(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    lastSync: $lastSync
-  ) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       name
       owner
+
       friend {
         nextToken
         startedAt
@@ -29,6 +37,7 @@ query SyncUsers(
     startedAt
   }
 }
+
 query GetUser($id: ID!) {
   getUser(id: $id) {
     id
@@ -60,12 +69,19 @@ query ListUsers(
   $filter: ModelUserFilterInput
   $limit: Int
   $nextToken: String
+  $lastSync: AWSTimestamp
 ) {
-  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  syncUsers(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
     items {
       id
       name
       owner
+
       friend {
         nextToken
         startedAt

@@ -27,11 +27,13 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 public final class User implements Model {
   public static final QueryField ID = field("id");
   public static final QueryField NAME = field("name");
+
   public static final QueryField OWNER = field("owner");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String name;
   private final @ModelField(targetType="String") String owner;
   private final @ModelField(targetType="Friend") @HasMany(associatedWith = "userID", type = Friend.class) List<Friend> friend = null;
+
   public String getId() {
       return id;
   }
@@ -39,19 +41,22 @@ public final class User implements Model {
   public String getName() {
       return name;
   }
-  
+
   public String getOwner() {
       return owner;
   }
   
+
   public List<Friend> getFriend() {
       return friend;
   }
-  
+
   private User(String id, String name, String owner) {
     this.id = id;
     this.name = name;
     this.owner = owner;
+
+
   }
   
   @Override
@@ -63,8 +68,10 @@ public final class User implements Model {
       } else {
       User user = (User) obj;
       return ObjectsCompat.equals(getId(), user.getId()) &&
+
               ObjectsCompat.equals(getName(), user.getName()) &&
               ObjectsCompat.equals(getOwner(), user.getOwner());
+
       }
   }
   
@@ -73,6 +80,8 @@ public final class User implements Model {
     return new StringBuilder()
       .append(getId())
       .append(getName())
+
+
       .append(getOwner())
       .toString()
       .hashCode();
@@ -83,8 +92,10 @@ public final class User implements Model {
     return new StringBuilder()
       .append("User {")
       .append("id=" + String.valueOf(getId()) + ", ")
+
       .append("name=" + String.valueOf(getName()) + ", ")
       .append("owner=" + String.valueOf(getOwner()))
+
       .append("}")
       .toString();
   }
@@ -127,6 +138,7 @@ public final class User implements Model {
   public interface BuildStep {
     User build();
     BuildStep id(String id) throws IllegalArgumentException;
+
     BuildStep name(String name);
     BuildStep owner(String owner);
   }
@@ -151,13 +163,11 @@ public final class User implements Model {
         this.name = name;
         return this;
     }
-    
     @Override
      public BuildStep owner(String owner) {
         this.owner = owner;
         return this;
     }
-    
     /** 
      * WARNING: Do not set ID when creating a new object. Leave this blank and one will be auto generated for you.
      * This should only be set when referring to an already existing object.
@@ -181,6 +191,7 @@ public final class User implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
+
     private CopyOfBuilder(String id, String name, String owner) {
       super.id(id);
       super.name(name)

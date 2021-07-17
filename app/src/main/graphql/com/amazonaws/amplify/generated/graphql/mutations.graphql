@@ -6,6 +6,7 @@ mutation CreateUser(
   createUser(input: $input, condition: $condition) {
     id
     name
+
     owner
     friend {
       items {
@@ -22,6 +23,7 @@ mutation CreateUser(
       nextToken
       startedAt
     }
+
     _version
     _deleted
     _lastChangedAt
@@ -36,6 +38,7 @@ mutation UpdateUser(
   updateUser(input: $input, condition: $condition) {
     id
     name
+
     owner
     friend {
       items {
@@ -52,6 +55,7 @@ mutation UpdateUser(
       nextToken
       startedAt
     }
+
     _version
     _deleted
     _lastChangedAt
@@ -66,6 +70,7 @@ mutation DeleteUser(
   deleteUser(input: $input, condition: $condition) {
     id
     name
+
     owner
     friend {
       items {
@@ -130,6 +135,7 @@ mutation DeleteFriend(
     id
     number
     name
+
     _version
     _deleted
     _lastChangedAt

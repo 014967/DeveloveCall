@@ -13,10 +13,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
 
 import com.amplifyframework.api.graphql.MutationType;
 import com.amplifyframework.api.graphql.model.ModelMutation;
@@ -31,6 +33,7 @@ import com.example.developCall.Adapter.ContactAdpater;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import java.util.Map;
 
 public class ContactActivity extends AppCompatActivity implements ContactAdpater.AdapterCallback {
@@ -42,6 +45,7 @@ public class ContactActivity extends AppCompatActivity implements ContactAdpater
     HashMap<String,String> friendList;
 
     Button pushData;
+
 
     String userId = Amplify.Auth.getCurrentUser().getUserId();
 
@@ -60,6 +64,7 @@ public class ContactActivity extends AppCompatActivity implements ContactAdpater
         pushData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
+
 
 // TODO: 7/10/21
 
@@ -87,6 +92,7 @@ public class ContactActivity extends AppCompatActivity implements ContactAdpater
 
             }
         );
+
 
 
     }

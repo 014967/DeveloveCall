@@ -5,7 +5,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +37,9 @@ import com.example.developCall.ChatActivity;
 import com.example.developCall.ContactActivity;
 import com.example.developCall.Function.S3Upload;
 
+
+import com.example.developCall.Function.CallReceiver;
+import com.example.developCall.Function.S3Upload;
 import com.example.developCall.Function.TranscribeTask;
 import com.example.developCall.LoginActivity;
 import com.example.developCall.Object.AmazonTranscription;
@@ -48,6 +54,11 @@ import java.io.InputStream;
 import java.util.concurrent.Executors;
 
 import jodd.http.HttpResponse;
+
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
 
 
 public class MainFragment extends Fragment {
@@ -64,12 +75,6 @@ public class MainFragment extends Fragment {
     S3Upload s3Upload = new S3Upload();
     TranscribeTask transcribeTask = new TranscribeTask();
     String filename="";
-
-
-
-
-
-
 
     //transcribe
     AWSCredentials basicAWSCendentials;
@@ -111,9 +116,8 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState ) {
 
+
         View view = inflater.inflate(R.layout.activity_main,container, false);
-
-
 
         upload = view.findViewById(R.id.upload);
         btn_s3Upload = view.findViewById(R.id.s3Upload);
@@ -272,6 +276,7 @@ public class MainFragment extends Fragment {
                                     }
                                 }
 
+
                                 for(int i=0; i<array1.length; i++)
                                 {
 
@@ -348,6 +353,8 @@ public class MainFragment extends Fragment {
 
 
                                 }
+
+
 
 
 
@@ -430,7 +437,6 @@ public class MainFragment extends Fragment {
     }
 
 
-
    private AmazonTranscription download(String uri) throws IOException {
 
 
@@ -448,9 +454,5 @@ public class MainFragment extends Fragment {
 
        return gson.fromJson(result , AmazonTranscription.class);
     }
-
-
-
-
 
 }

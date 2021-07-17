@@ -1,7 +1,12 @@
 package com.example.developCall;
 
+
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.developCall.Fragment.Fragment1;
 import com.example.developCall.Fragment.Fragment2;
 import com.example.developCall.Fragment.MainFragment;
+
+import com.example.developCall.Function.CallReceiver;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
@@ -21,11 +28,13 @@ public class HomeActivity extends AppCompatActivity {
     Fragment2 fragment2;
     MainFragment mainFragment;
     FragmentTransaction transaction;
+    private BroadcastReceiver mReceiveer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+        mReceiveer = new CallReceiver();
 
         fragmentManager = getSupportFragmentManager();
 
@@ -56,5 +65,23 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_POWER_CONNECTED);
+        filter.addAction(CallReceiver.MyAction);
+        registerReceiver(mReceiveer, filter);
+    }
+
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(mReceiveer);
+    }
+
+    public void connect(View view) {
+        Intent intent = new Intent(CallReceiver.MyAction);
+        sendBroadcast(intent);
     }
 }

@@ -1,3 +1,4 @@
+
 type User @model
   @auth(rules : [{allow : owner, operations:[create ,delete, update]}])
 {
@@ -15,3 +16,4 @@ type Friend @model
   number : String
   name : String
 }
+
