@@ -19,7 +19,19 @@
               "userPoolId": "authdevf2047c1c"
             }
           },
-          "additionalAuthenticationProviders": []
+
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "API_KEY",
+              "apiKeyConfig": {
+                "apiKeyExpirationDays": 30,
+                "description": "api key description"
+              }
+            },
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
         }
       }
     }
@@ -28,6 +40,14 @@
     "s33c72f622": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
+    }
+
+  },
+  "function": {
+    "fetchUser": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   }
 }

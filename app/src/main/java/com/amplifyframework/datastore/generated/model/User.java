@@ -26,8 +26,12 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 public final class User implements Model {
   public static final QueryField ID = field("id");
   public static final QueryField NAME = field("name");
+
+  public static final QueryField OWNER = field("owner");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String name;
+  private final @ModelField(targetType="String") String owner;
+
   public String getId() {
       return id;
   }
@@ -36,9 +40,16 @@ public final class User implements Model {
       return name;
   }
   
-  private User(String id, String name) {
+
+  public String getOwner() {
+      return owner;
+  }
+  
+  private User(String id, String name, String owner) {
     this.id = id;
     this.name = name;
+    this.owner = owner;
+
   }
   
   @Override
@@ -50,7 +61,10 @@ public final class User implements Model {
       } else {
       User user = (User) obj;
       return ObjectsCompat.equals(getId(), user.getId()) &&
-              ObjectsCompat.equals(getName(), user.getName());
+
+              ObjectsCompat.equals(getName(), user.getName()) &&
+              ObjectsCompat.equals(getOwner(), user.getOwner());
+
       }
   }
   
@@ -59,6 +73,8 @@ public final class User implements Model {
     return new StringBuilder()
       .append(getId())
       .append(getName())
+
+      .append(getOwner())
       .toString()
       .hashCode();
   }
@@ -68,7 +84,10 @@ public final class User implements Model {
     return new StringBuilder()
       .append("User {")
       .append("id=" + String.valueOf(getId()) + ", ")
-      .append("name=" + String.valueOf(getName()))
+
+      .append("name=" + String.valueOf(getName()) + ", ")
+      .append("owner=" + String.valueOf(getOwner()))
+
       .append("}")
       .toString();
   }
@@ -98,13 +117,17 @@ public final class User implements Model {
     }
     return new User(
       id,
+
+      null,
       null
     );
   }
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
-      name);
+
+      name,
+      owner);
   }
   public interface NameStep {
     BuildStep name(String name);
@@ -114,19 +137,25 @@ public final class User implements Model {
   public interface BuildStep {
     User build();
     BuildStep id(String id) throws IllegalArgumentException;
+
+    BuildStep owner(String owner);
   }
   
 
   public static class Builder implements NameStep, BuildStep {
     private String id;
     private String name;
+
+    private String owner;
     @Override
      public User build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
         return new User(
           id,
-          name);
+
+          name,
+          owner);
     }
     
     @Override
@@ -136,6 +165,13 @@ public final class User implements Model {
         return this;
     }
     
+
+    @Override
+     public BuildStep owner(String owner) {
+        this.owner = owner;
+        return this;
+    }
+
     /** 
      * WARNING: Do not set ID when creating a new object. Leave this blank and one will be auto generated for you.
      * This should only be set when referring to an already existing object.
@@ -159,14 +195,23 @@ public final class User implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String name) {
+
+    private CopyOfBuilder(String id, String name, String owner) {
       super.id(id);
-      super.name(name);
+      super.name(name)
+        .owner(owner);
+
     }
     
     @Override
      public CopyOfBuilder name(String name) {
       return (CopyOfBuilder) super.name(name);
+    }
+
+    
+    @Override
+     public CopyOfBuilder owner(String owner) {
+      return (CopyOfBuilder) super.owner(owner);
     }
   }
   

@@ -5,20 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.example.developCall.RecyclerView.ChatRecyclerAdapter;
+import com.example.developCall.Adapter.ChatRecyclerAdapter;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Chat extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity {
 
 
     RecyclerView recyclerView;

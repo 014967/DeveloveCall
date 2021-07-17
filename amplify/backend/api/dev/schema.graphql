@@ -1,8 +1,7 @@
-type User
-@model
-@auth(rules : [{allow: owner, operations : [create, delete ,update]}])
-{
+
+type User @model @auth(rules: [ {allow : owner , operations : [create, delete , update ]}]) {
   id: ID!
   name: String!
-
+  owner : String
 }
+ 

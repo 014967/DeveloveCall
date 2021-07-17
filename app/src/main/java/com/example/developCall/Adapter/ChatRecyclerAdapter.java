@@ -1,7 +1,6 @@
-package com.example.developCall.RecyclerView;
+package com.example.developCall.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.developCall.R;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ChatRecyclerAdapter  extends RecyclerView.Adapter<ChatRecyclerAdapter.ViewHolder> {
 
     List<List<String>> data;
     Context context;
-
 
 
     public ChatRecyclerAdapter(Context context , List<List<String>> data) {
@@ -34,8 +31,14 @@ public class ChatRecyclerAdapter  extends RecyclerView.Adapter<ChatRecyclerAdapt
 
 
 
+
+
         if(data.get(position).get(2).equals("spk_0"))
+        {
             return 1;
+        }
+
+
         else
         {
             return 2;
@@ -71,8 +74,14 @@ public class ChatRecyclerAdapter  extends RecyclerView.Adapter<ChatRecyclerAdapt
     public void onBindViewHolder(@NonNull ChatRecyclerAdapter.ViewHolder holder, int position) {
 
 
+            holder.textView.setText(data.get(position).get(3));
 
-        holder.textView.setText(data.get(position).get(3));
+
+
+
+
+
+
 
 
     }
