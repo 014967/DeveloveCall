@@ -6,14 +6,18 @@ mutation CreateUser(
   createUser(input: $input, condition: $condition) {
     id
     name
-
     owner
+    userImg
     friend {
       items {
         userID
         id
         number
         name
+        remindDate
+        friendImg
+        group
+        favorite
         _version
         _deleted
         _lastChangedAt
@@ -23,7 +27,6 @@ mutation CreateUser(
       nextToken
       startedAt
     }
-
     _version
     _deleted
     _lastChangedAt
@@ -38,14 +41,18 @@ mutation UpdateUser(
   updateUser(input: $input, condition: $condition) {
     id
     name
-
     owner
+    userImg
     friend {
       items {
         userID
         id
         number
         name
+        remindDate
+        friendImg
+        group
+        favorite
         _version
         _deleted
         _lastChangedAt
@@ -55,7 +62,6 @@ mutation UpdateUser(
       nextToken
       startedAt
     }
-
     _version
     _deleted
     _lastChangedAt
@@ -70,14 +76,18 @@ mutation DeleteUser(
   deleteUser(input: $input, condition: $condition) {
     id
     name
-
     owner
+    userImg
     friend {
       items {
         userID
         id
         number
         name
+        remindDate
+        friendImg
+        group
+        favorite
         _version
         _deleted
         _lastChangedAt
@@ -103,6 +113,10 @@ mutation CreateFriend(
     id
     number
     name
+    remindDate
+    friendImg
+    group
+    favorite
     _version
     _deleted
     _lastChangedAt
@@ -119,6 +133,10 @@ mutation UpdateFriend(
     id
     number
     name
+    remindDate
+    friendImg
+    group
+    favorite
     _version
     _deleted
     _lastChangedAt
@@ -135,7 +153,10 @@ mutation DeleteFriend(
     id
     number
     name
-
+    remindDate
+    friendImg
+    group
+    favorite
     _version
     _deleted
     _lastChangedAt

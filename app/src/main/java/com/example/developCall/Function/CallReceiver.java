@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Friend;
+
 
 //전화 중이면 전화를 받고 아니면 메세지
 public class CallReceiver extends BroadcastReceiver {//현재 전화가 오는지 받는지 끊는지 기본인지
@@ -55,6 +59,21 @@ public class CallReceiver extends BroadcastReceiver {//현재 전화가 오는�
 
                 } else if (state.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
                     Log.d("qqq", "통화종료 혹은 통화벨 종료");
+
+
+
+                    Amplify.API.query(
+                            ModelQuery.list(Friend.class, Friend.NUMBER.contains("010-8311-0419")),
+                            response -> {
+                                for (Friend friend : response.getData()) {
+                                    Log.i("MyAmplifyApp", friend.getName());
+                                }
+                            },
+                            error -> Log.e("MyAmplifyApp", "Query failure", error)
+                    );
+
+
+
                 }
 
                 Log.d("qqq", "phone state : " + state);
@@ -68,4 +87,6 @@ public class CallReceiver extends BroadcastReceiver {//현재 전화가 오는�
         }
 
     }
+
+
 }

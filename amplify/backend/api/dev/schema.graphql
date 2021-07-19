@@ -1,19 +1,23 @@
-
 type User @model
-  @auth(rules : [{allow : owner, operations:[create ,delete, update]}])
+@auth(rules : [{allow : owner, operations:[create ,delete, update]}])
 {
   id : ID!
   name : String
   owner: String
+  userImg : String
   friend : [Friend] @connection(keyName : "userFriendId", fields :["id"])
+
 }
 
 type Friend @model
-  @key(name : "userFriendId" , fields : ["userID"])
+@key(name : "userFriendId" , fields : ["userID"])
 {
   userID : ID!
   id : ID!
   number : String
   name : String
+  remindDate : String
+  friendImg : String
+  group : String
+  favorite : Boolean
 }
-

@@ -29,7 +29,7 @@ input TimestampConfiguration {
     updatedAt: String
 }
 
-
+directive @key(fields: [String!]!, name: String, queryField: String) on OBJECT
 # When applied to a type, augments the application with
 # owner and group-based authorization rules.
 directive @auth(rules: [AuthRule!]!) on OBJECT | FIELD_DEFINITION
@@ -39,9 +39,7 @@ input AuthRule {
     ownerField: String # defaults to "owner" when using owner auth
     identityClaim: String # defaults to "username" when using owner auth
     groupClaim: String # defaults to "cognito:groups" when using Group auth
-
     groups: [String]  # Required when using Static Group auth
-
     groupsField: String # defaults to "groups" when using Dynamic Group auth
     operations: [ModelOperation] # Required for finer control
 
@@ -55,9 +53,6 @@ enum ModelOperation { create update delete read }
 
 # The following objects are deprecated. It is encouraged to use ModelOperations.
 enum ModelQuery { get list }
-
 enum ModelMutation { create update delete }
 
-directive @key(fields: [String!]!, name: String, queryField: String) on OBJECT
 directive @connection(keyName: String, fields: [String!]) on FIELD_DEFINITION
-

@@ -97,7 +97,7 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
 
 
-                    User user = User.builder().name(name).id(userId).build();//name = 김현국
+                    User user = User.builder().name(name).id(userId).owner(userId).build();
 
 
 

@@ -3,14 +3,18 @@ subscription OnCreateUser {
   onCreateUser {
     id
     name
-
     owner
+    userImg
     friend {
       items {
         userID
         id
         number
         name
+        remindDate
+        friendImg
+        group
+        favorite
         _version
         _deleted
         _lastChangedAt
@@ -31,14 +35,18 @@ subscription OnUpdateUser {
   onUpdateUser {
     id
     name
-
     owner
+    userImg
     friend {
       items {
         userID
         id
         number
         name
+        remindDate
+        friendImg
+        group
+        favorite
         _version
         _deleted
         _lastChangedAt
@@ -59,14 +67,18 @@ subscription OnDeleteUser {
   onDeleteUser {
     id
     name
-
     owner
+    userImg
     friend {
       items {
         userID
         id
         number
         name
+        remindDate
+        friendImg
+        group
+        favorite
         _version
         _deleted
         _lastChangedAt
@@ -89,6 +101,10 @@ subscription OnCreateFriend {
     id
     number
     name
+    remindDate
+    friendImg
+    group
+    favorite
     _version
     _deleted
     _lastChangedAt
@@ -102,6 +118,10 @@ subscription OnUpdateFriend {
     id
     number
     name
+    remindDate
+    friendImg
+    group
+    favorite
     _version
     _deleted
     _lastChangedAt
@@ -115,6 +135,10 @@ subscription OnDeleteFriend {
     id
     number
     name
+    remindDate
+    friendImg
+    group
+    favorite
     _version
     _deleted
     _lastChangedAt

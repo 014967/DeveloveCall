@@ -27,13 +27,13 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 public final class User implements Model {
   public static final QueryField ID = field("id");
   public static final QueryField NAME = field("name");
-
   public static final QueryField OWNER = field("owner");
+  public static final QueryField USER_IMG = field("userImg");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String name;
   private final @ModelField(targetType="String") String owner;
+  private final @ModelField(targetType="String") String userImg;
   private final @ModelField(targetType="Friend") @HasMany(associatedWith = "userID", type = Friend.class) List<Friend> friend = null;
-
   public String getId() {
       return id;
   }
@@ -41,22 +41,24 @@ public final class User implements Model {
   public String getName() {
       return name;
   }
-
+  
   public String getOwner() {
       return owner;
   }
   
-
+  public String getUserImg() {
+      return userImg;
+  }
+  
   public List<Friend> getFriend() {
       return friend;
   }
-
-  private User(String id, String name, String owner) {
+  
+  private User(String id, String name, String owner, String userImg) {
     this.id = id;
     this.name = name;
     this.owner = owner;
-
-
+    this.userImg = userImg;
   }
   
   @Override
@@ -68,10 +70,9 @@ public final class User implements Model {
       } else {
       User user = (User) obj;
       return ObjectsCompat.equals(getId(), user.getId()) &&
-
               ObjectsCompat.equals(getName(), user.getName()) &&
-              ObjectsCompat.equals(getOwner(), user.getOwner());
-
+              ObjectsCompat.equals(getOwner(), user.getOwner()) &&
+              ObjectsCompat.equals(getUserImg(), user.getUserImg());
       }
   }
   
@@ -80,9 +81,8 @@ public final class User implements Model {
     return new StringBuilder()
       .append(getId())
       .append(getName())
-
-
       .append(getOwner())
+      .append(getUserImg())
       .toString()
       .hashCode();
   }
@@ -92,10 +92,9 @@ public final class User implements Model {
     return new StringBuilder()
       .append("User {")
       .append("id=" + String.valueOf(getId()) + ", ")
-
       .append("name=" + String.valueOf(getName()) + ", ")
-      .append("owner=" + String.valueOf(getOwner()))
-
+      .append("owner=" + String.valueOf(getOwner()) + ", ")
+      .append("userImg=" + String.valueOf(getUserImg()))
       .append("}")
       .toString();
   }
@@ -126,6 +125,7 @@ public final class User implements Model {
     return new User(
       id,
       null,
+      null,
       null
     );
   }
@@ -133,14 +133,15 @@ public final class User implements Model {
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
       name,
-      owner);
+      owner,
+      userImg);
   }
   public interface BuildStep {
     User build();
     BuildStep id(String id) throws IllegalArgumentException;
-
     BuildStep name(String name);
     BuildStep owner(String owner);
+    BuildStep userImg(String userImg);
   }
   
 
@@ -148,6 +149,7 @@ public final class User implements Model {
     private String id;
     private String name;
     private String owner;
+    private String userImg;
     @Override
      public User build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -155,7 +157,8 @@ public final class User implements Model {
         return new User(
           id,
           name,
-          owner);
+          owner,
+          userImg);
     }
     
     @Override
@@ -163,11 +166,19 @@ public final class User implements Model {
         this.name = name;
         return this;
     }
+    
     @Override
      public BuildStep owner(String owner) {
         this.owner = owner;
         return this;
     }
+    
+    @Override
+     public BuildStep userImg(String userImg) {
+        this.userImg = userImg;
+        return this;
+    }
+    
     /** 
      * WARNING: Do not set ID when creating a new object. Leave this blank and one will be auto generated for you.
      * This should only be set when referring to an already existing object.
@@ -191,11 +202,11 @@ public final class User implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-
-    private CopyOfBuilder(String id, String name, String owner) {
+    private CopyOfBuilder(String id, String name, String owner, String userImg) {
       super.id(id);
       super.name(name)
-        .owner(owner);
+        .owner(owner)
+        .userImg(userImg);
     }
     
     @Override
@@ -206,6 +217,11 @@ public final class User implements Model {
     @Override
      public CopyOfBuilder owner(String owner) {
       return (CopyOfBuilder) super.owner(owner);
+    }
+    
+    @Override
+     public CopyOfBuilder userImg(String userImg) {
+      return (CopyOfBuilder) super.userImg(userImg);
     }
   }
   

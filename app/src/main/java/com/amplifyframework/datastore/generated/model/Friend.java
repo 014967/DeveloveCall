@@ -24,10 +24,18 @@ public final class Friend implements Model {
   public static final QueryField USER_ID = field("userID");
   public static final QueryField NUMBER = field("number");
   public static final QueryField NAME = field("name");
+  public static final QueryField REMIND_DATE = field("remindDate");
+  public static final QueryField FRIEND_IMG = field("friendImg");
+  public static final QueryField GROUP = field("group");
+  public static final QueryField FAVORITE = field("favorite");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="ID", isRequired = true) String userID;
   private final @ModelField(targetType="String") String number;
   private final @ModelField(targetType="String") String name;
+  private final @ModelField(targetType="String") String remindDate;
+  private final @ModelField(targetType="String") String friendImg;
+  private final @ModelField(targetType="String") String group;
+  private final @ModelField(targetType="Boolean") Boolean favorite;
   public String getId() {
       return id;
   }
@@ -44,11 +52,31 @@ public final class Friend implements Model {
       return name;
   }
   
-  private Friend(String id, String userID, String number, String name) {
+  public String getRemindDate() {
+      return remindDate;
+  }
+  
+  public String getFriendImg() {
+      return friendImg;
+  }
+  
+  public String getGroup() {
+      return group;
+  }
+  
+  public Boolean getFavorite() {
+      return favorite;
+  }
+  
+  private Friend(String id, String userID, String number, String name, String remindDate, String friendImg, String group, Boolean favorite) {
     this.id = id;
     this.userID = userID;
     this.number = number;
     this.name = name;
+    this.remindDate = remindDate;
+    this.friendImg = friendImg;
+    this.group = group;
+    this.favorite = favorite;
   }
   
   @Override
@@ -62,7 +90,11 @@ public final class Friend implements Model {
       return ObjectsCompat.equals(getId(), friend.getId()) &&
               ObjectsCompat.equals(getUserId(), friend.getUserId()) &&
               ObjectsCompat.equals(getNumber(), friend.getNumber()) &&
-              ObjectsCompat.equals(getName(), friend.getName());
+              ObjectsCompat.equals(getName(), friend.getName()) &&
+              ObjectsCompat.equals(getRemindDate(), friend.getRemindDate()) &&
+              ObjectsCompat.equals(getFriendImg(), friend.getFriendImg()) &&
+              ObjectsCompat.equals(getGroup(), friend.getGroup()) &&
+              ObjectsCompat.equals(getFavorite(), friend.getFavorite());
       }
   }
   
@@ -73,6 +105,10 @@ public final class Friend implements Model {
       .append(getUserId())
       .append(getNumber())
       .append(getName())
+      .append(getRemindDate())
+      .append(getFriendImg())
+      .append(getGroup())
+      .append(getFavorite())
       .toString()
       .hashCode();
   }
@@ -84,7 +120,11 @@ public final class Friend implements Model {
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("userID=" + String.valueOf(getUserId()) + ", ")
       .append("number=" + String.valueOf(getNumber()) + ", ")
-      .append("name=" + String.valueOf(getName()))
+      .append("name=" + String.valueOf(getName()) + ", ")
+      .append("remindDate=" + String.valueOf(getRemindDate()) + ", ")
+      .append("friendImg=" + String.valueOf(getFriendImg()) + ", ")
+      .append("group=" + String.valueOf(getGroup()) + ", ")
+      .append("favorite=" + String.valueOf(getFavorite()))
       .append("}")
       .toString();
   }
@@ -116,6 +156,10 @@ public final class Friend implements Model {
       id,
       null,
       null,
+      null,
+      null,
+      null,
+      null,
       null
     );
   }
@@ -124,7 +168,11 @@ public final class Friend implements Model {
     return new CopyOfBuilder(id,
       userID,
       number,
-      name);
+      name,
+      remindDate,
+      friendImg,
+      group,
+      favorite);
   }
   public interface UserIdStep {
     BuildStep userId(String userId);
@@ -136,6 +184,10 @@ public final class Friend implements Model {
     BuildStep id(String id) throws IllegalArgumentException;
     BuildStep number(String number);
     BuildStep name(String name);
+    BuildStep remindDate(String remindDate);
+    BuildStep friendImg(String friendImg);
+    BuildStep group(String group);
+    BuildStep favorite(Boolean favorite);
   }
   
 
@@ -144,6 +196,10 @@ public final class Friend implements Model {
     private String userID;
     private String number;
     private String name;
+    private String remindDate;
+    private String friendImg;
+    private String group;
+    private Boolean favorite;
     @Override
      public Friend build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -152,7 +208,11 @@ public final class Friend implements Model {
           id,
           userID,
           number,
-          name);
+          name,
+          remindDate,
+          friendImg,
+          group,
+          favorite);
     }
     
     @Override
@@ -171,6 +231,30 @@ public final class Friend implements Model {
     @Override
      public BuildStep name(String name) {
         this.name = name;
+        return this;
+    }
+    
+    @Override
+     public BuildStep remindDate(String remindDate) {
+        this.remindDate = remindDate;
+        return this;
+    }
+    
+    @Override
+     public BuildStep friendImg(String friendImg) {
+        this.friendImg = friendImg;
+        return this;
+    }
+    
+    @Override
+     public BuildStep group(String group) {
+        this.group = group;
+        return this;
+    }
+    
+    @Override
+     public BuildStep favorite(Boolean favorite) {
+        this.favorite = favorite;
         return this;
     }
     
@@ -197,11 +281,15 @@ public final class Friend implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String userId, String number, String name) {
+    private CopyOfBuilder(String id, String userId, String number, String name, String remindDate, String friendImg, String group, Boolean favorite) {
       super.id(id);
       super.userId(userId)
         .number(number)
-        .name(name);
+        .name(name)
+        .remindDate(remindDate)
+        .friendImg(friendImg)
+        .group(group)
+        .favorite(favorite);
     }
     
     @Override
@@ -217,6 +305,26 @@ public final class Friend implements Model {
     @Override
      public CopyOfBuilder name(String name) {
       return (CopyOfBuilder) super.name(name);
+    }
+    
+    @Override
+     public CopyOfBuilder remindDate(String remindDate) {
+      return (CopyOfBuilder) super.remindDate(remindDate);
+    }
+    
+    @Override
+     public CopyOfBuilder friendImg(String friendImg) {
+      return (CopyOfBuilder) super.friendImg(friendImg);
+    }
+    
+    @Override
+     public CopyOfBuilder group(String group) {
+      return (CopyOfBuilder) super.group(group);
+    }
+    
+    @Override
+     public CopyOfBuilder favorite(Boolean favorite) {
+      return (CopyOfBuilder) super.favorite(favorite);
     }
   }
   

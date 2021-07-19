@@ -1,28 +1,21 @@
 # this is an auto generated file. This will be overwritten
-
-query GetUser($id: ID!) {
-  getUser(id: $id) {
-    id
-    name
-    owner
-    _version
-    _deleted
-    _lastChangedAt
-    createdAt
-    updatedAt
-  }
-}
-query ListUsers(
+query SyncUsers(
   $filter: ModelUserFilterInput
   $limit: Int
   $nextToken: String
+  $lastSync: AWSTimestamp
 ) {
-  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  syncUsers(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
     items {
       id
       name
       owner
-
+      userImg
       friend {
         nextToken
         startedAt
@@ -37,18 +30,22 @@ query ListUsers(
     startedAt
   }
 }
-
 query GetUser($id: ID!) {
   getUser(id: $id) {
     id
     name
     owner
+    userImg
     friend {
       items {
         userID
         id
         number
         name
+        remindDate
+        friendImg
+        group
+        favorite
         _version
         _deleted
         _lastChangedAt
@@ -69,19 +66,13 @@ query ListUsers(
   $filter: ModelUserFilterInput
   $limit: Int
   $nextToken: String
-  $lastSync: AWSTimestamp
 ) {
-  syncUsers(
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-    lastSync: $lastSync
-  ) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
       name
       owner
-
+      userImg
       friend {
         nextToken
         startedAt
@@ -113,6 +104,10 @@ query SyncFriends(
       id
       number
       name
+      remindDate
+      friendImg
+      group
+      favorite
       _version
       _deleted
       _lastChangedAt
@@ -129,6 +124,10 @@ query GetFriend($id: ID!) {
     id
     number
     name
+    remindDate
+    friendImg
+    group
+    favorite
     _version
     _deleted
     _lastChangedAt
@@ -147,6 +146,10 @@ query ListFriends(
       id
       number
       name
+      remindDate
+      friendImg
+      group
+      favorite
       _version
       _deleted
       _lastChangedAt
