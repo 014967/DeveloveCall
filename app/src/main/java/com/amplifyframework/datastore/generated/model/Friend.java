@@ -1,5 +1,6 @@
 package com.amplifyframework.datastore.generated.model;
 
+import com.amplifyframework.core.model.annotations.HasMany;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,6 +37,7 @@ public final class Friend implements Model {
   private final @ModelField(targetType="String") String friendImg;
   private final @ModelField(targetType="String") String group;
   private final @ModelField(targetType="Boolean") Boolean favorite;
+  private final @ModelField(targetType="Chat") @HasMany(associatedWith = "friendID", type = Chat.class) List<Chat> chat = null;
   public String getId() {
       return id;
   }
@@ -66,6 +68,10 @@ public final class Friend implements Model {
   
   public Boolean getFavorite() {
       return favorite;
+  }
+  
+  public List<Chat> getChat() {
+      return chat;
   }
   
   private Friend(String id, String userID, String number, String name, String remindDate, String friendImg, String group, Boolean favorite) {

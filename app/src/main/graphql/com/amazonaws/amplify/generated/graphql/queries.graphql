@@ -20,6 +20,10 @@ query SyncUsers(
         nextToken
         startedAt
       }
+      chat {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -55,6 +59,25 @@ query GetUser($id: ID!) {
       nextToken
       startedAt
     }
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -74,6 +97,10 @@ query ListUsers(
       owner
       userImg
       friend {
+        nextToken
+        startedAt
+      }
+      chat {
         nextToken
         startedAt
       }
@@ -108,6 +135,10 @@ query SyncFriends(
       friendImg
       group
       favorite
+      chat {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -128,6 +159,25 @@ query GetFriend($id: ID!) {
     friendImg
     group
     favorite
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -150,6 +200,83 @@ query ListFriends(
       friendImg
       group
       favorite
+      chat {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncChats(
+  $filter: ModelChatFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncChats(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      userID
+      friendID
+      id
+      date
+      s3_url
+      keyWord
+      summary
+      memo
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetChat($id: ID!) {
+  getChat(id: $id) {
+    userID
+    friendID
+    id
+    date
+    s3_url
+    keyWord
+    summary
+    memo
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListChats(
+  $filter: ModelChatFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listChats(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      userID
+      friendID
+      id
+      date
+      s3_url
+      keyWord
+      summary
+      memo
       _version
       _deleted
       _lastChangedAt

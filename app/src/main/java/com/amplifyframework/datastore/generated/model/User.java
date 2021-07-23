@@ -34,6 +34,7 @@ public final class User implements Model {
   private final @ModelField(targetType="String") String owner;
   private final @ModelField(targetType="String") String userImg;
   private final @ModelField(targetType="Friend") @HasMany(associatedWith = "userID", type = Friend.class) List<Friend> friend = null;
+  private final @ModelField(targetType="Chat") @HasMany(associatedWith = "userID", type = Chat.class) List<Chat> chat = null;
   public String getId() {
       return id;
   }
@@ -52,6 +53,10 @@ public final class User implements Model {
   
   public List<Friend> getFriend() {
       return friend;
+  }
+  
+  public List<Chat> getChat() {
+      return chat;
   }
   
   private User(String id, String name, String owner, String userImg) {

@@ -27,6 +27,25 @@ mutation CreateUser(
       nextToken
       startedAt
     }
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -53,6 +72,25 @@ mutation UpdateUser(
         friendImg
         group
         favorite
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
         _version
         _deleted
         _lastChangedAt
@@ -97,6 +135,25 @@ mutation DeleteUser(
       nextToken
       startedAt
     }
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -117,6 +174,25 @@ mutation CreateFriend(
     friendImg
     group
     favorite
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -137,6 +213,25 @@ mutation UpdateFriend(
     friendImg
     group
     favorite
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -157,6 +252,85 @@ mutation DeleteFriend(
     friendImg
     group
     favorite
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateChat(
+  $input: CreateChatInput!
+  $condition: ModelChatConditionInput
+) {
+  createChat(input: $input, condition: $condition) {
+    userID
+    friendID
+    id
+    date
+    s3_url
+    keyWord
+    summary
+    memo
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateChat(
+  $input: UpdateChatInput!
+  $condition: ModelChatConditionInput
+) {
+  updateChat(input: $input, condition: $condition) {
+    userID
+    friendID
+    id
+    date
+    s3_url
+    keyWord
+    summary
+    memo
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteChat(
+  $input: DeleteChatInput!
+  $condition: ModelChatConditionInput
+) {
+  deleteChat(input: $input, condition: $condition) {
+    userID
+    friendID
+    id
+    date
+    s3_url
+    keyWord
+    summary
+    memo
     _version
     _deleted
     _lastChangedAt

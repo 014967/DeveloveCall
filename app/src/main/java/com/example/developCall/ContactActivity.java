@@ -87,6 +87,7 @@ public class ContactActivity extends AppCompatActivity implements ContactAdpater
 
 
                 };
+                finish();
 
                 }
 

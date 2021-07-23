@@ -1,6 +1,6 @@
 {
     "identityPoolName": "devf2047c1c_identitypool_f2047c1c",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "devf2047c1c",
     "userPoolName": "devf2047c1c_userpool_f2047c1c",
     "autoVerifiedAttributes": [

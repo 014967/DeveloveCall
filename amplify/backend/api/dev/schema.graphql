@@ -6,7 +6,7 @@ type User @model
   owner: String
   userImg : String
   friend : [Friend] @connection(keyName : "userFriendId", fields :["id"])
-
+  chat : [Chat] @connection(keyName : "userId", fields: ["id"])
 }
 
 type Friend @model
@@ -20,4 +20,22 @@ type Friend @model
   friendImg : String
   group : String
   favorite : Boolean
+  chat : [Chat] @connection(keyName : "friendId" , fields : ["id"])
 }
+
+type Chat @model
+@key(name : "userId" , fields : ["userID"])
+@key(name : "friendId" , fields : ["friendID"])
+{
+  userID : ID!
+  friendID : ID!
+  id : ID!
+  date : String
+  s3_url : String
+  keyWord : String
+  summary : String
+  memo : String
+
+}
+
+

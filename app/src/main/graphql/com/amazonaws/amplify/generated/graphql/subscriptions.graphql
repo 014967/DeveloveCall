@@ -24,6 +24,25 @@ subscription OnCreateUser {
       nextToken
       startedAt
     }
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -47,6 +66,25 @@ subscription OnUpdateUser {
         friendImg
         group
         favorite
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
         _version
         _deleted
         _lastChangedAt
@@ -88,6 +126,25 @@ subscription OnDeleteUser {
       nextToken
       startedAt
     }
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -105,6 +162,25 @@ subscription OnCreateFriend {
     friendImg
     group
     favorite
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -122,6 +198,25 @@ subscription OnUpdateFriend {
     friendImg
     group
     favorite
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -139,6 +234,76 @@ subscription OnDeleteFriend {
     friendImg
     group
     favorite
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateChat {
+  onCreateChat {
+    userID
+    friendID
+    id
+    date
+    s3_url
+    keyWord
+    summary
+    memo
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateChat {
+  onUpdateChat {
+    userID
+    friendID
+    id
+    date
+    s3_url
+    keyWord
+    summary
+    memo
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteChat {
+  onDeleteChat {
+    userID
+    friendID
+    id
+    date
+    s3_url
+    keyWord
+    summary
+    memo
     _version
     _deleted
     _lastChangedAt
