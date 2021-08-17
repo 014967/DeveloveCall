@@ -1,8 +1,9 @@
 package com.example.developCall;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,8 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.amplifyframework.auth.AuthException;
-import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.auth.result.AuthSignInResult;
 import com.amplifyframework.core.Amplify;
 
@@ -24,7 +27,19 @@ public class LoginActivity extends AppCompatActivity {
     EditText user_Password;
     TextView txt_Join;
 
+    int PERMISSION_ALL = 1;
+    String[] PERMISSIONS = {
 
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.READ_CALL_LOG,
+            Manifest.permission.MANAGE_OWN_CALLS,
+
+
+
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +50,11 @@ public class LoginActivity extends AppCompatActivity {
         btn_login = (Button)findViewById(R.id.btn_login);
         txt_Join = (TextView) findViewById(R.id.txt_join);
 
+
+
+        if (!hasPermissions(this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        }
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,5 +107,31 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
+
+
     }
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+
+
+
+
+
+
 }

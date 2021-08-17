@@ -1,9 +1,9 @@
 package com.example.developCall;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
@@ -17,6 +17,7 @@ public class LaunchActivity extends AppCompatActivity {
 
         AuthUser currentUser = Amplify.Auth.getCurrentUser();
         Intent intent;
+        //Log.d("현재 유저 : " , currentUser.toString());
         if(currentUser == null )
         {
             //Go to the Login Page
@@ -31,7 +32,7 @@ public class LaunchActivity extends AppCompatActivity {
              intent = new Intent(getApplicationContext(), HomeActivity.class);
 
         }
-        intent = new Intent(getApplicationContext(), HomeActivity.class);
+
         startActivity(intent);
         finish();
     }

@@ -1,7 +1,11 @@
 package com.example.developCall;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
@@ -25,12 +29,16 @@ public class AmplifyApp extends Application {
             Amplify.configure(getApplicationContext());
 
             Log.i("amplify", "configure []");
+// app 이 통화중일때도 여기를 거쳐서 들어감.
 
         }
         catch (AmplifyException e )
         {
             e.printStackTrace();
         }
+
+
+
 
     }
 }

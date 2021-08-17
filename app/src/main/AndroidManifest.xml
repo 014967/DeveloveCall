@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.developCall">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS"/>
-    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
-    <uses-permission android:name="android.permissions.READ_PHONE_NUMBERS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"
-        android:maxSdkVersion="29"/>
-
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="READ_PHONE_NUMBERS" />
+    <uses-permission android:name="com.android.launcher3.permission.RECEIVE_LAUNCH_BROADCASTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".AmplifyApp"
@@ -22,9 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ContactActivity"></activity>
-        <activity android:name=".EmailConfirmationActivity" />
 
+        <activity android:name=".ContactActivity" />
+        <activity android:name=".EmailConfirmationActivity" />
         <activity android:name=".JoinActivity" />
         <activity android:name=".LaunchActivity">
             <intent-filter>
@@ -34,7 +35,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-
         <activity android:name=".HomeActivity" />
         <activity android:name=".ChatActivity" />
 
@@ -43,16 +43,22 @@
             android:enabled="true" />
 
 
-        <receiver android:name=".Function.CallReceiver">
+        <receiver
+            android:name=".Function.CallReceiver2"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE">
             <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE"/>
-                <action android:name="android.intent.action.BATTERY_LOW"/>
+                <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
 
+        <service
+            android:name=".Function.S3uploadService"
+            android:enabled="true"
+            android:exported="true"/>
+
 
     </application>
-
-
 
 </manifest>
