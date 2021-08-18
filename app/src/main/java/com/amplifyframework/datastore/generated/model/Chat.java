@@ -1,5 +1,6 @@
 package com.amplifyframework.datastore.generated.model;
 
+import com.amplifyframework.core.model.temporal.Temporal;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,14 +22,14 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 @Index(name = "userId", fields = {"userID"})
 @Index(name = "friendId", fields = {"friendID"})
 public final class Chat implements Model {
-  public static final QueryField ID = field("id");
-  public static final QueryField USER_ID = field("userID");
-  public static final QueryField FRIEND_ID = field("friendID");
-  public static final QueryField DATE = field("date");
-  public static final QueryField S3_URL = field("s3_url");
-  public static final QueryField KEY_WORD = field("keyWord");
-  public static final QueryField SUMMARY = field("summary");
-  public static final QueryField MEMO = field("memo");
+  public static final QueryField ID = field("Chat", "id");
+  public static final QueryField USER_ID = field("Chat", "userID");
+  public static final QueryField FRIEND_ID = field("Chat", "friendID");
+  public static final QueryField DATE = field("Chat", "date");
+  public static final QueryField S3_URL = field("Chat", "s3_url");
+  public static final QueryField KEY_WORD = field("Chat", "keyWord");
+  public static final QueryField SUMMARY = field("Chat", "summary");
+  public static final QueryField MEMO = field("Chat", "memo");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="ID", isRequired = true) String userID;
   private final @ModelField(targetType="ID", isRequired = true) String friendID;
@@ -37,6 +38,8 @@ public final class Chat implements Model {
   private final @ModelField(targetType="String") String keyWord;
   private final @ModelField(targetType="String") String summary;
   private final @ModelField(targetType="String") String memo;
+  private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
+  private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
       return id;
   }
@@ -69,6 +72,14 @@ public final class Chat implements Model {
       return memo;
   }
   
+  public Temporal.DateTime getCreatedAt() {
+      return createdAt;
+  }
+  
+  public Temporal.DateTime getUpdatedAt() {
+      return updatedAt;
+  }
+  
   private Chat(String id, String userID, String friendID, String date, String s3_url, String keyWord, String summary, String memo) {
     this.id = id;
     this.userID = userID;
@@ -95,7 +106,9 @@ public final class Chat implements Model {
               ObjectsCompat.equals(getS3Url(), chat.getS3Url()) &&
               ObjectsCompat.equals(getKeyWord(), chat.getKeyWord()) &&
               ObjectsCompat.equals(getSummary(), chat.getSummary()) &&
-              ObjectsCompat.equals(getMemo(), chat.getMemo());
+              ObjectsCompat.equals(getMemo(), chat.getMemo()) &&
+              ObjectsCompat.equals(getCreatedAt(), chat.getCreatedAt()) &&
+              ObjectsCompat.equals(getUpdatedAt(), chat.getUpdatedAt());
       }
   }
   
@@ -110,6 +123,8 @@ public final class Chat implements Model {
       .append(getKeyWord())
       .append(getSummary())
       .append(getMemo())
+      .append(getCreatedAt())
+      .append(getUpdatedAt())
       .toString()
       .hashCode();
   }
@@ -125,7 +140,9 @@ public final class Chat implements Model {
       .append("s3_url=" + String.valueOf(getS3Url()) + ", ")
       .append("keyWord=" + String.valueOf(getKeyWord()) + ", ")
       .append("summary=" + String.valueOf(getSummary()) + ", ")
-      .append("memo=" + String.valueOf(getMemo()))
+      .append("memo=" + String.valueOf(getMemo()) + ", ")
+      .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
+      .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
       .toString();
   }

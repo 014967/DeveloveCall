@@ -1,6 +1,7 @@
 package com.amplifyframework.datastore.generated.model;
 
 import com.amplifyframework.core.model.annotations.HasMany;
+import com.amplifyframework.core.model.temporal.Temporal;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,19 +23,21 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 /** This is an auto generated class representing the User type in your schema. */
 @SuppressWarnings("all")
 @ModelConfig(pluralName = "Users", authRules = {
-  @AuthRule(allow = AuthStrategy.OWNER, ownerField = "owner", identityClaim = "cognito:username", operations = { ModelOperation.CREATE, ModelOperation.DELETE, ModelOperation.UPDATE })
+  @AuthRule(allow = AuthStrategy.OWNER, ownerField = "owner", identityClaim = "cognito:username", provider = "userPools", operations = { ModelOperation.CREATE, ModelOperation.DELETE, ModelOperation.UPDATE })
 })
 public final class User implements Model {
-  public static final QueryField ID = field("id");
-  public static final QueryField NAME = field("name");
-  public static final QueryField OWNER = field("owner");
-  public static final QueryField USER_IMG = field("userImg");
+  public static final QueryField ID = field("User", "id");
+  public static final QueryField NAME = field("User", "name");
+  public static final QueryField OWNER = field("User", "owner");
+  public static final QueryField USER_IMG = field("User", "userImg");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String name;
   private final @ModelField(targetType="String") String owner;
   private final @ModelField(targetType="String") String userImg;
   private final @ModelField(targetType="Friend") @HasMany(associatedWith = "userID", type = Friend.class) List<Friend> friend = null;
   private final @ModelField(targetType="Chat") @HasMany(associatedWith = "userID", type = Chat.class) List<Chat> chat = null;
+  private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
+  private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
       return id;
   }
@@ -59,6 +62,14 @@ public final class User implements Model {
       return chat;
   }
   
+  public Temporal.DateTime getCreatedAt() {
+      return createdAt;
+  }
+  
+  public Temporal.DateTime getUpdatedAt() {
+      return updatedAt;
+  }
+  
   private User(String id, String name, String owner, String userImg) {
     this.id = id;
     this.name = name;
@@ -77,7 +88,9 @@ public final class User implements Model {
       return ObjectsCompat.equals(getId(), user.getId()) &&
               ObjectsCompat.equals(getName(), user.getName()) &&
               ObjectsCompat.equals(getOwner(), user.getOwner()) &&
-              ObjectsCompat.equals(getUserImg(), user.getUserImg());
+              ObjectsCompat.equals(getUserImg(), user.getUserImg()) &&
+              ObjectsCompat.equals(getCreatedAt(), user.getCreatedAt()) &&
+              ObjectsCompat.equals(getUpdatedAt(), user.getUpdatedAt());
       }
   }
   
@@ -88,6 +101,8 @@ public final class User implements Model {
       .append(getName())
       .append(getOwner())
       .append(getUserImg())
+      .append(getCreatedAt())
+      .append(getUpdatedAt())
       .toString()
       .hashCode();
   }
@@ -99,7 +114,9 @@ public final class User implements Model {
       .append("id=" + String.valueOf(getId()) + ", ")
       .append("name=" + String.valueOf(getName()) + ", ")
       .append("owner=" + String.valueOf(getOwner()) + ", ")
-      .append("userImg=" + String.valueOf(getUserImg()))
+      .append("userImg=" + String.valueOf(getUserImg()) + ", ")
+      .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
+      .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
       .toString();
   }

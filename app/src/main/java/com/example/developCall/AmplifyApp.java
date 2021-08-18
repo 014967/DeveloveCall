@@ -1,11 +1,7 @@
 package com.example.developCall;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
-
-import androidx.core.app.ActivityCompat;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;

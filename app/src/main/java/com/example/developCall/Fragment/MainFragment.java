@@ -29,13 +29,13 @@ import com.amazonaws.services.transcribe.model.StartTranscriptionJobRequest;
 import com.amazonaws.services.transcribe.model.TranscriptionJob;
 import com.amazonaws.services.transcribe.model.TranscriptionJobStatus;
 import com.amplifyframework.core.Amplify;
-import com.example.developCall.BuildConfig;
 import com.example.developCall.ChatActivity;
 import com.example.developCall.ContactActivity;
 import com.example.developCall.Function.S3Upload;
 import com.example.developCall.LoginActivity;
 import com.example.developCall.Object.AmazonTranscription;
 import com.example.developCall.R;
+import com.example.developCall.BuildConfig;
 import com.google.gson.Gson;
 
 import java.io.FileNotFoundException;

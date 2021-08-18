@@ -215,6 +215,7 @@ public class CallReceiver2 extends BroadcastReceiver {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     public static void uploadWithTransferUtility(String friendId) {
 
 

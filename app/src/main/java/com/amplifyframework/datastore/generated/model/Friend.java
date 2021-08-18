@@ -1,6 +1,7 @@
 package com.amplifyframework.datastore.generated.model;
 
 import com.amplifyframework.core.model.annotations.HasMany;
+import com.amplifyframework.core.model.temporal.Temporal;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,14 +22,14 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 @ModelConfig(pluralName = "Friends")
 @Index(name = "userFriendId", fields = {"userID"})
 public final class Friend implements Model {
-  public static final QueryField ID = field("id");
-  public static final QueryField USER_ID = field("userID");
-  public static final QueryField NUMBER = field("number");
-  public static final QueryField NAME = field("name");
-  public static final QueryField REMIND_DATE = field("remindDate");
-  public static final QueryField FRIEND_IMG = field("friendImg");
-  public static final QueryField GROUP = field("group");
-  public static final QueryField FAVORITE = field("favorite");
+  public static final QueryField ID = field("Friend", "id");
+  public static final QueryField USER_ID = field("Friend", "userID");
+  public static final QueryField NUMBER = field("Friend", "number");
+  public static final QueryField NAME = field("Friend", "name");
+  public static final QueryField REMIND_DATE = field("Friend", "remindDate");
+  public static final QueryField FRIEND_IMG = field("Friend", "friendImg");
+  public static final QueryField GROUP = field("Friend", "group");
+  public static final QueryField FAVORITE = field("Friend", "favorite");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="ID", isRequired = true) String userID;
   private final @ModelField(targetType="String") String number;
@@ -38,6 +39,8 @@ public final class Friend implements Model {
   private final @ModelField(targetType="String") String group;
   private final @ModelField(targetType="Boolean") Boolean favorite;
   private final @ModelField(targetType="Chat") @HasMany(associatedWith = "friendID", type = Chat.class) List<Chat> chat = null;
+  private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
+  private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
       return id;
   }
@@ -74,6 +77,14 @@ public final class Friend implements Model {
       return chat;
   }
   
+  public Temporal.DateTime getCreatedAt() {
+      return createdAt;
+  }
+  
+  public Temporal.DateTime getUpdatedAt() {
+      return updatedAt;
+  }
+  
   private Friend(String id, String userID, String number, String name, String remindDate, String friendImg, String group, Boolean favorite) {
     this.id = id;
     this.userID = userID;
@@ -100,7 +111,9 @@ public final class Friend implements Model {
               ObjectsCompat.equals(getRemindDate(), friend.getRemindDate()) &&
               ObjectsCompat.equals(getFriendImg(), friend.getFriendImg()) &&
               ObjectsCompat.equals(getGroup(), friend.getGroup()) &&
-              ObjectsCompat.equals(getFavorite(), friend.getFavorite());
+              ObjectsCompat.equals(getFavorite(), friend.getFavorite()) &&
+              ObjectsCompat.equals(getCreatedAt(), friend.getCreatedAt()) &&
+              ObjectsCompat.equals(getUpdatedAt(), friend.getUpdatedAt());
       }
   }
   
@@ -115,6 +128,8 @@ public final class Friend implements Model {
       .append(getFriendImg())
       .append(getGroup())
       .append(getFavorite())
+      .append(getCreatedAt())
+      .append(getUpdatedAt())
       .toString()
       .hashCode();
   }
@@ -130,7 +145,9 @@ public final class Friend implements Model {
       .append("remindDate=" + String.valueOf(getRemindDate()) + ", ")
       .append("friendImg=" + String.valueOf(getFriendImg()) + ", ")
       .append("group=" + String.valueOf(getGroup()) + ", ")
-      .append("favorite=" + String.valueOf(getFavorite()))
+      .append("favorite=" + String.valueOf(getFavorite()) + ", ")
+      .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
+      .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
       .toString();
   }

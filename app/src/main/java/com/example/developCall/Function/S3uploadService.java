@@ -91,6 +91,7 @@ public class S3uploadService extends Service {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
