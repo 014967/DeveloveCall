@@ -3,12 +3,40 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../layout/custom_preview.xml" value="0.22135416666666666" />
+        <entry key="app/src/main/res/layout/activity_alarm_addList.xml" value="0.2557291666666667" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.22135416666666666" />
+        <entry key="app/src/main/res/layout/activity_contact.xml" value="0.21603260869565216" />
+        <entry key="app/src/main/res/layout/activity_dummy.xml" value="0.2708333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/alarm_calendarpopup.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/alarm_cyclepopup.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/alarm_getservicexml.xml" value="0.2708333333333333" />
+        <entry key="app/src/main/res/layout/alarm_layout.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/alarm_listview.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/alarm_setting.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/alarm_timepopup.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/fragment_fragment_1.xml" value="0.240625" />
+        <entry key="app/src/main/res/layout/fragment_fragment_3.xml" value="0.240625" />
+        <entry key="app/src/main/res/layout/fragment_friend_list.xml" value="0.2953125" />
+        <entry key="app/src/main/res/layout/fragment_group_list.xml" value="0.44011406844106465" />
+        <entry key="app/src/main/res/layout/fragment_nav_page1.xml" value="0.20416666666666666" />
+        <entry key="app/src/main/res/layout/fragment_nav_page2.xml" value="0.240625" />
+        <entry key="app/src/main/res/layout/fragment_nav_page3.xml" value="0.240625" />
+        <entry key="app/src/main/res/layout/fragment_tab1.xml" value="0.240625" />
+        <entry key="app/src/main/res/layout/fragment_tab2.xml" value="0.240625" />
+        <entry key="app/src/main/res/layout/fragment_tab3.xml" value="0.240625" />
         <entry key="app/src/main/res/layout/home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_contact.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_friend.xml" value="0.28984313109864834" />
+        <entry key="app/src/main/res/layout/item_group.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/popup_group.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/profile.xml" value="0.240625" />
+        <entry key="app/src/main/res/menu/bottom_nav.xml" value="0.21197916666666666" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

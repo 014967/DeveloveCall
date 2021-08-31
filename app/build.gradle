@@ -13,8 +13,8 @@ android {
 
     compileOptions {
 
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     defaultConfig {
@@ -68,9 +68,18 @@ dependencies {
     implementation group: 'com.amazonaws', name: 'aws-android-sdk-transcribe', version: '2.23.0'
 
     //firebase
-    implementation platform('com.google.firebase:firebase-bom:28.1.0')
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
+
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:28.2.1')
+    implementation 'com.google.firebase:firebase-messaging'
+
+    implementation 'com.amazonaws:aws-android-sdk-pinpoint:2.25.+'
+    implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.26.+@aar') { transitive = true }
 
 
+
+    /////
     //amplify
     implementation 'com.amplifyframework:core:1.18.0'
     implementation 'com.amplifyframework:aws-api:1.18.0'
@@ -83,16 +92,21 @@ dependencies {
 
     //s3 upload sdk  // 0817
     implementation 'com.amazonaws:aws-android-sdk-s3:2.15.+'
-    implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.15.+@aar') { transitive = true }
+  //  implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.15.+@aar') { transitive = true }
     implementation ('com.amazonaws:aws-android-sdk-auth-userpools:2.15.+@aar') { transitive = true }
 
     //rxJava
     implementation "io.reactivex.rxjava3:rxjava:3.0.13"
     implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
+    implementation 'com.amplifyframework:rxbindings:1.24.0'
     //workmanager
     implementation "androidx.work:work-runtime:2.5.0"
 
 
+
+    //androidx.activity androidx.fragment
+    implementation "androidx.activity:activity:1.3.0"
+    implementation "androidx.fragment:fragment:1.3.6"
 
 
     implementation 'androidx.appcompat:appcompat:1.2.0'

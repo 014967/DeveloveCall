@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +17,7 @@ import com.example.developCall.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ContactAdpater extends RecyclerView.Adapter<ContactAdpater.ViewHodler> {
+public class ContactAdpater extends RecyclerView.Adapter<ContactAdpater.ViewHolder> {
 
 
     public interface AdapterCallback{
@@ -40,17 +39,17 @@ public class ContactAdpater extends RecyclerView.Adapter<ContactAdpater.ViewHodl
     }
     @NonNull
     @Override
-    public ContactAdpater.ViewHodler onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ContactAdpater.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
 
         View view = layoutInflater.inflate(R.layout.item_contact,parent, false);
 
-        return new ViewHodler(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContactAdpater.ViewHodler holder, int position) {
+    public void onBindViewHolder(@NonNull ContactAdpater.ViewHolder holder, int position) {
 
 
         ContactModel contactModel = arrayList.get(position);
@@ -89,12 +88,12 @@ public class ContactAdpater extends RecyclerView.Adapter<ContactAdpater.ViewHodl
         return arrayList.size();
     }
 
-    public class ViewHodler extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv_name;
         TextView tv_number;
         CheckBox checkBox;
 
-        public ViewHodler(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tv_name = itemView.findViewById(R.id.tv_name);

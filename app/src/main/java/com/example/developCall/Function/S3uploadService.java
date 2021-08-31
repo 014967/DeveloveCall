@@ -24,7 +24,6 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
-import com.amplifyframework.datastore.generated.model.Friend;
 import com.amplifyframework.datastore.generated.model.User;
 
 import java.io.File;
@@ -33,8 +32,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -113,26 +110,26 @@ public class S3uploadService extends Service {
                 response ->
                 {
                     for (User user : response.getData()) {
-                        for (Friend friend : user.getFriend()) {
-                            try {
-                                if (friend.getNumber().equals(callNumber)) {
-
-
-                                    Observable.just(friend.getId())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(getObserver());
-
-
-                                } else {
-
-                                }
-
-                            } catch (Exception e) {
-                                Log.d("error : ", e.toString());
-                            }
-
-
-                        }
+//                        for (Friend friend : user.getFriend()) {
+//                            try {
+//                                if (friend.getNumber().equals(callNumber)) {
+//
+//
+//                                    Observable.just(friend.getId())
+//                                            .observeOn(AndroidSchedulers.mainThread())
+//                                            .subscribe(getObserver());
+//
+//
+//                                } else {
+//
+//                                }
+//
+//                            } catch (Exception e) {
+//                                Log.d("error : ", e.toString());
+//                            }
+//
+//
+//                        }
                     }
 
                 },

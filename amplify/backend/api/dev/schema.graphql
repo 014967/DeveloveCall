@@ -5,18 +5,19 @@ type User @model
   name : String
   owner: String
   userImg : String
-  friend : [Friend] @connection(keyName : "userFriendId", fields :["id"])
   chat : [Chat] @connection(keyName : "userId", fields: ["id"])
+  group : [Group] @connection(keyName : "userId", fields: ["id"])
 }
 
 type Friend @model
-@key(name : "userFriendId" , fields : ["userID"])
+@key(name: "groupName", fields : ["group"])
 {
-  userID : ID!
+
   id : ID!
   number : String
   name : String
-  remindDate : String
+  lastContact : String
+  remindDate: String
   friendImg : String
   group : String
   favorite : Boolean
@@ -37,5 +38,16 @@ type Chat @model
   memo : String
 
 }
+
+type Group @model
+@key(name : "userId" , fields : ["userID"])
+{
+  userID : ID!
+  id : ID!
+  name : String
+  friend : [Friend]  @connection(keyName : "groupName", fields : ["name"])
+}
+
+
 
 

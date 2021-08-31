@@ -13,13 +13,13 @@ import com.example.developCall.R;
 
 import java.util.List;
 
-public class ChatRecyclerAdapter  extends RecyclerView.Adapter<ChatRecyclerAdapter.ViewHolder> {
+public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapter.ViewHolder> {
 
     List<List<String>> data;
     Context context;
 
 
-    public ChatRecyclerAdapter(Context context , List<List<String>> data) {
+    public ChatRecyclerAdapter(Context context, List<List<String>> data) {
         System.out.println(data);
         this.data = data;
         this.context = context;
@@ -30,17 +30,9 @@ public class ChatRecyclerAdapter  extends RecyclerView.Adapter<ChatRecyclerAdapt
     public int getItemViewType(int position) {
 
 
-
-
-
-        if(data.get(position).get(2).equals("spk_0"))
-        {
+        if (data.get(position).get(2).equals("spk_0")) {
             return 1;
-        }
-
-
-        else
-        {
+        } else {
             return 2;
         }
 
@@ -53,14 +45,11 @@ public class ChatRecyclerAdapter  extends RecyclerView.Adapter<ChatRecyclerAdapt
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view;
-        if(viewType ==1)
-        {
+        if (viewType == 1) {
 
-            view = layoutInflater.inflate(R.layout.chatcardright,parent,false);
-        }
-
-          else{
-            view = layoutInflater.inflate(R.layout.chatcardleft,parent,false);
+            view = layoutInflater.inflate(R.layout.chatcardright, parent, false);
+        } else {
+            view = layoutInflater.inflate(R.layout.chatcardleft, parent, false);
         }
 
 
@@ -69,19 +58,11 @@ public class ChatRecyclerAdapter  extends RecyclerView.Adapter<ChatRecyclerAdapt
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull ChatRecyclerAdapter.ViewHolder holder, int position) {
 
 
-            holder.textView.setText(data.get(position).get(3));
-
-
-
-
-
-
-
+        holder.textView.setText(data.get(position).get(3));
 
 
     }
@@ -91,13 +72,12 @@ public class ChatRecyclerAdapter  extends RecyclerView.Adapter<ChatRecyclerAdapt
         return data.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
 
         TextView textView;
-        public ViewHolder(@NonNull View itemView) {
 
+        public ViewHolder(@NonNull View itemView) {
 
 
             super(itemView);

@@ -333,7 +333,7 @@ public class MainFragment extends Fragment {
 
     }
 
-    int requestcode = 1;
+
 
     @Override
     public void onActivityResult(int requestcode, int resultcode, Intent data) {
@@ -356,6 +356,7 @@ public class MainFragment extends Fragment {
         }
     }
 
+    int requestcode = 1;
     public void openFileChooser(View view) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");

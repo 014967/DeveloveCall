@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
-import com.amplifyframework.datastore.generated.model.Friend;
 import com.amplifyframework.datastore.generated.model.User;
 import com.example.developCall.Object.FriendId;
 
@@ -42,48 +41,23 @@ public class S3Upload {
 
 
 
-      /*  Amplify.API.query(
-                ModelQuery.list(Friend.class,Friend.NUMBER.contains(friendNumber)),
-                response ->
-                {
-                    for(Friend friend : response.getData())
-                    {
-                        Log.i("FriendData : " , friend.getId());
-                       // friendId.setFriendId(friend.getId());
-                        callee.setFriendId(friend.getId());
 
-                    }
-                    callee.execute();
-
-
-                },
-                error -> Log.e("APP " , "FAIL : " , error)
-
-        );
-
-
-
-
-
-*/
 
         Amplify.API.query(
                 ModelQuery.list(User.class, User.ID.contains(userId)),
                 response ->
                 {
                     for (User user : response.getData()) {
-                        //  Log.d( "" , user.getFriend().toString());
-//                        String [] test = user.getFriend().toString().split("}");
 
 
-                        for (Friend friend : user.getFriend()) {
-                            //Log.d(" friend : " , friend.getNumber()+ friend.getId());
-                            if (friend.getNumber().equals(friendNumber)) {
-                                System.out.println(friend.getId());
-                                callee.setFriendId(friend.getId());
-
-                            }
-                        }
+//                        for (Friend friend : user.getFriend()) {
+//                            //Log.d(" friend : " , friend.getNumber()+ friend.getId());
+//                            if (friend.getNumber().equals(friendNumber)) {
+//                                System.out.println(friend.getId());
+//                                callee.setFriendId(friend.getId());
+//
+//                            }
+//                        }
                     }
                     callee.execute();
                 },

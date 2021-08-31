@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/alarmsetback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알람설정"
+            android:textSize="20dp"
+            android:layout_marginLeft="85dp"
+            android:layout_marginTop="2dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Switch
+            android:id="@+id/pushonoff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="푸시 알림 설정"
+            android:checked="true"
+            android:textSize="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="20dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알람 시간 설정"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="170dp"
+            android:layout_marginTop="2dp" />
+
+        <Button
+            android:id="@+id/alarmtimeset"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:text="15:00"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="연락 추천 주기"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="170dp"
+            android:layout_marginTop="2dp"/>
+
+        <Button
+            android:id="@+id/alarmcycle"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:text="1개월 마다"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일정 알림 시간"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="170dp"
+            android:layout_marginTop="2dp"/>
+
+        <Button
+            android:id="@+id/calendartimeset"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:text="1시간 전"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/setfinish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="완료"
+        android:layout_gravity="right"
+        android:layout_marginTop="250dp"
+        android:layout_marginRight="10dp"/>
+
+</LinearLayout>

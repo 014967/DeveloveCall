@@ -5,25 +5,6 @@ subscription OnCreateUser {
     name
     owner
     userImg
-    friend {
-      items {
-        userID
-        id
-        number
-        name
-        remindDate
-        friendImg
-        group
-        favorite
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
-    }
     chat {
       items {
         userID
@@ -34,6 +15,20 @@ subscription OnCreateUser {
         keyWord
         summary
         memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    group {
+      items {
+        userID
+        id
+        name
         _version
         _deleted
         _lastChangedAt
@@ -56,25 +51,6 @@ subscription OnUpdateUser {
     name
     owner
     userImg
-    friend {
-      items {
-        userID
-        id
-        number
-        name
-        remindDate
-        friendImg
-        group
-        favorite
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
-    }
     chat {
       items {
         userID
@@ -85,6 +61,20 @@ subscription OnUpdateUser {
         keyWord
         summary
         memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    group {
+      items {
+        userID
+        id
+        name
         _version
         _deleted
         _lastChangedAt
@@ -107,25 +97,6 @@ subscription OnDeleteUser {
     name
     owner
     userImg
-    friend {
-      items {
-        userID
-        id
-        number
-        name
-        remindDate
-        friendImg
-        group
-        favorite
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
-    }
     chat {
       items {
         userID
@@ -145,6 +116,20 @@ subscription OnDeleteUser {
       nextToken
       startedAt
     }
+    group {
+      items {
+        userID
+        id
+        name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -154,10 +139,10 @@ subscription OnDeleteUser {
 }
 subscription OnCreateFriend {
   onCreateFriend {
-    userID
     id
     number
     name
+    lastContact
     remindDate
     friendImg
     group
@@ -190,10 +175,10 @@ subscription OnCreateFriend {
 }
 subscription OnUpdateFriend {
   onUpdateFriend {
-    userID
     id
     number
     name
+    lastContact
     remindDate
     friendImg
     group
@@ -226,10 +211,10 @@ subscription OnUpdateFriend {
 }
 subscription OnDeleteFriend {
   onDeleteFriend {
-    userID
     id
     number
     name
+    lastContact
     remindDate
     friendImg
     group
@@ -304,6 +289,99 @@ subscription OnDeleteChat {
     keyWord
     summary
     memo
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateGroup {
+  onCreateGroup {
+    userID
+    id
+    name
+    friend {
+      items {
+        id
+        number
+        name
+        lastContact
+        remindDate
+        friendImg
+        group
+        favorite
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateGroup {
+  onUpdateGroup {
+    userID
+    id
+    name
+    friend {
+      items {
+        id
+        number
+        name
+        lastContact
+        remindDate
+        friendImg
+        group
+        favorite
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteGroup {
+  onDeleteGroup {
+    userID
+    id
+    name
+    friend {
+      items {
+        id
+        number
+        name
+        lastContact
+        remindDate
+        friendImg
+        group
+        favorite
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt

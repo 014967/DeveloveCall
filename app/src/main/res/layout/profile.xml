@@ -17,6 +17,7 @@
         android:layout_marginTop="50dp"
         android:gravity="right">
         <TextView
+            android:id="@+id/tv_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/edit"/>
@@ -45,7 +46,7 @@
             android:id="@+id/txt_pf_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="홍길동"
+            android:text=""
             android:textSize="22dp"
             android:textColor="@color/light_black"
             android:layout_marginTop="15dp"
@@ -66,7 +67,7 @@
                 android:id="@+id/txt_pf_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="010-8311-0419"
+                android:text=""
                 android:textColor="@color/light_black"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
@@ -163,7 +164,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:text="@string/category"
+                        android:text=""
                         android:textSize="11.5dp" />
 
                     <ImageView

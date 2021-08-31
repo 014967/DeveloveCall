@@ -16,11 +16,11 @@ query SyncUsers(
       name
       owner
       userImg
-      friend {
+      chat {
         nextToken
         startedAt
       }
-      chat {
+      group {
         nextToken
         startedAt
       }
@@ -40,25 +40,6 @@ query GetUser($id: ID!) {
     name
     owner
     userImg
-    friend {
-      items {
-        userID
-        id
-        number
-        name
-        remindDate
-        friendImg
-        group
-        favorite
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
-    }
     chat {
       items {
         userID
@@ -69,6 +50,20 @@ query GetUser($id: ID!) {
         keyWord
         summary
         memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    group {
+      items {
+        userID
+        id
+        name
         _version
         _deleted
         _lastChangedAt
@@ -96,11 +91,11 @@ query ListUsers(
       name
       owner
       userImg
-      friend {
+      chat {
         nextToken
         startedAt
       }
-      chat {
+      group {
         nextToken
         startedAt
       }
@@ -127,10 +122,10 @@ query SyncFriends(
     lastSync: $lastSync
   ) {
     items {
-      userID
       id
       number
       name
+      lastContact
       remindDate
       friendImg
       group
@@ -151,10 +146,10 @@ query SyncFriends(
 }
 query GetFriend($id: ID!) {
   getFriend(id: $id) {
-    userID
     id
     number
     name
+    lastContact
     remindDate
     friendImg
     group
@@ -192,10 +187,10 @@ query ListFriends(
 ) {
   listFriends(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
-      userID
       id
       number
       name
+      lastContact
       remindDate
       friendImg
       group
@@ -277,6 +272,91 @@ query ListChats(
       keyWord
       summary
       memo
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncGroups(
+  $filter: ModelGroupFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncGroups(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      userID
+      id
+      name
+      friend {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetGroup($id: ID!) {
+  getGroup(id: $id) {
+    userID
+    id
+    name
+    friend {
+      items {
+        id
+        number
+        name
+        lastContact
+        remindDate
+        friendImg
+        group
+        favorite
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListGroups(
+  $filter: ModelGroupFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      userID
+      id
+      name
+      friend {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt

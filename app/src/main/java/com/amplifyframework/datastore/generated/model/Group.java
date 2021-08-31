@@ -8,10 +8,7 @@ import java.util.Objects;
 
 import androidx.core.util.ObjectsCompat;
 
-import com.amplifyframework.core.model.AuthStrategy;
 import com.amplifyframework.core.model.Model;
-import com.amplifyframework.core.model.ModelOperation;
-import com.amplifyframework.core.model.annotations.AuthRule;
 import com.amplifyframework.core.model.annotations.Index;
 import com.amplifyframework.core.model.annotations.ModelConfig;
 import com.amplifyframework.core.model.annotations.ModelField;
@@ -19,51 +16,38 @@ import com.amplifyframework.core.model.query.predicate.QueryField;
 
 import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
-/** This is an auto generated class representing the User type in your schema. */
+/** This is an auto generated class representing the Group type in your schema. */
 @SuppressWarnings("all")
-@ModelConfig(pluralName = "Users", authRules = {
-  @AuthRule(allow = AuthStrategy.OWNER, ownerField = "owner", identityClaim = "cognito:username", operations = { ModelOperation.CREATE, ModelOperation.DELETE, ModelOperation.UPDATE })
-})
-public final class User implements Model {
+@ModelConfig(pluralName = "Groups")
+@Index(name = "userId", fields = {"userID"})
+public final class Group implements Model {
   public static final QueryField ID = field("id");
+  public static final QueryField USER_ID = field("userID");
   public static final QueryField NAME = field("name");
-  public static final QueryField OWNER = field("owner");
-  public static final QueryField USER_IMG = field("userImg");
   private final @ModelField(targetType="ID", isRequired = true) String id;
+  private final @ModelField(targetType="ID", isRequired = true) String userID;
   private final @ModelField(targetType="String") String name;
-  private final @ModelField(targetType="String") String owner;
-  private final @ModelField(targetType="String") String userImg;
-  private final @ModelField(targetType="Chat") @HasMany(associatedWith = "userID", type = Chat.class) List<Chat> chat = null;
-  private final @ModelField(targetType="Group") @HasMany(associatedWith = "userID", type = Group.class) List<Group> group = null;
+  private final @ModelField(targetType="Friend") @HasMany(associatedWith = "group", type = Friend.class) List<Friend> friend = null;
   public String getId() {
       return id;
+  }
+  
+  public String getUserId() {
+      return userID;
   }
   
   public String getName() {
       return name;
   }
   
-  public String getOwner() {
-      return owner;
+  public List<Friend> getFriend() {
+      return friend;
   }
   
-  public String getUserImg() {
-      return userImg;
-  }
-  
-  public List<Chat> getChat() {
-      return chat;
-  }
-  
-  public List<Group> getGroup() {
-      return group;
-  }
-  
-  private User(String id, String name, String owner, String userImg) {
+  private Group(String id, String userID, String name) {
     this.id = id;
+    this.userID = userID;
     this.name = name;
-    this.owner = owner;
-    this.userImg = userImg;
   }
   
   @Override
@@ -73,11 +57,10 @@ public final class User implements Model {
       } else if(obj == null || getClass() != obj.getClass()) {
         return false;
       } else {
-      User user = (User) obj;
-      return ObjectsCompat.equals(getId(), user.getId()) &&
-              ObjectsCompat.equals(getName(), user.getName()) &&
-              ObjectsCompat.equals(getOwner(), user.getOwner()) &&
-              ObjectsCompat.equals(getUserImg(), user.getUserImg());
+      Group group = (Group) obj;
+      return ObjectsCompat.equals(getId(), group.getId()) &&
+              ObjectsCompat.equals(getUserId(), group.getUserId()) &&
+              ObjectsCompat.equals(getName(), group.getName());
       }
   }
   
@@ -85,9 +68,8 @@ public final class User implements Model {
    public int hashCode() {
     return new StringBuilder()
       .append(getId())
+      .append(getUserId())
       .append(getName())
-      .append(getOwner())
-      .append(getUserImg())
       .toString()
       .hashCode();
   }
@@ -95,16 +77,15 @@ public final class User implements Model {
   @Override
    public String toString() {
     return new StringBuilder()
-      .append("User {")
+      .append("Group {")
       .append("id=" + String.valueOf(getId()) + ", ")
-      .append("name=" + String.valueOf(getName()) + ", ")
-      .append("owner=" + String.valueOf(getOwner()) + ", ")
-      .append("userImg=" + String.valueOf(getUserImg()))
+      .append("userID=" + String.valueOf(getUserId()) + ", ")
+      .append("name=" + String.valueOf(getName()))
       .append("}")
       .toString();
   }
   
-  public static BuildStep builder() {
+  public static UserIdStep builder() {
       return new Builder();
   }
   
@@ -117,7 +98,7 @@ public final class User implements Model {
    * @return an instance of this model with only ID populated
    * @throws IllegalArgumentException Checks that ID is in the proper format
    */
-  public static User justId(String id) {
+  public static Group justId(String id) {
     try {
       UUID.fromString(id); // Check that ID is in the UUID format - if not an exception is thrown
     } catch (Exception exception) {
@@ -127,9 +108,8 @@ public final class User implements Model {
               "creating a new object, use the standard builder method and leave the ID field blank."
       );
     }
-    return new User(
+    return new Group(
       id,
-      null,
       null,
       null
     );
@@ -137,50 +117,45 @@ public final class User implements Model {
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
-      name,
-      owner,
-      userImg);
+      userID,
+      name);
   }
-  public interface BuildStep {
-    User build();
-    BuildStep id(String id) throws IllegalArgumentException;
-    BuildStep name(String name);
-    BuildStep owner(String owner);
-    BuildStep userImg(String userImg);
+  public interface UserIdStep {
+    BuildStep userId(String userId);
   }
   
 
-  public static class Builder implements BuildStep {
+  public interface BuildStep {
+    Group build();
+    BuildStep id(String id) throws IllegalArgumentException;
+    BuildStep name(String name);
+  }
+  
+
+  public static class Builder implements UserIdStep, BuildStep {
     private String id;
+    private String userID;
     private String name;
-    private String owner;
-    private String userImg;
     @Override
-     public User build() {
+     public Group build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
-        return new User(
+        return new Group(
           id,
-          name,
-          owner,
-          userImg);
+          userID,
+          name);
+    }
+    
+    @Override
+     public BuildStep userId(String userId) {
+        Objects.requireNonNull(userId);
+        this.userID = userId;
+        return this;
     }
     
     @Override
      public BuildStep name(String name) {
         this.name = name;
-        return this;
-    }
-    
-    @Override
-     public BuildStep owner(String owner) {
-        this.owner = owner;
-        return this;
-    }
-    
-    @Override
-     public BuildStep userImg(String userImg) {
-        this.userImg = userImg;
         return this;
     }
     
@@ -207,26 +182,20 @@ public final class User implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String name, String owner, String userImg) {
+    private CopyOfBuilder(String id, String userId, String name) {
       super.id(id);
-      super.name(name)
-        .owner(owner)
-        .userImg(userImg);
+      super.userId(userId)
+        .name(name);
+    }
+    
+    @Override
+     public CopyOfBuilder userId(String userId) {
+      return (CopyOfBuilder) super.userId(userId);
     }
     
     @Override
      public CopyOfBuilder name(String name) {
       return (CopyOfBuilder) super.name(name);
-    }
-    
-    @Override
-     public CopyOfBuilder owner(String owner) {
-      return (CopyOfBuilder) super.owner(owner);
-    }
-    
-    @Override
-     public CopyOfBuilder userImg(String userImg) {
-      return (CopyOfBuilder) super.userImg(userImg);
     }
   }
   

@@ -20,7 +20,6 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
-import com.amplifyframework.datastore.generated.model.Friend;
 import com.amplifyframework.datastore.generated.model.User;
 
 import java.io.File;
@@ -29,8 +28,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -113,31 +110,6 @@ public class CallReceiver2 extends BroadcastReceiver {
 
                 }
 
-//                WorkRequest uploadWorkRequest = new OneTimeWorkRequest.Builder(S3uploadWork.class).setInputData(data.build()).build();
-//                WorkManager workManager = WorkManager.getInstance(context);
-//                workManager.beginWith((OneTimeWorkRequest) uploadWorkRequest).enqueue();
-
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                    context.startForegroundService(new Intent(context, TransferService.class));
-//                } else {
-//                    context.startService(new Intent(context, TransferService.class));
-//                }
-//
-//                AWSMobileClient.getInstance().initialize(context, new Callback<UserStateDetails>() {
-//                    @Override
-//                    public void onResult(UserStateDetails userStateDetails) {
-//                        Log.i(TAG, "AWSMobileClient initialized. User State is " + userStateDetails.getUserState());
-//
-//                        //  uploadWithTransferUtility(context);
-//
-//                        getFriendId(userId, callNumber);
-//                    }
-//
-//                    @Override
-//                    public void onError(Exception e) {
-//                        Log.e(TAG, "Initialization error.", e);
-//                    }
-//                });
 
 
             }
@@ -155,26 +127,26 @@ public class CallReceiver2 extends BroadcastReceiver {
                 response ->
                 {
                     for (User user : response.getData()) {
-                        for (Friend friend : user.getFriend()) {
-                            try {
-                                if (friend.getNumber().equals(callNumber)) {
-
-
-                                    Observable.just(friend.getId())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(getObserver());
-
-
-                                } else {
-
-                                }
-
-                            } catch (Exception e) {
-                                Log.d("error : ", e.toString());
-                            }
-
-
-                        }
+//                        for (Friend friend : user.getFriend()) {
+//                            try {
+//                                if (friend.getNumber().equals(callNumber)) {
+//
+//
+//                                    Observable.just(friend.getId())
+//                                            .observeOn(AndroidSchedulers.mainThread())
+//                                            .subscribe(getObserver());
+//
+//
+//                                } else {
+//
+//                                }
+//
+//                            } catch (Exception e) {
+//                                Log.d("error : ", e.toString());
+//                            }
+//
+//
+//                        }
                     }
 
                 },
@@ -193,6 +165,7 @@ public class CallReceiver2 extends BroadcastReceiver {
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.R)
             @Override
             public void onNext(@io.reactivex.rxjava3.annotations.NonNull String s) {
 
