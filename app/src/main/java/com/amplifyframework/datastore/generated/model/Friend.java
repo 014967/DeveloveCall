@@ -19,7 +19,7 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 /** This is an auto generated class representing the Friend type in your schema. */
 @SuppressWarnings("all")
 @ModelConfig(pluralName = "Friends")
-@Index(name = "groupName", fields = {"group"})
+@Index(name = "groupId", fields = {"groupID"})
 public final class Friend implements Model {
   public static final QueryField ID = field("id");
   public static final QueryField NUMBER = field("number");
@@ -27,7 +27,7 @@ public final class Friend implements Model {
   public static final QueryField LAST_CONTACT = field("lastContact");
   public static final QueryField REMIND_DATE = field("remindDate");
   public static final QueryField FRIEND_IMG = field("friendImg");
-  public static final QueryField GROUP = field("group");
+  public static final QueryField GROUP_ID = field("groupID");
   public static final QueryField FAVORITE = field("favorite");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String number;
@@ -35,7 +35,7 @@ public final class Friend implements Model {
   private final @ModelField(targetType="String") String lastContact;
   private final @ModelField(targetType="String") String remindDate;
   private final @ModelField(targetType="String") String friendImg;
-  private final @ModelField(targetType="String") String group;
+  private final @ModelField(targetType="ID", isRequired = true) String groupID;
   private final @ModelField(targetType="Boolean") Boolean favorite;
   private final @ModelField(targetType="Chat") @HasMany(associatedWith = "friendID", type = Chat.class) List<Chat> chat = null;
   public String getId() {
@@ -62,8 +62,8 @@ public final class Friend implements Model {
       return friendImg;
   }
   
-  public String getGroup() {
-      return group;
+  public String getGroupId() {
+      return groupID;
   }
   
   public Boolean getFavorite() {
@@ -74,14 +74,14 @@ public final class Friend implements Model {
       return chat;
   }
   
-  private Friend(String id, String number, String name, String lastContact, String remindDate, String friendImg, String group, Boolean favorite) {
+  private Friend(String id, String number, String name, String lastContact, String remindDate, String friendImg, String groupID, Boolean favorite) {
     this.id = id;
     this.number = number;
     this.name = name;
     this.lastContact = lastContact;
     this.remindDate = remindDate;
     this.friendImg = friendImg;
-    this.group = group;
+    this.groupID = groupID;
     this.favorite = favorite;
   }
   
@@ -99,7 +99,7 @@ public final class Friend implements Model {
               ObjectsCompat.equals(getLastContact(), friend.getLastContact()) &&
               ObjectsCompat.equals(getRemindDate(), friend.getRemindDate()) &&
               ObjectsCompat.equals(getFriendImg(), friend.getFriendImg()) &&
-              ObjectsCompat.equals(getGroup(), friend.getGroup()) &&
+              ObjectsCompat.equals(getGroupId(), friend.getGroupId()) &&
               ObjectsCompat.equals(getFavorite(), friend.getFavorite());
       }
   }
@@ -113,7 +113,7 @@ public final class Friend implements Model {
       .append(getLastContact())
       .append(getRemindDate())
       .append(getFriendImg())
-      .append(getGroup())
+      .append(getGroupId())
       .append(getFavorite())
       .toString()
       .hashCode();
@@ -129,13 +129,13 @@ public final class Friend implements Model {
       .append("lastContact=" + String.valueOf(getLastContact()) + ", ")
       .append("remindDate=" + String.valueOf(getRemindDate()) + ", ")
       .append("friendImg=" + String.valueOf(getFriendImg()) + ", ")
-      .append("group=" + String.valueOf(getGroup()) + ", ")
+      .append("groupID=" + String.valueOf(getGroupId()) + ", ")
       .append("favorite=" + String.valueOf(getFavorite()))
       .append("}")
       .toString();
   }
   
-  public static BuildStep builder() {
+  public static GroupIdStep builder() {
       return new Builder();
   }
   
@@ -177,9 +177,14 @@ public final class Friend implements Model {
       lastContact,
       remindDate,
       friendImg,
-      group,
+      groupID,
       favorite);
   }
+  public interface GroupIdStep {
+    BuildStep groupId(String groupId);
+  }
+  
+
   public interface BuildStep {
     Friend build();
     BuildStep id(String id) throws IllegalArgumentException;
@@ -188,19 +193,18 @@ public final class Friend implements Model {
     BuildStep lastContact(String lastContact);
     BuildStep remindDate(String remindDate);
     BuildStep friendImg(String friendImg);
-    BuildStep group(String group);
     BuildStep favorite(Boolean favorite);
   }
   
 
-  public static class Builder implements BuildStep {
+  public static class Builder implements GroupIdStep, BuildStep {
     private String id;
+    private String groupID;
     private String number;
     private String name;
     private String lastContact;
     private String remindDate;
     private String friendImg;
-    private String group;
     private Boolean favorite;
     @Override
      public Friend build() {
@@ -213,8 +217,15 @@ public final class Friend implements Model {
           lastContact,
           remindDate,
           friendImg,
-          group,
+          groupID,
           favorite);
+    }
+    
+    @Override
+     public BuildStep groupId(String groupId) {
+        Objects.requireNonNull(groupId);
+        this.groupID = groupId;
+        return this;
     }
     
     @Override
@@ -248,12 +259,6 @@ public final class Friend implements Model {
     }
     
     @Override
-     public BuildStep group(String group) {
-        this.group = group;
-        return this;
-    }
-    
-    @Override
      public BuildStep favorite(Boolean favorite) {
         this.favorite = favorite;
         return this;
@@ -282,15 +287,20 @@ public final class Friend implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String number, String name, String lastContact, String remindDate, String friendImg, String group, Boolean favorite) {
+    private CopyOfBuilder(String id, String number, String name, String lastContact, String remindDate, String friendImg, String groupId, Boolean favorite) {
       super.id(id);
-      super.number(number)
+      super.groupId(groupId)
+        .number(number)
         .name(name)
         .lastContact(lastContact)
         .remindDate(remindDate)
         .friendImg(friendImg)
-        .group(group)
         .favorite(favorite);
+    }
+    
+    @Override
+     public CopyOfBuilder groupId(String groupId) {
+      return (CopyOfBuilder) super.groupId(groupId);
     }
     
     @Override
@@ -316,11 +326,6 @@ public final class Friend implements Model {
     @Override
      public CopyOfBuilder friendImg(String friendImg) {
       return (CopyOfBuilder) super.friendImg(friendImg);
-    }
-    
-    @Override
-     public CopyOfBuilder group(String group) {
-      return (CopyOfBuilder) super.group(group);
     }
     
     @Override

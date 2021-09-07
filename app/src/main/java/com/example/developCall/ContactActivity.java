@@ -74,13 +74,13 @@ public class ContactActivity extends AppCompatActivity implements ContactAdpater
                         for (Map.Entry<String, String> entry : friendList.entrySet()) {
 
                             Ob_Friend ob_friend = new Ob_Friend();
-                            Friend friend = Friend.builder().number(entry.getKey()).name(entry.getValue()).group(groupName).build();
+                            Friend friend = Friend.builder().groupId(ob_group.getId()).name(entry.getValue()).number(entry.getKey()).build();
                             Amplify.DataStore.save(friend
                                     , success -> Log.d("success", "success")
                                     , error -> Log.e("fail", "fail", error));
                             ob_friend.setNumber(entry.getKey());
                             ob_friend.setName(entry.getValue());
-                            ob_friend.setGroup(groupName);
+                            ob_friend.setGroupName(groupName);
                             Ob_friendList.add(ob_friend);
                         };
 

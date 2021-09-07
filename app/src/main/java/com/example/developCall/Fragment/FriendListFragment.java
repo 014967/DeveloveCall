@@ -133,6 +133,8 @@ public class FriendListFragment extends Fragment {
 
     }
 
+
+
     public List<Ob_Friend> addFriendList(GraphQLResponse<PaginatedResult<User>> response, String group_name) {
         for (User user : response.getData()) {
             for (Group group : user.getGroup()) {
@@ -141,10 +143,13 @@ public class FriendListFragment extends Fragment {
 
                     for (Friend friend : group.getFriend()) {
                         Ob_Friend ob_friend = new Ob_Friend();
+                        ob_friend.setId(friend.getId());
                         ob_friend.setName(friend.getName());
                         ob_friend.setNumber(friend.getNumber());
-                        ob_friend.setGroup(friend.getGroup());
+                        ob_friend.setGroupId(friend.getGroupId());
+                        ob_friend.setGroupName(group.getName());
                         ob_friend.setRemindDate(friend.getLastContact());
+                        ob_friend.setFriendImg(friend.getFriendImg());
                         if (friend.getFavorite() == null) {
                             ob_friend.setFavorite(false);
                         } else {

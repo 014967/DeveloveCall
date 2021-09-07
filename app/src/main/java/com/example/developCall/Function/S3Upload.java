@@ -37,12 +37,6 @@ public class S3Upload {
         FriendId friendId = new FriendId();
 
 
-
-
-
-
-
-
         Amplify.API.query(
                 ModelQuery.list(User.class, User.ID.contains(userId)),
                 response ->

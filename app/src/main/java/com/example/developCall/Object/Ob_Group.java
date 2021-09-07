@@ -7,6 +7,9 @@ public class Ob_Group implements Serializable {
     String id;
     String name;
     Ob_Friend friend;
+    String created_At;
+
+
 
     public String getUserID() {
         return userID;

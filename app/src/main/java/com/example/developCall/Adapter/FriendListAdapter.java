@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import com.example.developCall.Fragment.Fragment2;
 import com.example.developCall.Object.Ob_Friend;
 import com.example.developCall.R;
@@ -44,6 +46,17 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         holder.friendName.setText(friend.getName());
         Bundle bundle = new Bundle();
         bundle.putSerializable("ob_friend", friend);
+        String END_POINT = "https://developcallfriendimg.s3.ap-northeast-2.amazonaws.com/";
+
+
+        if(friend.getFriendImg() != null)
+        {
+            String url = END_POINT+friend.getFriendImg();
+            Glide.with(holder.itemView.getContext()).load(url).into(holder.friendImg);
+
+        }
+
+
         holder.friendName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +87,8 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
             friendImg = itemView.findViewById(R.id.friendImg);
             friendName = itemView.findViewById(R.id.friendName);
             lastConnect = itemView.findViewById(R.id.lastConnect);
+
+
         }
 
 

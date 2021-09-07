@@ -9,7 +9,26 @@ public class Ob_Friend implements Serializable
     private String name;
     private String remindDate;
     private String friendImg;
-    private String group;
+    private String groupId;
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    private String groupName;
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
     private boolean favorite;
 
     public String getId() {
@@ -52,13 +71,6 @@ public class Ob_Friend implements Serializable
         this.friendImg = friendImg;
     }
 
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
 
     public boolean getFavorite() {
         return favorite;

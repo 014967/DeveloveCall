@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.RemoteViews;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -24,7 +25,10 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Friend;
+import com.amplifyframework.datastore.generated.model.Group;
 import com.amplifyframework.datastore.generated.model.User;
+import com.example.developCall.R;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -32,6 +36,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -63,9 +69,13 @@ public class S3uploadService extends Service {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel();
+
+            RemoteViews custom_layout = new RemoteViews(getPackageName(), R.layout.s3upload_notification);
+
             Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setContentTitle("MyService is running")
                     .setContentText("MyService is running")
+                    .setCustomContentView(custom_layout)
                     .build();
             Log.d("Test", "start foreground");
             startForeground(NOTIFICATION_ID, notification);
@@ -76,7 +86,7 @@ public class S3uploadService extends Service {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createNotificationChannel() {
 
-        NotificationChannel notificationChannel = new  NotificationChannel(
+        NotificationChannel notificationChannel = new NotificationChannel(
                 CHANNEL_ID,
                 "MyApp notification",
                 NotificationManager.IMPORTANCE_HIGH
@@ -85,7 +95,6 @@ public class S3uploadService extends Service {
         notificationManager.createNotificationChannel(
                 notificationChannel);
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.R)
@@ -110,26 +119,29 @@ public class S3uploadService extends Service {
                 response ->
                 {
                     for (User user : response.getData()) {
-//                        for (Friend friend : user.getFriend()) {
-//                            try {
-//                                if (friend.getNumber().equals(callNumber)) {
-//
-//
-//                                    Observable.just(friend.getId())
-//                                            .observeOn(AndroidSchedulers.mainThread())
-//                                            .subscribe(getObserver());
-//
-//
-//                                } else {
-//
-//                                }
-//
-//                            } catch (Exception e) {
-//                                Log.d("error : ", e.toString());
-//                            }
-//
-//
-//                        }
+                        for (Group group : user.getGroup()) {
+                            for (Friend friend : group.getFriend()) {
+                                try {
+                                    if (friend.getNumber().equals(callNumber)) {
+
+
+                                        Observable.just(friend.getId())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(getObserver());
+
+
+                                    } else {
+
+                                    }
+
+                                } catch (Exception e) {
+                                    Log.d("error : ", e.toString());
+                                }
+
+                            }
+
+
+                        }
                     }
 
                 },

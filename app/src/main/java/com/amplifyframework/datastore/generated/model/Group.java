@@ -27,7 +27,7 @@ public final class Group implements Model {
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="ID", isRequired = true) String userID;
   private final @ModelField(targetType="String") String name;
-  private final @ModelField(targetType="Friend") @HasMany(associatedWith = "group", type = Friend.class) List<Friend> friend = null;
+  private final @ModelField(targetType="Friend") @HasMany(associatedWith = "groupID", type = Friend.class) List<Friend> friend = null;
   public String getId() {
       return id;
   }

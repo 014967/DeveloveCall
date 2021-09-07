@@ -128,7 +128,7 @@ query SyncFriends(
       lastContact
       remindDate
       friendImg
-      group
+      groupID
       favorite
       chat {
         nextToken
@@ -152,7 +152,7 @@ query GetFriend($id: ID!) {
     lastContact
     remindDate
     friendImg
-    group
+    groupID
     favorite
     chat {
       items {
@@ -193,7 +193,7 @@ query ListFriends(
       lastContact
       remindDate
       friendImg
-      group
+      groupID
       favorite
       chat {
         nextToken
@@ -325,7 +325,7 @@ query GetGroup($id: ID!) {
         lastContact
         remindDate
         friendImg
-        group
+        groupID
         favorite
         _version
         _deleted

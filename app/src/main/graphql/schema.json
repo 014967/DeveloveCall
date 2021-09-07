@@ -2183,11 +2183,11 @@
                         "defaultValue": null
                     },
                     {
-                        "name": "group",
+                        "name": "groupID",
                         "description": null,
                         "type": {
                             "kind": "INPUT_OBJECT",
-                            "name": "ModelStringInput",
+                            "name": "ModelIDInput",
                             "ofType": null
                         },
                         "defaultValue": null
@@ -2429,13 +2429,17 @@
                         "deprecationReason": null
                     },
                     {
-                        "name": "group",
+                        "name": "groupID",
                         "description": null,
                         "args": [],
                         "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
+                            "kind": "NON_NULL",
+                            "name": null,
+                            "ofType": {
+                                "kind": "SCALAR",
+                                "name": "ID",
+                                "ofType": null
+                            }
                         },
                         "isDeprecated": false,
                         "deprecationReason": null
@@ -3339,12 +3343,16 @@
                         "defaultValue": null
                     },
                     {
-                        "name": "group",
+                        "name": "groupID",
                         "description": null,
                         "type": {
-                            "kind": "SCALAR",
-                            "name": "String",
-                            "ofType": null
+                            "kind": "NON_NULL",
+                            "name": null,
+                            "ofType": {
+                                "kind": "SCALAR",
+                                "name": "ID",
+                                "ofType": null
+                            }
                         },
                         "defaultValue": null
                     },
@@ -3430,11 +3438,11 @@
                         "defaultValue": null
                     },
                     {
-                        "name": "group",
+                        "name": "groupID",
                         "description": null,
                         "type": {
                             "kind": "INPUT_OBJECT",
-                            "name": "ModelStringInput",
+                            "name": "ModelIDInput",
                             "ofType": null
                         },
                         "defaultValue": null
@@ -3563,11 +3571,11 @@
                         "defaultValue": null
                     },
                     {
-                        "name": "group",
+                        "name": "groupID",
                         "description": null,
                         "type": {
                             "kind": "SCALAR",
-                            "name": "String",
+                            "name": "ID",
                             "ofType": null
                         },
                         "defaultValue": null

@@ -6,49 +6,45 @@
   >
 
     <ImageView
-        android:layout_height="80dp"
-        android:layout_width="80dp"
         android:id="@+id/iv_image"
-        android:src="@drawable/ic_baseline_person_24"
-        />
-
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:layout_weight="3"
+        android:src="@drawable/ic_baseline_person_24" />
 
 
     <LinearLayout
         android:id="@+id/inLL"
-        android:layout_width="300dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:layout_weight="9"
+        android:orientation="vertical">
 
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/tv_name"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
 
             />
+
         <TextView
+            android:id="@+id/tv_number"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/tv_number"
-            android:textSize="14sp"
-            />
-
-
-
-
+            android:textSize="14sp" />
 
 
     </LinearLayout>
 
     <CheckBox
         android:id="@+id/checkBox"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2" />
 
 
 

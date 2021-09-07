@@ -10,7 +10,7 @@ type User @model
 }
 
 type Friend @model
-@key(name: "groupName", fields : ["group"])
+@key(name: "groupId", fields : ["groupID"])
 {
 
   id : ID!
@@ -19,7 +19,7 @@ type Friend @model
   lastContact : String
   remindDate: String
   friendImg : String
-  group : String
+  groupID : ID!
   favorite : Boolean
   chat : [Chat] @connection(keyName : "friendId" , fields : ["id"])
 }
@@ -45,7 +45,7 @@ type Group @model
   userID : ID!
   id : ID!
   name : String
-  friend : [Friend]  @connection(keyName : "groupName", fields : ["name"])
+  friend : [Friend]  @connection(keyName : "groupId", fields : ["id"])
 }
 
 

@@ -145,7 +145,7 @@ subscription OnCreateFriend {
     lastContact
     remindDate
     friendImg
-    group
+    groupID
     favorite
     chat {
       items {
@@ -181,7 +181,7 @@ subscription OnUpdateFriend {
     lastContact
     remindDate
     friendImg
-    group
+    groupID
     favorite
     chat {
       items {
@@ -217,7 +217,7 @@ subscription OnDeleteFriend {
     lastContact
     remindDate
     friendImg
-    group
+    groupID
     favorite
     chat {
       items {
@@ -309,7 +309,7 @@ subscription OnCreateGroup {
         lastContact
         remindDate
         friendImg
-        group
+        groupID
         favorite
         _version
         _deleted
@@ -340,7 +340,7 @@ subscription OnUpdateGroup {
         lastContact
         remindDate
         friendImg
-        group
+        groupID
         favorite
         _version
         _deleted
@@ -371,7 +371,7 @@ subscription OnDeleteGroup {
         lastContact
         remindDate
         friendImg
-        group
+        groupID
         favorite
         _version
         _deleted

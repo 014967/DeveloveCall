@@ -157,7 +157,7 @@ mutation CreateFriend(
     lastContact
     remindDate
     friendImg
-    group
+    groupID
     favorite
     chat {
       items {
@@ -196,7 +196,7 @@ mutation UpdateFriend(
     lastContact
     remindDate
     friendImg
-    group
+    groupID
     favorite
     chat {
       items {
@@ -235,7 +235,7 @@ mutation DeleteFriend(
     lastContact
     remindDate
     friendImg
-    group
+    groupID
     favorite
     chat {
       items {
@@ -339,7 +339,7 @@ mutation CreateGroup(
         lastContact
         remindDate
         friendImg
-        group
+        groupID
         favorite
         _version
         _deleted
@@ -373,7 +373,7 @@ mutation UpdateGroup(
         lastContact
         remindDate
         friendImg
-        group
+        groupID
         favorite
         _version
         _deleted
@@ -407,7 +407,7 @@ mutation DeleteGroup(
         lastContact
         remindDate
         friendImg
-        group
+        groupID
         favorite
         _version
         _deleted

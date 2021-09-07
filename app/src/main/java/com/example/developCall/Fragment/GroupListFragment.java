@@ -203,6 +203,7 @@ public class GroupListFragment extends Fragment {
             }
         }
 
+
         return list_group;
     }
 }

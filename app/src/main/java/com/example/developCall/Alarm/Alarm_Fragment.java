@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -76,14 +77,6 @@ public class Alarm_Fragment extends Fragment {
         alarmFileName = "alarmFileName";
         alarmName = "임시 이름";
 
-        alarm_listData = new ArrayList<Alarm_ListData>();
-        alarmTempName = getJsonString(alarmFileName);
-        jsonParsing(alarmTempName);
-
-        alarm_listView = (ListView) view.findViewById(R.id.alarmlist);
-        alarm_listAdapter = new Alarm_ListAdapter(view.getContext(), alarm_listData);
-        alarm_listView.setAdapter(alarm_listAdapter);
-
         alarmset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,12 +91,13 @@ public class Alarm_Fragment extends Fragment {
 
             if(check == 1){
                 alarm_listData = new ArrayList<Alarm_ListData>();
-                alarmTempName = getJsonString(alarmFileName);
-                jsonParsing(alarmTempName);
+                alarmTempName = alarmGetJsonString(alarmFileName);
+                alarmJsonParsing(alarmTempName);
 
                 alarm_listView = (ListView) view.findViewById(R.id.alarmlist);
                 alarm_listAdapter = new Alarm_ListAdapter(view.getContext(), alarm_listData);
                 alarm_listView.setAdapter(alarm_listAdapter);
+                setListViewHeightBasedOnItems(alarm_listView);
                 Log.d("tag", "체크 성공");
             }
 
@@ -147,8 +141,8 @@ public class Alarm_Fragment extends Fragment {
 
                 alarm_listData = new ArrayList<Alarm_ListData>();
                 Alarm_ListData listData = new Alarm_ListData();
-                alarmTempName = getJsonString(alarmFileName);
-                jsonParsing(alarmTempName);
+                alarmTempName = alarmGetJsonString(alarmFileName);
+                alarmJsonParsing(alarmTempName);
 
                 alarm_listData = AddData(alarm_listData, listData, alarmName, getDate, 0);
 
@@ -158,9 +152,19 @@ public class Alarm_Fragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                //alarm_manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
-                alarm_manager.set(AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(), pendingIntent);
+                alarm_manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+                //alarm_manager.set(AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(), pendingIntent);
             }
+        }
+        else {
+            alarm_listData = new ArrayList<Alarm_ListData>();
+            alarmTempName = alarmGetJsonString(alarmFileName);
+            alarmJsonParsing(alarmTempName);
+
+            alarm_listView = (ListView) view.findViewById(R.id.alarmlist);
+            alarm_listAdapter = new Alarm_ListAdapter(view.getContext(), alarm_listData);
+            alarm_listView.setAdapter(alarm_listAdapter);
+            setListViewHeightBasedOnItems(alarm_listView);
         }
 
         return view;
@@ -198,7 +202,7 @@ public class Alarm_Fragment extends Fragment {
         calendarWriter.close();
     }
 
-    private String getJsonString(String fileName)
+    private String alarmGetJsonString(String fileName)
     {
         String json = "";
         try {
@@ -219,7 +223,7 @@ public class Alarm_Fragment extends Fragment {
         return json;
     }
 
-    private void jsonParsing(String json)
+    private void alarmJsonParsing(String json)
     {
         try{
             JSONObject jsonObject = new JSONObject(json);
@@ -249,5 +253,39 @@ public class Alarm_Fragment extends Fragment {
         }
     }
 
+    public static boolean setListViewHeightBasedOnItems(ListView listView) {
+
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter != null) {
+
+            int numberOfItems = listAdapter.getCount();
+
+            // Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = listAdapter.getView(itemPos, null, listView);
+                float px = 500 * (listView.getResources().getDisplayMetrics().density);
+                item.measure(View.MeasureSpec.makeMeasureSpec((int) px, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            // Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+            // Get padding
+            int totalPadding = listView.getPaddingTop() + listView.getPaddingBottom();
+
+            // Set list height.
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalItemsHeight + totalDividersHeight + totalPadding;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+            //setDynamicHeight(listView);
+            return true;
+
+        } else {
+            return false;
+        }
+    }
 
 }
