@@ -128,7 +128,7 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
 
 
-                Intent intent = new Intent(getApplicationContext(),AssignActivity.class);
+                Intent intent = new Intent(getApplicationContext(),AssginCompleteActivity.class);
 
                 startActivity(intent);
             }
