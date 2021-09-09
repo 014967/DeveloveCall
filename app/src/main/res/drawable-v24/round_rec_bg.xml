@@ -3,6 +3,5 @@
     <!-- 모서리 기울기 -->
     <corners android:topRightRadius="70dp"
         android:topLeftRadius="70dp"/>
-
     <solid android:color="@color/white"/><!-- 배경색 -->
 </shape>

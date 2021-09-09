@@ -24,7 +24,7 @@ exports.handler = async (event) => {
     var uploadTime = dirtyNumber[2];
     var fileUrl = "s3://developcall-transcribe-output/" + jobName + ".json"
 
-    var tablename = "Chat-elly5d4s7ng2lmypvuhwgpr6lm-dev";
+    var tablename = "Chat-6tai4sqoubaihizrtoyvo7a5da-dev";
 
 
 

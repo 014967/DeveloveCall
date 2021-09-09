@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
@@ -56,6 +57,8 @@ public class S3uploadService extends Service {
 
     int NOTIFICATION_ID = 10;
     String CHANNEL_ID = "primary_notification_channel";
+    NotificationManager notificationManager;
+    boolean flag;
 
     @Nullable
     @Override
@@ -91,7 +94,7 @@ public class S3uploadService extends Service {
                 "MyApp notification",
                 NotificationManager.IMPORTANCE_HIGH
         );
-        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager= (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.createNotificationChannel(
                 notificationChannel);
     }
@@ -99,7 +102,7 @@ public class S3uploadService extends Service {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(@NonNull Intent intent, int flags, int startId) {
 
 
         userId = intent.getExtras().get("userId").toString();
@@ -114,6 +117,9 @@ public class S3uploadService extends Service {
         format = file.getName().split("\\.");
 
 
+       flag = false;
+
+
         Amplify.API.query(
                 ModelQuery.list(User.class, User.ID.contains(userId)),
                 response ->
@@ -125,6 +131,7 @@ public class S3uploadService extends Service {
                                     if (friend.getNumber().equals(callNumber)) {
 
 
+                                        flag = true;
                                         Observable.just(friend.getId())
                                                 .observeOn(AndroidSchedulers.mainThread())
                                                 .subscribe(getObserver());
@@ -142,6 +149,12 @@ public class S3uploadService extends Service {
 
 
                         }
+                        if(flag == false)
+                        {
+                            notificationManager.cancel(NOTIFICATION_ID);
+                            stopForeground(true);
+                            Log.d("S3UPLOADSERVICE", "can't find friend");
+                        }
                     }
 
                 },
@@ -158,6 +171,7 @@ public class S3uploadService extends Service {
 
     private void s3UPload(String s) {
         String uploadFilename = userId + "_" + s + "_" + uploadDate + "." + format[1];
+        System.out.println(uploadFilename);
         try {
             //background 안
 
@@ -181,6 +195,9 @@ public class S3uploadService extends Service {
                 public void onStateChanged(int id, TransferState state) {
                     if (TransferState.COMPLETED == state) {
                         // Handle a completed upload.
+                        notificationManager.cancel(NOTIFICATION_ID);
+                        stopForeground(true);
+                        Log.d("S3UPLOADSERVICE", "complete");
                     }
                 }
 
@@ -196,6 +213,8 @@ public class S3uploadService extends Service {
                 @Override
                 public void onError(int id, Exception ex) {
                     // Handle errors
+
+                    Log.d("uploadError", ex.toString());
                 }
 
             });
@@ -204,13 +223,14 @@ public class S3uploadService extends Service {
             // listener, check for the state and progress in the observer.
             if (TransferState.COMPLETED == uploadObserver.getState()) {
                 // Handle a completed upload.
-                stopSelf();
-                NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-                manager.cancel(10);
+
+
             }
 
             Log.d("S3UPLOADSERVICE", "Bytes Transferred: " + uploadObserver.getBytesTransferred());
             Log.d("S3UPLOADSERVICE", "Bytes Total: " + uploadObserver.getBytesTotal());
+
+
 
 
         } catch (Exception e) {

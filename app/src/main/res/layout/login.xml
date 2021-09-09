@@ -139,7 +139,7 @@
                 android:text="@string/login"
                 android:textColor="@color/white"
                 android:textSize="20dp"
-                android:background="@drawable/round_rec_fill"/>
+                android:background="@drawable/round_rec_fill_pink_orange"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

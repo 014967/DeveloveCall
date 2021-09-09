@@ -27,7 +27,7 @@
 
         <activity android:name=".ContactActivity" />
         <activity android:name=".EmailConfirmationActivity" />
-        <activity android:name=".JoinActivity" />
+        <activity android:name=".AssignActivity" />
         <activity android:name=".LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

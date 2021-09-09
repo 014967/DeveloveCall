@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.Fragment1"
-    android:background="@color/tag_green">
+    android:background="@color/home_keyword">
 
 
     <ScrollView
@@ -211,9 +211,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Recent Keyword"
-                    android:textSize="13dp"
                     android:textColor="@color/light_gray"
-                    />
+                    android:textSize="13dp" />
                 <TextView
                     android:id="@+id/txt_keyword_01"
                     android:layout_width="wrap_content"

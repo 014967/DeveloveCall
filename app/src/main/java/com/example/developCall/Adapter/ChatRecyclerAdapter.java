@@ -11,11 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.developCall.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapter.ViewHolder> {
 
-    List<List<String>> data;
+    List<List<String>> data = new ArrayList<>();
     Context context;
 
 
@@ -69,7 +70,16 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return data.size();
+        if(data.size() == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return data.size();
+
+        }
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -86,4 +96,10 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
 
         }
     }
+
+    public void initData( List<List<String>> newData)
+    {
+        this.data = newData;
+    }
+
 }

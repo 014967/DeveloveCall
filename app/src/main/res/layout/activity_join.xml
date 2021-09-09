@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".JoinActivity"
+    tools:context=".AssignActivity"
+    android:background="#FAF8F5"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5"
+        android:layout_height="600dp"
         android:orientation="vertical">
 
 
@@ -17,98 +18,121 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="가입"
-            android:gravity="center"
-            android:textSize="50sp"/>
+            android:text="REGIST"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="150dp"
+            android:textSize="30sp"/>
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RelativeLayout
+            android:layout_height="58dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginBottom="29dp"
+            android:background="@drawable/round_rec_fill_white">
+
+            <EditText
+
+                android:id="@+id/sign_Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp">
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_gravity="center_vertical"
 
-                <EditText
-                    android:id="@+id/sign_Email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginTop="13dp"
-                    android:background="@null"
-                    android:hint="이메일"
-                    android:inputType="textEmailAddress" />
+                android:background="@null"
+                android:hint="이름"
+                android:textSize="16dp"
+                android:ems="10"
+                />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:background="@drawable/round_rec_empty_input" />
-            </RelativeLayout>
         </LinearLayout>
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RelativeLayout
+            android:layout_height="58dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="29dp"
+
+            android:background="@drawable/round_rec_fill_white">
+
+            <EditText
+                android:id="@+id/sign_Email"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_gravity="center_vertical"
+
+                android:background="@null"
+                android:textSize="16dp"
+                android:hint="이메일"
+                android:inputType="textEmailAddress" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="45dp"
+
+            android:background="@drawable/round_rec_fill_white">
+
             <EditText
                 android:id="@+id/sign_PassWord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="45dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="16dp"
+
                 android:background="@null"
                 android:hint="패스워드"
                 android:inputType="textPassword"
                 android:ems="10"
                 />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/round_rec_empty_input" />
-            </RelativeLayout>
-
         </LinearLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <EditText
-
-                android:id="@+id/sign_Name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="45dp"
-                android:background="@null"
-                android:hint="이름"
-
-                android:ems="10"
-                />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/round_rec_empty_input" />
-
-        </RelativeLayout>
-
-        <Button
-            android:id="@+id/btn_Join"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:text="Join">
-
-
-        </Button>
 
 
     </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/btn_Join"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_rec_fill_light_orange"
+        android:text="Get Started"
+        android:textColor="@color/white">
+    </Button>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login to Account"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:textColor="@color/text_gray"
+        android:textSize="15sp"/>
 
 
 </LinearLayout>

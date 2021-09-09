@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,13 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-
 import com.example.developCall.Fragment.Fragment2;
 import com.example.developCall.Object.Ob_Friend;
 import com.example.developCall.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.ViewHolder> {
 
@@ -57,7 +58,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         }
 
 
-        holder.friendName.setOnClickListener(new View.OnClickListener() {
+        holder.rv_friendItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AppCompatActivity activity = (AppCompatActivity) v.getContext();
@@ -75,7 +76,8 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView friendImg;
+        RelativeLayout rv_friendItem;
+        CircleImageView friendImg;
         TextView friendName;
         TextView lastConnect;
         ProgressBar progressBar;
@@ -83,9 +85,10 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            rv_friendItem = itemView.findViewById(R.id.rv_friendItem);
             progressBar = itemView.findViewById(R.id.progressBar);
-            friendImg = itemView.findViewById(R.id.friendImg);
-            friendName = itemView.findViewById(R.id.friendName);
+            friendImg = itemView.findViewById(R.id.img_profile_03);
+            friendName = itemView.findViewById(R.id.search_result_adrress_name_01);
             lastConnect = itemView.findViewById(R.id.lastConnect);
 
 

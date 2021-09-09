@@ -142,6 +142,10 @@ public class ContactActivity extends AppCompatActivity implements ContactAdpater
                     ContactModel model = new ContactModel();
 
                     model.setName(name);
+
+                    number = number.replaceAll("[^0-9]", "");
+
+
                     model.setNumber(number);
                     arrayList.add(model);
                     phoneCursor.close();

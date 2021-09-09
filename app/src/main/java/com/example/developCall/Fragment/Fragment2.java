@@ -220,10 +220,14 @@ public class Fragment2 extends Fragment {
         });
 
 
-        fragment1 = new TabFragment1();
+
+        fragment1 = new TabFragment1(userId, ob_friend.getId());
         fragment2 = new TabFragment2();
         fragment3 = new TabFragment3();
 
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("name", ob_friend.getName());
+        fragment1.setArguments(bundle);
         requireActivity().getSupportFragmentManager().beginTransaction().add(R.id.tabFrame, fragment1).commit();
 
         TabLayout tabs = (TabLayout) view.findViewById(R.id.tab);

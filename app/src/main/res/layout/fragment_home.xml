@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragment.MainFragment"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/home_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_weight="0.15">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp">
+
+            <TextView
+                android:id="@+id/txt_hello"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="안녕하세요,"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="25dp"
+                android:textSize="16dp"
+                android:fontFamily="@font/notosans_regular"
+                />
+
+            <TextView
+                android:id="@+id/txt_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_hello"
+                android:layout_marginLeft="21dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/notosans_bold"
+                android:text="임태규"
+                android:textSize="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="님"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="15dp"
+                android:layout_below="@+id/txt_hello"
+                android:layout_toRightOf="@+id/txt_user_name"
+                android:fontFamily="@font/notosans_light"
+                android:textSize="30dp"
+                />
+
+            <ImageView
+                android:id="@+id/img_btn_search_white"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="35dp"
+                android:layout_marginRight="31dp"
+                android:src="@drawable/ic_search_white" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.18">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_person_gray"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="연락처"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="13dp"
+                    />
+            </LinearLayout>
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="75dp"
+                        android:layout_height="100dp"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_profile_01"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_baseline_person_24" />
+                        <TextView
+                            android:id="@+id/txt_profile_name_01"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="김현국"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginBottom="5dp"
+                            android:textSize="12dp"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="75dp"
+                        android:layout_height="100dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_profile_02"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/emoji_soso" />
+                        <TextView
+                            android:id="@+id/txt_profile_name_02"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="김용학"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginBottom="5dp"
+                            android:textSize="12dp"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="75dp"
+                        android:layout_height="100dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_profile_03"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_baseline_person_24" />
+                        <TextView
+                            android:id="@+id/txt_profile_name_03"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="류정욱"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginBottom="5dp"
+                            android:textSize="12dp"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="75dp"
+                        android:layout_height="100dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_profile_04"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_baseline_person_24" />
+                        <TextView
+                            android:id="@+id/txt_profile_name_04"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="박하나"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginBottom="5dp"
+                            android:textSize="12dp"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="75dp"
+                        android:layout_height="100dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_profile_06"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/emoji_good" />
+                        <TextView
+                            android:id="@+id/txt_profile_name_07"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="조영효"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginBottom="5dp"
+                            android:textSize="12dp"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="75dp"
+                        android:layout_height="100dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_profile_05"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/emoji_good" />
+                        <TextView
+                            android:id="@+id/txt_profile_name_05"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="조영효"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginBottom="5dp"
+                            android:textSize="12dp"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.25"
+        android:orientation="horizontal">
+        \
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/img_heart"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_heart"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="미션 달성도"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/img_heart"
+                android:textSize="13dp"
+                />
+            <ImageView
+                android:layout_width="160dp"
+                android:layout_height="200dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/graph_5"/>
+            <TextView
+                android:id="@+id/txt_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                android:layout_marginTop="80dp"
+                android:layout_centerHorizontal="true"
+                android:textSize="13dp"
+                />
+            <TextView
+                android:id="@+id/total_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="75%"
+                android:layout_marginTop="2dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/txt_total"
+                android:textSize="27dp"
+                />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="200dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/round_rec_fill"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/txt_recent_keyword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="최근 키워드"
+                    android:layout_marginTop="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="14dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/txt_recent_keyword"
+                    android:layout_toLeftOf="@+id/data_keyword"
+                    android:textSize="20dp"
+                    />
+                <TextView
+                    android:id="@+id/data_keyword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="공부"
+                    android:layout_marginTop="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/txt_recent_keyword"
+                    android:textSize="20dp"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_person_gray"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="다가오는 일정"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:textSize="13dp"
+                />
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="7dp">
+
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="25dp"
+                android:orientation="horizontal">
+                <!--다가오는 일정1-->
+                <LinearLayout
+                    android:layout_width="250dp"
+                    android:layout_height="110dp"
+                    android:background="@drawable/round_rec_fill_list"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp">
+
+                        <TextView
+                            android:id="@+id/data_plan_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="15dp"
+                            android:text="영화 [디벨럽콜2]"
+                            android:textSize="15dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/data_plan_title"
+                            android:layout_marginLeft="13dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="15dp"
+                            android:text="약속이 예정되어 있습니다."
+                            android:textSize="12dp" />
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/ic_search_white" />
+                    </RelativeLayout>
+
+
+                    <View style="@style/Divider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/ic_person_gray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="2dp"
+                            android:text="박하나"
+                            android:textSize="12dp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginRight="15dp"
+                            android:text="3일 뒤"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--다가오는 일정2-->
+                <LinearLayout
+                    android:layout_width="250dp"
+                    android:layout_height="110dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/round_rec_fill_list"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp">
+
+                        <TextView
+                            android:id="@+id/data_plan_title2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="15dp"
+                            android:text="영화 [디벨럽콜2]"
+                            android:textSize="15dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/data_plan_title2"
+                            android:layout_marginLeft="13dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="15dp"
+                            android:text="약속이 예정되어 있습니다."
+                            android:textSize="12dp" />
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/ic_search_white" />
+                    </RelativeLayout>
+
+
+                    <View style="@style/Divider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/ic_person_gray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="2dp"
+                            android:text="박하나"
+                            android:textSize="12dp" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginRight="15dp"
+                            android:text="3일 뒤"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </HorizontalScrollView>
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

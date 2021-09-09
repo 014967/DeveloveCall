@@ -1,14 +1,17 @@
 package com.example.developCall.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.developCall.Object.ListData;
+import com.example.developCall.ChatActivity;
+import com.example.developCall.Object.Ob_Chat;
 import com.example.developCall.R;
 
 import java.util.ArrayList;
@@ -17,12 +20,17 @@ public class ListAdapter extends BaseAdapter {
 
     Context mContext = null;
     LayoutInflater mLayoutInflater = null;
-    ArrayList<ListData> sample;
+    ArrayList<Ob_Chat> sample;
+    String username;
 
-    public ListAdapter(Context context, ArrayList<ListData> data) {
+
+
+
+    public ListAdapter(Context context, ArrayList<Ob_Chat> data, String username) {
         mContext = context;
         sample = data;
         mLayoutInflater = LayoutInflater.from(mContext);
+        this.username = username;
     }
 
     @Override
@@ -36,7 +44,7 @@ public class ListAdapter extends BaseAdapter {
     }
 
     @Override
-    public ListData getItem(int position) {
+    public Ob_Chat getItem(int position) {
         return sample.get(position);
     }
 
@@ -44,14 +52,44 @@ public class ListAdapter extends BaseAdapter {
     public View getView(int position, View converView, ViewGroup parent) {
         View view = mLayoutInflater.inflate(R.layout.list_design, null);
 
-        ImageView imageView = (ImageView)view.findViewById(R.id.img_profile);
-        TextView movieName = (TextView)view.findViewById(R.id.name_profile);
-        TextView grade = (TextView)view.findViewById(R.id.number_profile);
 
-        imageView.setImageResource(sample.get(position).getProfile());
-        movieName.setText(sample.get(position).getName());
-        grade.setText(sample.get(position).getNumber());
+        TextView chatDate = (TextView)view.findViewById(R.id.name_profile);
+        //TextView grade = (TextView)view.findViewById(R.id.number_profile);
+        Button btn_chat = (Button)view.findViewById(R.id.btn_chat);
+        chatDate.setText(sample.get(position).getDate());
+
+
+        btn_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] url = sample.get(position).getS3_url().split("/");
+                Log.d("url", url.toString());
+              //https://developcall-transcribe-output.s3.ap-northeast-2.amazonaws.com/dd5341b7-db9f-40de-b5d3-a82b878d698b_faf53472-bcd0-43e9-bc2c-bf75dfc335c6_08092021191628.m4a.json
+                String httpUrl = "developcall-transcribe-output.s3.ap-northeast-2.amazonaws.com/" + url[3];
+                Intent in = new Intent(mContext, ChatActivity.class);
+                in.putExtra("name",username);
+                in.putExtra("url",httpUrl);
+                mContext.startActivity(in);
+
+
+            }
+        });
+
+
+
+
 
         return view;
     }
+
+    public void setSample(ArrayList<Ob_Chat> list)
+    {
+        this.sample = list;
+    }
+
+
+
+
+
+
 }

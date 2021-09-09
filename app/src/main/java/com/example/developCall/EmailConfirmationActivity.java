@@ -1,18 +1,14 @@
 package com.example.developCall;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.auth.AuthException;
 import com.amplifyframework.auth.result.AuthSignInResult;
 import com.amplifyframework.auth.result.AuthSignUpResult;
@@ -21,8 +17,6 @@ import com.amplifyframework.core.model.Model;
 import com.amplifyframework.datastore.DataStoreException;
 import com.amplifyframework.datastore.DataStoreItemChange;
 import com.amplifyframework.datastore.generated.model.User;
-
-import com.amplifyframework.datastore.generated.model.User.Builder;
 
 public class EmailConfirmationActivity extends AppCompatActivity {
 
@@ -134,7 +128,7 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
 
 
-                Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                Intent intent = new Intent(getApplicationContext(),AssignActivity.class);
 
                 startActivity(intent);
             }

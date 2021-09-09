@@ -6,6 +6,8 @@
     <string name="title">Develove Call</string>
     <string name="findID">아이디 찾기</string>
     <string name="findPW"> 비밀번호 찾기</string>
+    <string name="getStart">GET STARTED</string>
+
 
     <string name="SignUp">회원가입</string>
     <string name="signupwith">SNS 계정으로 간편 로그인하세요.</string>
@@ -33,7 +35,7 @@
 
 
     <!-- activity_my_qr -->
-    <string name="list_my_qr">QR 코드 목록</string>
+
 
     <!-- activity_qr_info -->
     <string name="qr_info_title">서울과학기술대학교 미래관</string>

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Fragment.MainFragment"
-    android:background="@color/bg_green">
+    android:background="@color/bg_yellow">
 
     <!--편집-->
     <LinearLayout
@@ -16,11 +16,12 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="50dp"
         android:gravity="right">
+
         <TextView
             android:id="@+id/tv_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/edit"/>
+            android:text="@string/edit" />
 
 
         <TextView
@@ -46,7 +47,7 @@
             android:id="@+id/txt_pf_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="홍길동"
             android:textSize="22dp"
             android:textColor="@color/light_black"
             android:layout_marginTop="15dp"
@@ -67,7 +68,7 @@
                 android:id="@+id/txt_pf_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="010-8311-0419"
                 android:textColor="@color/light_black"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
@@ -77,13 +78,13 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="160dp"
             android:background="@color/white">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/bg_green">
+                android:background="@color/bg_yellow">
 
             </RelativeLayout>
 
@@ -96,9 +97,9 @@
                     android:id="@+id/img_profile"
                     android:layout_width="85dp"
                     android:layout_height="85dp"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="24dp"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/ex1"
+                    android:src="@drawable/ic_baseline_person_24"
                     app:civ_border_color="@color/white"
                     app:civ_border_width="4dp" />
 
@@ -108,41 +109,51 @@
                     android:layout_below="@+id/img_profile"
                     android:layout_marginTop="20dp">
 
+
+
+                    <!--태그 리스트-->
+
                     <TextView
+                        android:id="@+id/profile_tag_01"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:background="@drawable/round_tag_fill"
+                        android:layout_marginLeft="28dp"
+                        android:background="@drawable/round_profile_tag_bg"
                         android:paddingLeft="15dp"
                         android:paddingTop="5dp"
                         android:paddingRight="15dp"
                         android:paddingBottom="5dp"
                         android:text="과제"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/profile_tag" />
 
                     <TextView
+                        android:id="@+id/profile_tag_02"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:background="@drawable/round_tag_fill"
+                        android:background="@drawable/round_profile_tag_bg"
                         android:paddingLeft="15dp"
                         android:paddingTop="5dp"
                         android:paddingRight="15dp"
                         android:paddingBottom="5dp"
                         android:text="떡볶이"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/profile_tag" />
 
                     <TextView
+                        android:id="@+id/profile_tag_03"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:background="@drawable/round_tag_fill"
+                        android:background="@drawable/rouund_profile_old_tag_bg"
                         android:paddingLeft="15dp"
                         android:paddingTop="5dp"
                         android:paddingRight="15dp"
                         android:paddingBottom="5dp"
                         android:text="취업"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/profile_old_tag" />
                 </LinearLayout>
 
 
@@ -155,8 +166,9 @@
 
                     <ImageView
                         android:id="@+id/ic_menu"
-                        android:layout_width="20dp"
+                        android:layout_width="15dp"
                         android:layout_height="50dp"
+                        android:layout_marginLeft="8dp"
                         android:src="@drawable/ic_menu" />
 
                     <TextView
@@ -164,31 +176,52 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:text=""
-                        android:textSize="11.5dp" />
+                        android:text="@string/category"
+                        android:textSize="12dp" />
 
                     <ImageView
-
                         android:id="@+id/ic_menu2"
 
-                        android:layout_width="20dp"
+                        android:layout_width="18dp"
                         android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
-                        android:src="@drawable/ic_menu" />
+                        android:src="@drawable/ic_navi_alarm_line" />
 
                     <TextView
-
                         android:id="@+id/txt_category2"
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:text="@string/category"
-                        android:textSize="11.5dp" />
+                        android:textSize="12dp" />
                 </LinearLayout>
-            </RelativeLayout>
 
+            </RelativeLayout>
         </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="36dp"
+                android:text="연락빈도 (7/10)"
+                android:textSize="13dp" />
+
+            <View
+                android:layout_width="220dp"
+                android:layout_height="12dp"
+                android:layout_marginLeft="36dp"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/horizontal_graph"/>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -206,7 +239,8 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tab_Item1"
@@ -230,7 +264,8 @@
     <FrameLayout
         android:id="@+id/tabFrame"
         android:layout_width="match_parent"
-        android:layout_height="350dp" />
+        android:layout_height="350dp"
+        android:background="@color/white"/>
 
 
 
