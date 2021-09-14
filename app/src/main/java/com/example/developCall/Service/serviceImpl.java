@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Calendar;
 
 
@@ -209,6 +210,53 @@ public class serviceImpl implements service{
         return ret + str.substring(scdIdx);
     }
 
+
+    public String [][] mergeArray(String[][] array1, String[][] array2)
+    {
+        String result[][];
+        String pre;
+        for (int i = 0; i < array1.length; i++) {
+            for (int j = 0; j < array2.length; j++) {
+                if (array1[i][0].equals(array2[j][0])) {
+                    array1[i][3] = array2[j][3];
+                }
+            }
+        }
+        pre = array1[0][2];
+        int count = 1;
+        for (int i = 1; i < array1.length; i++) {
+            if (array1[i][2].equals(pre)) {
+
+            } else {
+                pre = array1[i][2];
+                count++;
+
+            }
+        }
+        result = new String[count][2];
+        for (String k[] : result) {
+            Arrays.fill(k, "");
+        }
+        count = 0;
+        for (int i = 0; i < array1.length; i++) {
+            if (array1[i][2].equals(pre)) {
+                result[count][0] = pre;
+                result[count][1] += array1[i][3] + " ";
+
+            } else {
+                pre = array1[i][2];
+                count++;
+                result[count][0] = pre;
+                result[count][1] += array1[i][3];
+            }
+        }
+
+        return result;
+    }
+
+
+
+
     public String[][] getTokenizedArray(String item) {
         String dummy[];
         String array[][];
@@ -253,7 +301,7 @@ public class serviceImpl implements service{
                 postContent = array1[i][3];
                 postEndtime = array1[i][1];
                 if (preSpk.equals(postSpk)) {
-                    preContent = preContent + " " + postContent;
+                    preContent = preContent + " " + postContent;  // TODO: 2021/09/10  스피커가 바꾸지않았을경우 이거 수정햐여험
                     preEndtime = postEndtime;
                 } else {
                     array1[preIndex][3] = preContent;

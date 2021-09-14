@@ -290,7 +290,6 @@ public class MainFragment extends Fragment {
                         for (int i = 0; i < array1.length; i++) //array1 탐색
                         {
 
-
                             if (preSpk.equals(""))  //맨처음에
                             {
 
@@ -334,7 +333,6 @@ public class MainFragment extends Fragment {
     }
 
 
-
     @Override
     public void onActivityResult(int requestcode, int resultcode, Intent data) {
         super.onActivityResult(requestcode, resultcode, data);
@@ -357,6 +355,7 @@ public class MainFragment extends Fragment {
     }
 
     int requestcode = 1;
+
     public void openFileChooser(View view) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");

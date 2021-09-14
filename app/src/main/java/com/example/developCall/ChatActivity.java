@@ -22,10 +22,15 @@ import com.example.developCall.Service.serviceImpl;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -51,7 +56,7 @@ public class ChatActivity extends AppCompatActivity {
     String[][] array1;
     String[] dummy2;
     String[][] array2;
-
+    String st_date;
 
     ProgressBar loading;
     ImageView btn_back;
@@ -63,6 +68,14 @@ public class ChatActivity extends AppCompatActivity {
     List<List<String>> list = new ArrayList<>();
     TextView nonechat;
     TextView username;
+    TextView tv_date;
+
+    Date date;
+    SimpleDateFormat simpleDateFormat;
+    SimpleDateFormat newDateFormat;
+    String chatDate;
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -79,16 +92,39 @@ public class ChatActivity extends AppCompatActivity {
 
         nonechat = findViewById(R.id.noneText);
         btn_back = findViewById(R.id.btn_back);
-        username= findViewById(R.id.username);
-
+        username = findViewById(R.id.username);
+        tv_date = findViewById(R.id.tv_date);
         String st_name = getIntent().getStringExtra("name");
 
         username.setText(st_name);
 
 
-
-
         String url = getIntent().getStringExtra("url");
+//developcall-transcribe-output.s3.ap-northeast-2.amazonaws.com/27181b7c-50cc-4cd7-a3f2-c36720eb5e42_f309adee-26e4-4707-a7e7-41588d552b4f_13092021210444.m4a.json
+
+        String expression = "(developcall-transcribe-output.s3.ap-northeast-2.amazonaws.com/)(.*)(.m4a.json)";
+        Pattern pattern = Pattern.compile(expression);
+        Matcher matcher = pattern.matcher(url);
+
+        if(matcher.find())
+        {
+            String [] temp =  matcher.group(2).split("_");
+            st_date = temp[2];
+            simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
+            newDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+
+            try {
+                date = simpleDateFormat.parse(st_date);
+                chatDate = newDateFormat.format(date);
+                tv_date.setText(chatDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+
 
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -104,13 +140,13 @@ public class ChatActivity extends AppCompatActivity {
 
                     try {
                         amazonTranscription = download(url);
+                        //amazonTranscription = download();
 
                         if (amazonTranscription.getResults().getTranscripts().get(0).getTranscript().equals("")) {
                             Handler handler = new Handler(Looper.getMainLooper());
                             handler.postDelayed(new Runnable() {
                                 @Override
-                                public void run()
-                                {
+                                public void run() {
                                     loading.setVisibility(View.GONE);
                                     nonechat.setVisibility(View.VISIBLE);
                                     Toast.makeText(getApplicationContext(), "통화내용이 없습니다.", Toast.LENGTH_SHORT).show();
@@ -118,38 +154,52 @@ public class ChatActivity extends AppCompatActivity {
                             }, 0);
                             break;
                         } else {
-                            item1 = amazonTranscription.getResults().getSpeaker_labels().toString();
-                            item2 = amazonTranscription.getResults().getItems().toString();
 
 
-                            item1 = item1.replace("[", "").replace("]", "");
-                            item2 = item2.replace("[", "").replace("]", "");
+                            if(amazonTranscription.getResults().getSpeaker_labels().getSpeakers() == 2)
+                            {
+                                item1 = amazonTranscription.getResults().getSpeaker_labels().toString();
+                                item2 = amazonTranscription.getResults().getItems().toString();
 
 
-                            dummy1 = item1.split(",");
-                            array1 = new String[dummy1.length][];
-                            int r = 0;
-                            for (String row : dummy1) {
-                                array1[r++] = row.split("/", 5);
+                                item1 = item1.replace("[", "").replace("]", "");
+                                item2 = item2.replace("[", "").replace("]", "");
+
+
+                                array1 = service.getTokenizedArray(item1);
+                                array2 = service.getTokenizedArray(item2);
+
+                                modifi = service.mergeArray(array1, array2);
+
+
+
+                                list = Arrays.stream(modifi)
+                                        .map(Arrays::asList)
+                                        .collect(Collectors.toList());
+                                Observable.just(list)
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(addList());
+                            }
+                            else
+                            {
+                                // 화자가 1 일때
+                                String[] dd = amazonTranscription.getResults().getTranscripts().get(0).getTranscript()
+                                        .split("[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9|\\s]");
+                                String[][] result = new String[dd.length][2];
+                                for(int i=0; i<dd.length; i++)
+                                {
+                                    result[i][0] = "spk_0";
+                                    result[i][1] = dd[i];
+                                }
+
+                                list = Arrays.stream(result).map(Arrays::asList)
+                                        .collect(Collectors.toList());
+                                Observable.just(list)
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(addList());
 
                             }
 
-                            Log.d("item2", item2);
-                            dummy2 = item2.split(",");
-                            array2 = new String[dummy2.length][];
-                            int k = 0;
-                            for (String row1 : dummy2) {
-                                array2[k++] = row1.split("/", 5);
-
-                            }
-
-                            modifi = service.getModifiedChatArray(array1, array2);
-                            list = Arrays.stream(modifi)
-                                    .map(Arrays::asList)
-                                    .collect(Collectors.toList());
-                            Observable.just(list)
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(addList());
 
 
                         }
@@ -203,6 +253,7 @@ public class ChatActivity extends AppCompatActivity {
         HttpResponse response = httpRequest.get(uri).send();
 
         String result = response.charset("UTF-8").bodyText();
+
         Log.d("텍스트", result);
 
 

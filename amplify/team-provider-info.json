@@ -18,11 +18,11 @@
       "function": {
         "transcribeS3Audio": {
           "deploymentBucketName": "amplify-dev-dev-144123-deployment",
-          "s3Key": "amplify-builds/transcribeS3Audio-4561625339324767356e-build.zip"
+          "s3Key": "amplify-builds/transcribeS3Audio-67626b4d4e6450677655-build.zip"
         },
         "updateDataStoreScriptUrl": {
           "deploymentBucketName": "amplify-dev-dev-144123-deployment",
-          "s3Key": "amplify-builds/updateDataStoreScriptUrl-756a44716e4e33557446-build.zip"
+          "s3Key": "amplify-builds/updateDataStoreScriptUrl-556a6c466d6d41776b65-build.zip"
         },
         "updatefriendimg": {
           "deploymentBucketName": "amplify-dev-dev-144123-deployment",

@@ -1,6 +1,8 @@
 package com.example.developCall.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.amplifyframework.core.Amplify;
 import com.example.developCall.Alarm.AlarmSet_Fragment;
+import com.example.developCall.LoginActivity;
 import com.example.developCall.R;
 
 public class MyPageFragment extends Fragment {
@@ -23,7 +27,7 @@ public class MyPageFragment extends Fragment {
     TextView tv_inquiry;
     LinearLayout txt_notice;
     TextView alarm_Setting;
-
+    TextView tv_logout;
 
     @Nullable
     @Override
@@ -34,7 +38,7 @@ public class MyPageFragment extends Fragment {
         tv_inquiry = view.findViewById(R.id.onebyone);
         txt_notice = view.findViewById(R.id.txt_notice);
         alarm_Setting = view.findViewById(R.id.alarmSetting);
-
+        tv_logout = view.findViewById(R.id.tv_logout);
 
 
         tv_faq.setOnClickListener(new View.OnClickListener() { //faq
@@ -69,6 +73,19 @@ public class MyPageFragment extends Fragment {
                 AlarmSet_Fragment alarmSet_fragment = new AlarmSet_Fragment();
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.home_frame, alarmSet_fragment).addToBackStack(null).commit();
 
+            }
+        });
+
+        tv_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Amplify.Auth.signOut(
+                        () -> Log.i("AuthQuickstart", "Signed out successfully"),
+                        error -> Log.e("AuthQuickstart", error.toString()));
+
+                Intent in = new Intent(requireActivity().getApplicationContext(), LoginActivity.class);
+                requireActivity().startActivity(in);
+                requireActivity().finish();
             }
         });
 

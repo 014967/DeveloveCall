@@ -91,7 +91,9 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
 
 
-                    User user = User.builder().name(name).id(userId).owner(userId).build();
+
+
+                    User user = User.builder().name(name).id(userId).owner(userId).userImg("").build();
 
 
 
@@ -104,15 +106,6 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
 
                 }
-/*
-*
-* GraphQLResponse{data='null', errors='[GraphQLResponse.Error{message='Validation error of type FieldUndefined:
-*  Field 'owner' in type 'User' is undefined @ 'createUser/owner'', locations
-* ='[GraphQLLocation{line='5', column='5'}]', path='null', extensions='null'}]'}
-*
-* */
-
-
 
 
 
@@ -120,7 +113,12 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
             private void onError(DataStoreException e) {
                 runOnUiThread(()->
-                        Toast.makeText(getApplicationContext(), "DataStoreError", Toast.LENGTH_LONG).show());
+                        {
+                            System.out.println(e.toString());
+                            Toast.makeText(getApplicationContext(), "DataStoreError", Toast.LENGTH_LONG).show();
+                        });
+
+
             }
 
             private <T extends Model> void onSavedSuccess(DataStoreItemChange<T> tDataStoreItemChange)

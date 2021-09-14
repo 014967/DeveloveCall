@@ -226,7 +226,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-
             android:text="1:1 문의"/>
         <TextView
             android:id="@+id/alarmSetting"
@@ -238,6 +237,13 @@
             android:text="알림 설정"/>
 
 
+        <TextView
+            android:id="@+id/tv_logout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="로그 아웃"/>
 
     </LinearLayout>
 

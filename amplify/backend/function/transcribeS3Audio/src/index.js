@@ -53,7 +53,11 @@ exports.handler =  (event, context) => {
         },
         MediaFormat : mediaFormat,
         TranscriptionJobName : jobName,
-        OutputBucketName : OUTPUT_BUCKET
+        OutputBucketName : OUTPUT_BUCKET,
+        Settings : {
+            MaxSpeakerLabels : 2,
+            ShowSpeakerLabels : true,
+        }
     };
 
     try{

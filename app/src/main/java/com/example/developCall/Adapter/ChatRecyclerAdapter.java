@@ -21,7 +21,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
 
 
     public ChatRecyclerAdapter(Context context, List<List<String>> data) {
-        System.out.println(data);
+
         this.data = data;
         this.context = context;
     }
@@ -31,11 +31,13 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
     public int getItemViewType(int position) {
 
 
-        if (data.get(position).get(2).equals("spk_0")) {
+        if (data.get(position).get(0).equals("spk_0")) {
             return 1;
         } else {
             return 2;
+
         }
+
 
     }
 
@@ -63,19 +65,16 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
     public void onBindViewHolder(@NonNull ChatRecyclerAdapter.ViewHolder holder, int position) {
 
 
-        holder.textView.setText(data.get(position).get(3));
+        holder.textView.setText(data.get(position).get(1));
 
 
     }
 
     @Override
     public int getItemCount() {
-        if(data.size() == 0)
-        {
+        if (data.size() == 0) {
             return 0;
-        }
-        else
-        {
+        } else {
             return data.size();
 
         }
@@ -97,8 +96,7 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
         }
     }
 
-    public void initData( List<List<String>> newData)
-    {
+    public void initData(List<List<String>> newData) {
         this.data = newData;
     }
 

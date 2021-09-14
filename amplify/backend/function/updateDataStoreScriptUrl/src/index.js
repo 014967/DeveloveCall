@@ -26,6 +26,11 @@ exports.handler = async (event) => {
 
     var tablename = "Chat-6tai4sqoubaihizrtoyvo7a5da-dev";
 
+    var friendTableName = "Friend-6tai4sqoubaihizrtoyvo7a5da-dev";
+
+    console.log(userId);
+    console.log(friendId);
+    console.log(uploadTime);
 
 
     var params = {
@@ -45,12 +50,35 @@ exports.handler = async (event) => {
     }
 
 
+    var lastContactParams = {
+        TableName : friendTableName,
+        Key : {
+            "id" : friendId,
+        },
+        UpdateExpression : "set lastContact = :c",
+        ExpressionAttributeValues:{
+            ":c" : uploadTime,
+        },
+        ReturnValues:"UPDATED_NEW"
+    };
 
     async function createItem(){
     try {
         await docClient.put(params).promise();
+
     } catch (err) {
         return err;
+        }
+    }
+
+    async function updateContact()
+    {
+        try{
+            await docClient.update(lastContactParams).promise();
+        }
+        catch(err)
+        {
+        console.log(err);
         }
     }
 
@@ -59,8 +87,8 @@ exports.handler = async (event) => {
 
     try{
         await createItem();
-
-            console.log("success");
+        await updateContact();
+        console.log("success");
 
     }
     catch(err)
