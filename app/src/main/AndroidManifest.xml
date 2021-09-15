@@ -41,7 +41,11 @@
         <activity android:name=".Alarm.Alarm_CalendarPopUp" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".Alarm.Alarm_CyclePopUp" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".Alarm.Alarm_TimePopUp" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".Calendar.AddPopUpActivity" android:theme="@android:style/Theme.Dialog"/>
+        <activity android:name=".Calendar.ListPopUpActivity" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".Alarm.Alarm_AddList"/>
+        <activity android:name=".Search.SearchActivity" />
+
         <receiver android:name=".Alarm.Alarm_Receiver"/>
 
 

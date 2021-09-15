@@ -1,21 +1,19 @@
 package com.example.developCall.Calendar;
 
 public class JsonData {
-    private int profile;
+    private String title;
     private String name;
-    private String number;
+    private String time;
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
+    public void setNumber(String time) { this.time = time; }
 
-    public int getProfile()
+    public String getTitle()
     {
-        return this.profile;
+        return this.title;
     }
 
     public String getName()
@@ -23,8 +21,8 @@ public class JsonData {
         return this.name;
     }
 
-    public String getNumber()
+    public String getTime()
     {
-        return this.number;
+        return this.time;
     }
 }

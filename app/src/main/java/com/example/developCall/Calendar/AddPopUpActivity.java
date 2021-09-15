@@ -13,9 +13,9 @@ import com.example.developCall.R;
 
 public class AddPopUpActivity extends Activity {
 
-    EditText name, number;
+    EditText name, title;
     Button finish, addclose;
-    String addname, addnumber;
+    String addname, addtitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,19 +24,19 @@ public class AddPopUpActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.popup_layout);
 
-        name = (EditText)findViewById(R.id.title);
-        number = (EditText)findViewById(R.id.content);
+        title = (EditText)findViewById(R.id.title);
+        name = (EditText)findViewById(R.id.content);
         finish = (Button)findViewById(R.id.finish);
         addclose = (Button)findViewById(R.id.addclose);
 
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addtitle = title.getText().toString();
                 addname = name.getText().toString();
-                addnumber = number.getText().toString();
                 Intent intent = new Intent();
+                intent.putExtra("title", addtitle);
                 intent.putExtra("name", addname);
-                intent.putExtra("number", addnumber);
                 setResult(RESULT_OK, intent);
 
                 finish();
@@ -65,5 +65,4 @@ public class AddPopUpActivity extends Activity {
         //안드로이드 백버튼 막기
         return;
     }
-
 }

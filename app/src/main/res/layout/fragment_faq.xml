@@ -8,23 +8,42 @@
 
     android:background="@color/white">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="89dp"
-        android:gravity="center">
+        android:layout_height="63dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/ic_back_thin" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:paddingTop="20dp"
-            android:text="FAQ"/>
-    </LinearLayout>
+            android:layout_centerInParent="true"
+            android:text="FAQ"
+            android:textSize="15dp" />
+
+    </RelativeLayout>
+
+    <!--회색 구분선-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color"/>
+
     <!--카테고리1-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="34dp"
         android:gravity="center_vertical"
         android:background="@color/light_gray"
+        android:textColor="@color/dark_black"
         android:paddingLeft="20dp"
         android:text="사용자 관리"/>
 
@@ -55,6 +74,7 @@
                 android:paddingRight="20dp"
                 android:layout_marginLeft="10dp"
                 android:textSize="13dp"
+                android:textColor="@color/dark_black"
                 android:text="사용자는 어떻게 등록하나요?"/>
             <View
                 android:layout_width="0dp"
@@ -77,6 +97,7 @@
                 android:layout_height="34dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
+                android:textColor="@color/dark_black"
                 android:text="A."/>
             <TextView
                 android:layout_width="match_parent"
@@ -85,6 +106,7 @@
                 android:paddingRight="20dp"
                 android:layout_marginLeft="10dp"
                 android:textSize="13dp"
+                android:textColor="@color/dark_black"
                 android:text="친구 목록에서 + 버튼을 눌러 기존 휴대폰 전화번호부에서 가져올
 수 있습니다."/>
         </LinearLayout>
@@ -125,6 +147,7 @@
                 android:paddingRight="20dp"
                 android:layout_marginLeft="10dp"
                 android:textSize="13dp"
+                android:textColor="@color/dark_black"
                 android:text="사용자는 어떻게 등록하나요?"/>
             <View
                 android:layout_width="0dp"
@@ -147,6 +170,7 @@
                 android:layout_height="34dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
+                android:textColor="@color/dark_black"
                 android:text="A."/>
             <TextView
                 android:layout_width="match_parent"
@@ -155,6 +179,7 @@
                 android:paddingRight="20dp"
                 android:layout_marginLeft="10dp"
                 android:textSize="13dp"
+                android:textColor="@color/dark_black"
                 android:text="친구 목록에서 + 버튼을 눌러 기존 휴대폰 전화번호부에서 가져올
 수 있습니다."/>
         </LinearLayout>
@@ -195,6 +220,7 @@
                 android:paddingRight="20dp"
                 android:layout_marginLeft="10dp"
                 android:textSize="13dp"
+                android:textColor="@color/dark_black"
                 android:text="사용자는 어떻게 등록하나요?"/>
             <View
                 android:layout_width="0dp"
@@ -217,6 +243,7 @@
                 android:layout_height="34dp"
                 android:gravity="center_vertical"
                 android:paddingLeft="20dp"
+                android:textColor="@color/dark_black"
                 android:text="A."/>
             <TextView
                 android:layout_width="match_parent"
@@ -225,6 +252,7 @@
                 android:paddingRight="20dp"
                 android:layout_marginLeft="10dp"
                 android:textSize="13dp"
+                android:textColor="@color/dark_black"
                 android:text="친구 목록에서 + 버튼을 눌러 기존 휴대폰 전화번호부에서 가져올
 수 있습니다."/>
         </LinearLayout>
@@ -241,6 +269,7 @@
         android:background="@color/light_gray"
         android:paddingLeft="20dp"
         android:layout_marginTop="15dp"
+        android:textColor="@color/dark_black"
         android:text="주문/배송"/>
 
     <!--질문4-->
@@ -270,6 +299,7 @@
                 android:paddingRight="20dp"
                 android:layout_marginLeft="10dp"
                 android:textSize="13dp"
+                android:textColor="@color/dark_black"
                 android:text="사용자는 어떻게 등록하나요?"/>
             <View
                 android:layout_width="0dp"
@@ -318,6 +348,7 @@
                 android:paddingRight="20dp"
                 android:layout_marginLeft="10dp"
                 android:textSize="13dp"
+                android:textColor="@color/dark_black"
                 android:text="사용자는 어떻게 등록하나요?"/>
             <View
                 android:layout_width="0dp"
