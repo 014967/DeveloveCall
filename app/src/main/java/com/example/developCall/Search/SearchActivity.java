@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+
 import android.widget.ImageView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -18,7 +20,9 @@ public class SearchActivity extends AppCompatActivity {
     FragmentTransaction searchTransaction;
     Search_HistoryFragment search_historyFragment;
     Search_AddressFragment search_addressFragment;
+
     ImageView iv_back;
+
 
 
     EditText searchContents;
@@ -36,6 +40,7 @@ public class SearchActivity extends AppCompatActivity {
         searchTransaction.replace(R.id.search_frame, search_historyFragment).commitAllowingStateLoss();
 
         searchContents = (EditText) findViewById(R.id.search_contents);
+
         iv_back = findViewById(R.id.iv_back);
 
         iv_back.setOnClickListener(new View.OnClickListener() {

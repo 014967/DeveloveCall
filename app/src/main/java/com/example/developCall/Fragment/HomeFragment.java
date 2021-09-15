@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +29,7 @@ import com.example.developCall.Object.Ob_Friend;
 import com.example.developCall.R;
 import com.example.developCall.Search.SearchActivity;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,18 +45,29 @@ public class HomeFragment extends Fragment {
     Home_FriendListAdapter friendListAdapter;
     List<Ob_Friend> friendListArray = new ArrayList<>();
 
+
+    ImageView searchbtn;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        searchbtn = (ImageView) view.findViewById(R.id.img_btn_search_white);
+
+        searchbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent searchIntent = new Intent(getActivity().getApplicationContext(), SearchActivity.class);
+                startActivity(searchIntent);
+            }
+        });
 
         imageView = view.findViewById(R.id.img_btn_search_white);
         txt_user_name = view.findViewById(R.id.txt_user_name);
         home_rv_friend = view.findViewById(R.id.home_rv_friend);
         userId = Amplify.Auth.getCurrentUser().getUserId();
         friendListAdapter = new Home_FriendListAdapter(friendListArray);
-
 
 
         home_rv_friend.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
@@ -104,8 +118,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private List<Ob_Friend> addFriendList(GraphQLResponse<PaginatedResult<User>> response)
-    {
+    private List<Ob_Friend> addFriendList(GraphQLResponse<PaginatedResult<User>> response) {
         for (User user : response.getData()) {
             username = user.getName();
             for (Group group : user.getGroup()) {
@@ -123,3 +136,6 @@ public class HomeFragment extends Fragment {
     }
 
 }
+
+
+

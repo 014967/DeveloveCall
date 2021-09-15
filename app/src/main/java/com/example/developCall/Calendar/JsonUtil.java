@@ -8,9 +8,9 @@ public class JsonUtil {
         try {
 
             JSONObject jsonObj = new JSONObject();
-            jsonObj.put("title", data.getProfile());
-            jsonObj.put("date", data.getName());
-            jsonObj.put("note", data.getNumber());
+            jsonObj.put("title", data.getTitle());
+            jsonObj.put("name", data.getName());
+            jsonObj.put("time", data.getTime());
 
             return jsonObj.toString();
 

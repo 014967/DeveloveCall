@@ -46,7 +46,11 @@
                     android:text="Button" />
 
             </LinearLayout>
-
+            <!--회색 구분선-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/group_rv"
                 android:layout_width="match_parent"

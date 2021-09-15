@@ -43,13 +43,13 @@ public class CalendarAdapter extends BaseAdapter {
     public View getView(int position, View converView, ViewGroup parent) {
         View view = mLayoutInflater.inflate(R.layout.listview_custom, null);
 
-        ImageView imageView = (ImageView)view.findViewById(R.id.Profile);
-        TextView Name = (TextView)view.findViewById(R.id.Name);
-        TextView Number = (TextView)view.findViewById(R.id.Number);
+        TextView Title = (TextView)view.findViewById(R.id.Calendar_Title);
+        TextView Name = (TextView)view.findViewById(R.id.Calendar_Name);
+        TextView Time = (TextView)view.findViewById(R.id.Calendar_Time);
 
-        imageView.setImageResource(sample.get(position).getProfile());
+        Title.setText(sample.get(position).getTitle());
         Name.setText(sample.get(position).getName());
-        Number.setText(sample.get(position).getNumber());
+        Time.setText(sample.get(position).getTime());
 
         return view;
     }

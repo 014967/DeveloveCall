@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="40dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -19,36 +19,40 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_back"/>
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_back" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <LinearLayout
             android:layout_width="320dp"
             android:layout_height="46dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/round_rec_fill_gray_full">
+
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:layout_marginLeft="15dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_search"/>
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/ic_search" />
+
             <EditText
                 android:id="@+id/search_contents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:layout_marginLeft="10dp"
                 android:layout_gravity="center_vertical"
-                android:background="@android:color/transparent"
-                android:textColorHint="@color/text_gray"
-                android:hint="Search"
+                android:layout_marginLeft="10dp"
                 android:autofillHints="Search"
-                android:singleLine="true"/>
+                android:background="@android:color/transparent"
+                android:hint="Search"
+                android:singleLine="true"
+                android:textColorHint="@color/text_gray"
+                android:textSize="18dp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -56,19 +60,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/bg_gray">
-    </LinearLayout>
-
-
+        android:background="@color/bg_gray"></LinearLayout>
 
 
     <FrameLayout
         android:id="@+id/search_frame"
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
 
-
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"></FrameLayout>
 
 
 </LinearLayout>

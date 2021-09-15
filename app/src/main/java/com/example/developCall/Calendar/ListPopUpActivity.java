@@ -14,9 +14,9 @@ import com.example.developCall.R;
 
 public class ListPopUpActivity extends Activity {
 
-    EditText name, number;
+    EditText title, name;
     Button rewrite, delete, close;
-    String listtitle, listnumber;
+    String listtitle, listname;
     int listposition;
 
     @Override
@@ -27,12 +27,12 @@ public class ListPopUpActivity extends Activity {
         setContentView(R.layout.listview_popup);
 
         Intent intent = getIntent();
-        listtitle = intent.getStringExtra("name");
-        listnumber = intent.getStringExtra("number");
+        listtitle = intent.getStringExtra("title");
+        listname = intent.getStringExtra("name");
         listposition = intent.getIntExtra("position",0);
 
-        name = (EditText)findViewById(R.id.listview_title);
-        number = (EditText)findViewById(R.id.listview_content);
+        title = (EditText)findViewById(R.id.listview_title);
+        name = (EditText)findViewById(R.id.listview_content);
         rewrite = (Button)findViewById(R.id.rewrite);
         delete = (Button)findViewById(R.id.delete);
         close = (Button)findViewById(R.id.close);
@@ -40,17 +40,17 @@ public class ListPopUpActivity extends Activity {
         String test = String.valueOf(listposition);
         Log.d("tag",test);
 
-        name.setText(listtitle);
-        number.setText(listnumber);
+        title.setText(listtitle);
+        name.setText(listname);
 
         rewrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listtitle = name.getText().toString();
-                listnumber = number.getText().toString();
+                listtitle = title.getText().toString();
+                listname = name.getText().toString();
                 Intent intent = new Intent();
-                intent.putExtra("name", listtitle);
-                intent.putExtra("number", listnumber);
+                intent.putExtra("title", listtitle);
+                intent.putExtra("name", listname);
                 intent.putExtra("position", listposition);
                 setResult(1, intent);
 

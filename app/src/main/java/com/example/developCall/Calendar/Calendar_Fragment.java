@@ -3,12 +3,16 @@ package com.example.developCall.Calendar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,26 +24,46 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.developCall.Alarm.Alarm_ListData;
 import com.example.developCall.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Calendar_Fragment extends Fragment {
     ArrayList<CalendarData> dataList;
-    Button[] button = null;
-    String oldFileName = "";
-    String oldName = "";
-    Button addbtn;
     CalendarAdapter calendarAdapter;
+
+    Button[] button = null;
+    Button addbtn;
+    Button oldbtn;
     ListView listView;
     TextView day;
+    TextView weekDay;
+    TextView monthYear;
+
+    String oldFileName = "";
+    String oldName = "";
+    String fileName = "";
+    String getMonth;
+    String getDay;
+    String getYear;
+    String getWeek;
+    int numDay;
+
+    Calendar tempCalendar;
+
     Context context;
 
     @Override
@@ -47,36 +71,92 @@ public class Calendar_Fragment extends Fragment {
         View view = inflater.inflate(R.layout.calendar_layout, container, false);
         context = container.getContext();
 
-        button = new Button[7];
-        int[] btnid = {R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7};
+        Log.d("tag", "들어옴");
+
+        button = new Button[31];
+        int[] btnid = {R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9, R.id.button10, R.id.button11, R.id.button12, R.id.button13, R.id.button14, R.id.button15, R.id.button16, R.id.button17, R.id.button18, R.id.button19, R.id.button20, R.id.button21, R.id.button22, R.id.button23, R.id.button24, R.id.button25, R.id.button26, R.id.button27, R.id.button28, R.id.button29, R.id.button30, R.id.button31};
 
         addbtn = (Button)view.findViewById(R.id.add);
-        day = (TextView)view.findViewById(R.id.day);
 
-        for(int i = 0; i < 7; i++){
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat dayFormat = new SimpleDateFormat("dd", Locale.getDefault());
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MM", Locale.getDefault());
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+        SimpleDateFormat weekFormat = new SimpleDateFormat("EE", Locale.getDefault());
+        getMonth = monthFormat.format(date);
+        getDay = dayFormat.format(date);
+        getYear = yearFormat.format(date);
+        getWeek = weekFormat.format(date);
+        numDay = Integer.parseInt(getDay);
+
+        tempCalendar = Calendar.getInstance();
+        tempCalendar.set(Calendar.YEAR, Integer.parseInt(getYear));
+        tempCalendar.set(Calendar.MONTH, Integer.parseInt(getMonth)-1);
+
+        String setMonthYear = getMonth + " " + getYear;
+
+        day = (TextView)view.findViewById(R.id.day);
+        weekDay = (TextView) view.findViewById(R.id.weekday);
+        monthYear = (TextView) view.findViewById(R.id.monthyear);
+
+        weekDay.setText(getWeek);
+        monthYear.setText(setMonthYear);
+        day.setText(getDay);
+
+        for(int i = 0; i < 31; i++){
             this.button[i] = (Button)view.findViewById(btnid[i]);
         }
 
-
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < 31; i++){
             this.button[i].setOnClickListener(btnListener);
+            this.button[i].setOnTouchListener(btnTouchListener);
+            this.button[i].setBackgroundColor(getResources().getColor(R.color.white));
+            this.button[i].setTextColor(getResources().getColor(R.color.text_dark_gray));
+        }
+
+        for(int i = 0; i < 31; i++){
+            tempCalendar.set(Calendar.DAY_OF_MONTH, i+1);
+            Date tempDate = new Date(tempCalendar.getTimeInMillis());
+            SimpleDateFormat tempWeekFormat = new SimpleDateFormat("EE", Locale.getDefault());
+
+            String tempweek = tempWeekFormat.format(tempDate);
+            String btnNum = Integer.toString(i+1);
+            String btnText = tempweek + " " + btnNum;
+            this.button[i].setText(btnText);
         }
 
         addbtn.setOnClickListener(btnListener);
 
-        this.InitializeData();
+
+        if(numDay == 4 || numDay == 6 || numDay == 9 || numDay == 11){
+            button[30].setVisibility(View.INVISIBLE);
+        }
+        else if(numDay == 2){
+            button[28].setVisibility(view.INVISIBLE);
+            button[29].setVisibility(View.INVISIBLE);
+            button[30].setVisibility(View.INVISIBLE);
+        }
+
+        String dayToString = Integer.toString(button[numDay-1].getId());
+
+        dataList = new ArrayList<CalendarData>();
+        String calendarTempName = getJsonString(dayToString+".json");
+        jsonParsing(calendarTempName);
 
         listView = (ListView)view.findViewById(R.id.listview);
         calendarAdapter = new CalendarAdapter(view.getContext(),dataList);
-
         listView.setAdapter(calendarAdapter);
+
+        setListViewHeightBasedOnItems(listView);
+
+        oldFileName = "";
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView parent, View v, int position, long id){
                 Intent intent = new Intent(view.getContext(), ListPopUpActivity.class);
+                intent.putExtra("title", calendarAdapter.getItem(position).getTitle());
                 intent.putExtra("name", calendarAdapter.getItem(position).getName());
-                intent.putExtra("number", calendarAdapter.getItem(position).getNumber());
                 intent.putExtra("position", position);
                 startActivityResult.launch(intent);
             }
@@ -93,17 +173,17 @@ public class Calendar_Fragment extends Fragment {
         CalendarData data3 = new CalendarData();
 
         data1.setName("김현국");
-        data1.setNumber("111-1111-1111");
+        data1.setTime("14:00pm");
 
         dataList.add(data1);
 
         data2.setName("김용학");
-        data2.setNumber("222-2222-2222");
+        data1.setTime("16:00pm");
 
         dataList.add(data2);
 
         data3.setName("박하나");
-        data3.setNumber("333-3333-3333");
+        data1.setTime("18:00pm");
 
         dataList.add(data3);
     }
@@ -111,6 +191,10 @@ public class Calendar_Fragment extends Fragment {
     public final View.OnClickListener btnListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Button tempbtn = (Button)v.findViewById(v.getId());
+            String btnday = tempbtn.getText().toString();
+            int max = btnday.length();
+
             ListView listView = (ListView) getActivity().findViewById(R.id.listview);
             final CalendarAdapter calendarAdapter = new CalendarAdapter(v.getContext(), dataList);
             listView.setAdapter(calendarAdapter);
@@ -120,15 +204,16 @@ public class Calendar_Fragment extends Fragment {
                 startActivityResult.launch(intent);
             }
             else {
-                String fileName = v.getId() + ".json";
+                String str1 = btnday.substring(0, btnday.indexOf(" "));
+                String str2 = btnday.substring(4, max);
+                fileName = v.getId() + ".json";
                 String Name = "";
-                Button tempbtn = (Button)v.findViewById(v.getId());
-                String btnday = tempbtn.getText().toString();
 
-                day.setText(btnday+"일");
+                day.setText(str2);
+                weekDay.setText(str1);
 
                 try {
-                    if (oldFileName != "") {
+                    if (!oldFileName.equals("")) {
                         writeFile(oldFileName, dataList);
                     }
                     Name = getJsonString(fileName);
@@ -139,6 +224,26 @@ public class Calendar_Fragment extends Fragment {
                     e.printStackTrace();
                 }
             }
+
+        }
+    };
+
+    public final View.OnTouchListener btnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent motionEvent)  {
+            Button tempbtn = (Button)v.findViewById(v.getId());
+            if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                try {
+                    oldbtn.setBackgroundColor(getResources().getColor(R.color.white));
+                    oldbtn.setTextColor(getResources().getColor(R.color.text_dark_gray));
+                } catch (Exception e) {
+                }
+                tempbtn.setBackgroundColor(getResources().getColor(R.color.pink_orange));
+                tempbtn.setTextColor(getResources().getColor(R.color.white));
+                tempbtn.setBackground(getResources().getDrawable(R.drawable.calendar_date));
+            }
+            oldbtn = tempbtn;
+            return false;
         }
     };
 
@@ -149,12 +254,12 @@ public class Calendar_Fragment extends Fragment {
             for (int i = 0; i < dataList.size(); i++)//배열
             {
                 JSONObject sObject = new JSONObject();//배열 내에 들어갈 json
-                sObject.put("profile", dataList.get(i).getProfile());
+                sObject.put("title", dataList.get(i).getTitle());
                 sObject.put("name", dataList.get(i).getName());
-                sObject.put("number", dataList.get(i).getNumber());
+                sObject.put("time", dataList.get(i).getTime());
                 jArray.put(sObject);
             }
-            obj.put("Friend", jArray);//배열을 넣음
+            obj.put("Calendar", jArray);//배열을 넣음
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -192,7 +297,7 @@ public class Calendar_Fragment extends Fragment {
         try{
             JSONObject jsonObject = new JSONObject(json);
 
-            JSONArray dataArray = jsonObject.getJSONArray("Friend");
+            JSONArray dataArray = jsonObject.getJSONArray("Calendar");
 
             dataList.clear();
 
@@ -202,9 +307,13 @@ public class Calendar_Fragment extends Fragment {
 
                 CalendarData data = new CalendarData();
 
-                data.setProfile(dataObject.getInt("profile"));
+                data.setTitle(dataObject.getString("title"));
                 data.setName(dataObject.getString("name"));
-                data.setNumber(dataObject.getString("number"));
+                try {
+                    data.setTime(dataObject.getString("time"));
+                } catch (JSONException e) {
+                    data.setTime("Every Time");
+                }
 
                 dataList.add(data);
             }
@@ -220,19 +329,19 @@ public class Calendar_Fragment extends Fragment {
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
+                        String titleresult = data.getStringExtra("title");
                         String nameresult = data.getStringExtra("name");
-                        String numberresult = data.getStringExtra("number");
 
-                        if(!nameresult.equals("") && !numberresult.equals("")) {
+                        if(!nameresult.equals("") && !titleresult.equals("")) {
                             CalendarData adddata = new CalendarData();
 
+                            adddata.setTitle(titleresult);
                             adddata.setName(nameresult);
-                            adddata.setNumber(numberresult);
 
                             dataList.add(adddata);
 
                             try {
-                                if (oldFileName != "") {
+                                if (!oldFileName.equals("")) {
                                     writeFile(oldFileName, dataList);
                                 }
                             } catch (IOException e) {
@@ -242,20 +351,20 @@ public class Calendar_Fragment extends Fragment {
                     }
                     else if (result.getResultCode() == 1){
                         Intent data = result.getData();
+                        String retitle = data.getStringExtra("title");
                         String rename = data.getStringExtra("name");
-                        String renumber = data.getStringExtra("number");
                         int position = data.getIntExtra("position",0);
 
                         CalendarData redata = new CalendarData();
 
+                        redata.setTitle(retitle);
                         redata.setName(rename);
-                        redata.setNumber(renumber);
 
                         dataList.set(position, redata);
                         listView.setAdapter(calendarAdapter);
 
                         try {
-                            if (oldFileName != "") {
+                            if (!oldFileName.equals("")) {
                                 writeFile(oldFileName, dataList);
                             }
                         } catch (IOException e) {
@@ -269,8 +378,10 @@ public class Calendar_Fragment extends Fragment {
                         dataList.remove(position);
                         listView.setAdapter(calendarAdapter);
 
+                        String Name = "";
+
                         try {
-                            if (oldFileName != "") {
+                            if (!oldFileName.equals("")) {
                                 writeFile(oldFileName, dataList);
                             }
                         } catch (IOException e) {
@@ -279,4 +390,40 @@ public class Calendar_Fragment extends Fragment {
                     }
                 }
             });
+
+    public static boolean setListViewHeightBasedOnItems(ListView listView) {
+
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter != null) {
+
+            int numberOfItems = listAdapter.getCount();
+
+            // Get total height of all items.
+            int totalItemsHeight = 0;
+            for (int itemPos = 0; itemPos < numberOfItems; itemPos++) {
+                View item = listAdapter.getView(itemPos, null, listView);
+                float px = 500 * (listView.getResources().getDisplayMetrics().density);
+                item.measure(View.MeasureSpec.makeMeasureSpec((int) px, View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                totalItemsHeight += item.getMeasuredHeight();
+            }
+
+            // Get total height of all item dividers.
+            int totalDividersHeight = listView.getDividerHeight() *
+                    (numberOfItems - 1);
+            // Get padding
+            int totalPadding = listView.getPaddingTop() + listView.getPaddingBottom();
+
+            // Set list height.
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            //params.height = totalItemsHeight + totalDividersHeight + totalPadding;
+            params.height = 1200;
+            listView.setLayoutParams(params);
+            listView.requestLayout();
+            //setDynamicHeight(listView);
+            return true;
+
+        } else {
+            return false;
+        }
+    }
 }
