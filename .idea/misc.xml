@@ -25,7 +25,7 @@
         <entry key="app/src/main/res/layout/alarm_listview.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/alarm_setting.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/alarm_timepopup.xml" value="0.2171875" />
-        <entry key="app/src/main/res/layout/assign_complete.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/assign_complete.xml" value="0.22072072072072071" />
         <entry key="app/src/main/res/layout/calendar_layout.xml" value="0.2045045045045045" />
         <entry key="app/src/main/res/layout/chatcardleft.xml" value="0.32117117117117117" />
         <entry key="app/src/main/res/layout/chatcardright.xml" value="0.32117117117117117" />
@@ -46,19 +46,23 @@
         <entry key="app/src/main/res/layout/fragment_tab1.xml" value="0.240625" />
         <entry key="app/src/main/res/layout/fragment_tab2.xml" value="0.240625" />
         <entry key="app/src/main/res/layout/fragment_tab3.xml" value="0.240625" />
-        <entry key="app/src/main/res/layout/home.xml" value="0.38183347350714886" />
+        <entry key="app/src/main/res/layout/home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_contact.xml" value="0.2264720793287343" />
         <entry key="app/src/main/res/layout/item_friend.xml" value="0.5100969781491577" />
         <entry key="app/src/main/res/layout/item_group.xml" value="0.125" />
         <entry key="app/src/main/res/layout/list_design.xml" value="0.2045045045045045" />
         <entry key="app/src/main/res/layout/login.xml" value="0.18697916666666667" />
-        <entry key="app/src/main/res/layout/mypage.xml" value="0.31981846235495714" />
+        <entry key="app/src/main/res/layout/mypage.xml" value="0.1" />
         <entry key="app/src/main/res/layout/personal_inquiry.xml" value="0.2269021739130435" />
         <entry key="app/src/main/res/layout/pop_up_edit.xml" value="0.4132663821462915" />
         <entry key="app/src/main/res/layout/popup_group.xml" value="0.335" />
         <entry key="app/src/main/res/layout/popup_layout.xml" value="0.2595108695652174" />
         <entry key="app/src/main/res/layout/profile.xml" value="0.375" />
         <entry key="app/src/main/res/layout/s3upload_notification.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/search_history_list.xml" value="0.16936936936936936" />
+        <entry key="app/src/main/res/layout/search_listview_custom.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/search_result.xml" value="1.717806067222237" />
+        <entry key="app/src/main/res/layout/search_result_address.xml" value="0.1" />
         <entry key="app/src/main/res/menu/bottom_nav.xml" value="0.21197916666666666" />
       </map>
     </option>
