@@ -3,9 +3,7 @@ package com.example.developCall.Calendar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,13 +22,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.developCall.Alarm.Alarm_ListData;
 import com.example.developCall.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,12 +62,126 @@ public class Calendar_Fragment extends Fragment {
 
     Context context;
 
+
+    public Calendar_Fragment(){
+
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.calendar_layout, container, false);
         context = container.getContext();
 
-        Log.d("tag", "들어옴");
+        ActivityResultLauncher<Intent> startActivityResult = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            String titleresult = data.getStringExtra("title");
+                            String nameresult = data.getStringExtra("name");
+
+                            if(!nameresult.equals("") && !titleresult.equals("")) {
+                                CalendarData adddata = new CalendarData();
+
+                                adddata.setTitle(titleresult);
+                                adddata.setName(nameresult);
+
+                                dataList.add(adddata);
+
+                                try {
+                                    if (!oldFileName.equals("")) {
+                                        writeFile(oldFileName, dataList);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        else if (result.getResultCode() == 1){
+                            Intent data = result.getData();
+                            String retitle = data.getStringExtra("title");
+                            String rename = data.getStringExtra("name");
+                            int position = data.getIntExtra("position",0);
+
+                            CalendarData redata = new CalendarData();
+
+                            redata.setTitle(retitle);
+                            redata.setName(rename);
+
+                            dataList.set(position, redata);
+                            listView.setAdapter(calendarAdapter);
+
+                            try {
+                                if (!oldFileName.equals("")) {
+                                    writeFile(oldFileName, dataList);
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else if (result.getResultCode() == 2){
+                            Intent data = result.getData();
+                            int position = data.getIntExtra("position",0);
+
+                            dataList.remove(position);
+                            listView.setAdapter(calendarAdapter);
+
+                            String Name = "";
+
+                            try {
+                                if (!oldFileName.equals("")) {
+                                    writeFile(oldFileName, dataList);
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+        View.OnClickListener btnListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button tempbtn = (Button)v.findViewById(v.getId());
+                String btnday = tempbtn.getText().toString();
+                int max = btnday.length();
+
+                ListView listView = (ListView) getActivity().findViewById(R.id.listview);
+                final CalendarAdapter calendarAdapter = new CalendarAdapter(v.getContext(), dataList);
+                listView.setAdapter(calendarAdapter);
+
+                if(v.getId() == R.id.add) {
+                    Intent intent = new Intent(v.getContext(), AddPopUpActivity.class);
+                    startActivityResult.launch(intent);
+                }
+                else {
+                    String str1 = btnday.substring(0, btnday.indexOf(" "));
+                    String [] dummy = btnday.split(" ");
+
+                    String str2 = dummy[1];
+                    fileName = v.getId() + ".json";
+                    String Name = "";
+
+                    day.setText(str2);
+                    weekDay.setText(str1);
+
+                    try {
+                        if (!oldFileName.equals("")) {
+                            writeFile(oldFileName, dataList);
+                        }
+                        Name = getJsonString(fileName);
+                        jsonParsing(Name);
+                        oldFileName = fileName;
+                        oldName = Name;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        };
 
         button = new Button[31];
         int[] btnid = {R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9, R.id.button10, R.id.button11, R.id.button12, R.id.button13, R.id.button14, R.id.button15, R.id.button16, R.id.button17, R.id.button18, R.id.button19, R.id.button20, R.id.button21, R.id.button22, R.id.button23, R.id.button24, R.id.button25, R.id.button26, R.id.button27, R.id.button28, R.id.button29, R.id.button30, R.id.button31};

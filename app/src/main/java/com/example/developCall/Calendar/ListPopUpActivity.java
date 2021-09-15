@@ -61,8 +61,7 @@ public class ListPopUpActivity extends Activity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(2, intent);
-                intent.putExtra("position", listposition);
+                setResult(2, new Intent().putExtra("position", listposition));
                 finish();
             }
         });
