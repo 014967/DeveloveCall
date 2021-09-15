@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 
 
-public class serviceImpl implements service{
+public class serviceImpl implements service {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String findScheduleFormat(String str) {
@@ -22,19 +22,19 @@ public class serviceImpl implements service{
 
         String scheduleStr = "";
 
-        String [] tmrw = {"내일"};
-        String [] dayTmrw = {"모레", "내일 모레", "이틀 뒤", "이틀 후"};
-        String [] thrDayNow = {"글피", "모레 모레", "삼일 뒤", "삼일 후"};
+        String[] tmrw = {"내일"};
+        String[] dayTmrw = {"모레", "내일 모레", "이틀 뒤", "이틀 후"};
+        String[] thrDayNow = {"글피", "모레 모레", "삼일 뒤", "삼일 후"};
 
         int chk1 = 0, chk2 = 0, chk3 = 0, chk4 = 0; //달,시,일,분
 
-        String [] aftrNmths = {"달 후", "달 뒤"};
-        String [] aftrNHrs = {"시간 후", "시간 뒤"};
-        String [] hrsNum = {"한", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열", "열한", "열두"};
+        String[] aftrNmths = {"달 후", "달 뒤"};
+        String[] aftrNHrs = {"시간 후", "시간 뒤"};
+        String[] hrsNum = {"한", "두", "세", "네", "다섯", "여섯", "일곱", "여덟", "아홉", "열", "열한", "열두"};
 
-        String [] aftrNdays = {"일 후", "일 뒤","일후", "일뒤"};
-        String [] aftrNMnts = {"분 후", "분 뒤", "분후", "분뒤"};
-        String [] mntsNum = {"일", "이", "삼", "사", "오", "육", "칠", "팔", "구", "십", "십일", "십이",
+        String[] aftrNdays = {"일 후", "일 뒤", "일후", "일뒤"};
+        String[] aftrNMnts = {"분 후", "분 뒤", "분후", "분뒤"};
+        String[] mntsNum = {"일", "이", "삼", "사", "오", "육", "칠", "팔", "구", "십", "십일", "십이",
                 "십삼", "십사", "십오", "십육", "십칠", "십팔", "십구", "이십", "이십일", "이십이",
                 "이십삼", "이십사", "이십오", "이십육", "이십칠", "이십팔", "이십구", "삼십", "삼십일",
                 "삼십이", "삼십삼", "삼십사", "삼십오", "삼십육", "삼십칠", "삼십팔", "삼십구", "사십",
@@ -42,8 +42,8 @@ public class serviceImpl implements service{
                 "오십", "오십일", "오십이", "오십삼", "오십사", "오십오", "오십육", "오십칠", "오십팔",
                 "오십구", "육십"};
 
-        String [] mthsNum = {"일", "이", "삼", "사", "오", "유", "칠", "팔", "구", "시", "십일", "십이"};
-        String [] daysNum = {"일", "이", "삼", "사", "오", "육", "칠", "팔", "구", "십", "십일", "십이",
+        String[] mthsNum = {"일", "이", "삼", "사", "오", "유", "칠", "팔", "구", "시", "십일", "십이"};
+        String[] daysNum = {"일", "이", "삼", "사", "오", "육", "칠", "팔", "구", "십", "십일", "십이",
                 "십삼", "십사", "십오", "십육", "십칠", "십팔", "십구", "이십", "이십일", "이십이",
                 "이십삼", "이십사", "이십오", "이십육", "이십칠", "이십팔", "이십구", "삼십", "삼십일"};
 
@@ -51,21 +51,21 @@ public class serviceImpl implements service{
 
         if (tmp > last) last = tmp;
 
-        for(String form : tmrw) {
+        for (String form : tmrw) {
             if ((tmp = str.indexOf(form)) != -1) {
                 if (tmp > last) last = tmp;
                 cal.add(cal.DATE, 1);
                 ret = sdf.format(cal.getTime());
             }
         }
-        for(String form : dayTmrw) {
+        for (String form : dayTmrw) {
             if ((tmp = str.indexOf(form)) != -1) {
                 if (tmp > last) last = tmp;
                 cal.add(cal.DATE, 2);
                 ret = sdf.format(cal.getTime());
             }
         }
-        for(String form : thrDayNow) {
+        for (String form : thrDayNow) {
             if ((tmp = str.indexOf(form)) != -1) {
                 if (tmp > last) last = tmp;
                 cal.add(cal.DATE, 3);
@@ -73,9 +73,9 @@ public class serviceImpl implements service{
             }
         }
 
-        for(String form : aftrNmths) {
+        for (String form : aftrNmths) {
             index = 0;
-            for(String form2 : hrsNum) {
+            for (String form2 : hrsNum) {
                 if ((tmp = str.indexOf(form2 + " " + form)) != -1
                         || (tmp = str.indexOf(form2 + form)) != -1) {
                     if (tmp > last) last = tmp;
@@ -86,9 +86,9 @@ public class serviceImpl implements service{
                 index++;
             }
         }
-        for(String form : aftrNdays) {
+        for (String form : aftrNdays) {
             index = 0;
-            for(String form2 : mntsNum) {
+            for (String form2 : mntsNum) {
                 if ((tmp = str.indexOf(form2 + " " + form)) != -1
                         || (tmp = str.indexOf(form2 + form)) != -1) {
                     if (tmp > last) last = tmp;
@@ -99,9 +99,9 @@ public class serviceImpl implements service{
                 index++;
             }
         }
-        for(String form : aftrNHrs) {
+        for (String form : aftrNHrs) {
             index = 0;
-            for(String form2 : hrsNum) {
+            for (String form2 : hrsNum) {
                 if ((tmp = str.indexOf(form2 + " " + form)) != -1
                         || (tmp = str.indexOf(form2 + form)) != -1) {
                     if (tmp > last) last = tmp;
@@ -112,9 +112,9 @@ public class serviceImpl implements service{
                 index++;
             }
         }
-        for(String form : aftrNMnts) {
+        for (String form : aftrNMnts) {
             index = 0;
-            for(String form2 : mntsNum) {
+            for (String form2 : mntsNum) {
                 if ((tmp = str.indexOf(form2 + " " + form)) != -1
                         || (tmp = str.indexOf(form2 + form)) != -1) {
                     if (tmp > last) last = tmp;
@@ -139,7 +139,7 @@ public class serviceImpl implements service{
         }
 
         index = 0;
-        for(String form : mthsNum) {
+        for (String form : mthsNum) {
             if ((tmp = str.indexOf(form + "월")) != -1
                     || (tmp = str.indexOf(form + " 월")) != -1) {
                 if (tmp > last) last = tmp;
@@ -149,7 +149,7 @@ public class serviceImpl implements service{
             index++;
         }
         index = 0;
-        for(String form : daysNum) {
+        for (String form : daysNum) {
             if (((tmp = str.indexOf(form + "일")) != -1
                     || (tmp = str.indexOf(form + " 일")) != -1)
                     && chk3 != 1) {
@@ -162,7 +162,7 @@ public class serviceImpl implements service{
             index++;
         }
         index = 0;
-        for(String form : hrsNum) {
+        for (String form : hrsNum) {
             if (((tmp = str.indexOf(form + "시")) != -1
                     || (tmp = str.indexOf(form + " 시")) != -1)
                     && chk2 != 1) {
@@ -178,7 +178,7 @@ public class serviceImpl implements service{
             index++;
         }
         index = 0;
-        for(String form : mntsNum) {
+        for (String form : mntsNum) {
             if (((tmp = str.indexOf(form + "분")) != -1
                     || (tmp = str.indexOf(form + " 분")) != -1)
                     && chk4 != 1) {
@@ -211,8 +211,7 @@ public class serviceImpl implements service{
     }
 
 
-    public String [][] mergeArray(String[][] array1, String[][] array2)
-    {
+    public String[][] mergeArray(String[][] array1, String[][] array2) {
         String result[][];
         String pre;
         for (int i = 0; i < array1.length; i++) {
@@ -253,6 +252,7 @@ public class serviceImpl implements service{
 
         return result;
     }
+
 
 
 

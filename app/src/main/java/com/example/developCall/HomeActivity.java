@@ -21,6 +21,9 @@ import com.example.developCall.Fragment.GroupListFragment;
 import com.example.developCall.Fragment.HomeFragment;
 import com.example.developCall.Fragment.MainFragment;
 import com.example.developCall.Fragment.MyPageFragment;
+import com.example.developCall.Fragment.TabFragment1;
+import com.example.developCall.Fragment.TabFragment2;
+import com.example.developCall.Fragment.TabFragment3;
 import com.example.developCall.Function.CallReceiver2;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -37,6 +40,9 @@ public class HomeActivity extends AppCompatActivity {
 
     MyPageFragment myPageFragment;
     FriendListFragment friendListFragment;
+    TabFragment1 tabFragment1;
+    TabFragment2 tabFragment2;
+    TabFragment3 tabFragment3;
 
     GroupListFragment groupListFragment;
     FragmentTransaction transaction;
@@ -65,9 +71,11 @@ public class HomeActivity extends AppCompatActivity {
         home_fragment = new HomeFragment();
         myPageFragment = new MyPageFragment();
         calendar_fragment = new Calendar_Fragment();
-
         groupListFragment = new GroupListFragment();
 
+        tabFragment1 = new TabFragment1();
+        tabFragment2 = new TabFragment2();
+        tabFragment3 = new TabFragment3();
         transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.home_frame, home_fragment).commitAllowingStateLoss();
 

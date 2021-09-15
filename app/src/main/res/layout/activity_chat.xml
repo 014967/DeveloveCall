@@ -63,6 +63,7 @@
             android:layout_marginLeft="26dp"
             android:background="@drawable/round_rec_fill_white"
             android:gravity="center_vertical"
+            android:layout_weight="2"
             android:paddingLeft="14dp"
             android:paddingRight="14dp">
 
@@ -96,9 +97,10 @@
 
         <!--햄버거-->
         <ImageView
+            android:id="@+id/addMemo"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginRight="14dp"
+            android:layout_weight="1"
             android:layout_gravity="right|center_vertical"
             android:src="@drawable/ic_menu_circle"/>
 

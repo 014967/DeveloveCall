@@ -87,6 +87,7 @@ public class Fragment2 extends Fragment {
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
 
+
     String userId;
 
     @Nullable
@@ -225,10 +226,14 @@ public class Fragment2 extends Fragment {
         fragment2 = new TabFragment2();
         fragment3 = new TabFragment3();
 
+
+
+
         Bundle bundle = new Bundle();
         bundle.putSerializable("name", ob_friend.getName());
         fragment1.setArguments(bundle);
-        requireActivity().getSupportFragmentManager().beginTransaction().add(R.id.tabFrame, fragment1).commit();
+        transaction.replace(R.id.tabFrame,fragment1).commit();
+       // requireActivity().getSupportFragmentManager().beginTransaction().add(R.id.tabFrame, fragment1).commit();
 
         TabLayout tabs = (TabLayout) view.findViewById(R.id.tab);
 

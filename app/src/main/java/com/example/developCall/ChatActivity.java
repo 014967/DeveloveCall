@@ -1,11 +1,16 @@
 package com.example.developCall;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,8 +31,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -60,6 +67,7 @@ public class ChatActivity extends AppCompatActivity {
 
     ProgressBar loading;
     ImageView btn_back;
+    ImageView btn_addMemo;
 
     AmazonTranscription amazonTranscription = new AmazonTranscription();
     Gson gson = new Gson();
@@ -70,12 +78,35 @@ public class ChatActivity extends AppCompatActivity {
     TextView username;
     TextView tv_date;
 
+
     Date date;
     SimpleDateFormat simpleDateFormat;
     SimpleDateFormat newDateFormat;
     String chatDate;
 
+    //pop
+    AlertDialog dialog;
+    AlertDialog.Builder dialogBuilder;
+    TextView popup_tv_date;
+    TextView popup_set_date;
 
+
+    //
+    DatePickerDialog datePickerDialog;
+
+    Calendar myCalendar = Calendar.getInstance();
+
+
+
+    DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet( DatePicker datePicker, int year, int month, int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, month);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        }
+    };
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -90,6 +121,7 @@ public class ChatActivity extends AppCompatActivity {
         chatRecyclerAdapter = new ChatRecyclerAdapter(this, list);
         recyclerView.setAdapter(chatRecyclerAdapter);
 
+        btn_addMemo = findViewById(R.id.addMemo);
         nonechat = findViewById(R.id.noneText);
         btn_back = findViewById(R.id.btn_back);
         username = findViewById(R.id.username);
@@ -106,9 +138,8 @@ public class ChatActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile(expression);
         Matcher matcher = pattern.matcher(url);
 
-        if(matcher.find())
-        {
-            String [] temp =  matcher.group(2).split("_");
+        if (matcher.find()) {
+            String[] temp = matcher.group(2).split("_");
             st_date = temp[2];
             simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
             newDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
@@ -124,7 +155,83 @@ public class ChatActivity extends AppCompatActivity {
         }
 
 
+        btn_addMemo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogBuilder = new AlertDialog.Builder(ChatActivity.this);
+                View popView = getLayoutInflater().inflate(R.layout.popup_calendar, null);
+                popup_tv_date = popView.findViewById(R.id.tv_date);
+                popup_set_date = popView.findViewById(R.id.set_date);
 
+
+
+
+                if (popView.getParent() != null)
+                    ((ViewGroup) popView.getParent()).removeView(popView);
+                dialogBuilder.setView(popView);
+                dialog = dialogBuilder.create();
+                dialog.show();
+
+
+                popup_set_date.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+
+                        datePickerDialog =
+                                new DatePickerDialog(dialog.getContext(),
+                                        myDatePicker, myCalendar.get(Calendar.YEAR),
+                                        myCalendar.get(Calendar.MONTH),
+                                        myCalendar.get(Calendar.DAY_OF_MONTH));
+
+
+
+
+                        datePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE, "확인",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String myFormat = "yyyy/MM/dd";    // 출력형식   2021/07/26
+                                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
+
+                                        Observable.just(sdf.format(myCalendar.getTime()))
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(updateLabel(popView));
+                                        datePickerDialog.dismiss();
+                                    }
+                                });
+                        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "취소",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        datePickerDialog.dismiss();
+                                    }
+                                });
+
+
+                        datePickerDialog.show();
+
+                    }
+                });
+
+                dialog.setButton(DialogInterface.BUTTON_POSITIVE, "확인",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "취소",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+            }
+        });
 
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -156,8 +263,7 @@ public class ChatActivity extends AppCompatActivity {
                         } else {
 
 
-                            if(amazonTranscription.getResults().getSpeaker_labels().getSpeakers() == 2)
-                            {
+                            if (amazonTranscription.getResults().getSpeaker_labels().getSpeakers() == 2) {
                                 item1 = amazonTranscription.getResults().getSpeaker_labels().toString();
                                 item2 = amazonTranscription.getResults().getItems().toString();
 
@@ -172,22 +278,18 @@ public class ChatActivity extends AppCompatActivity {
                                 modifi = service.mergeArray(array1, array2);
 
 
-
                                 list = Arrays.stream(modifi)
                                         .map(Arrays::asList)
                                         .collect(Collectors.toList());
                                 Observable.just(list)
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(addList());
-                            }
-                            else
-                            {
+                            } else {
                                 // 화자가 1 일때
                                 String[] dd = amazonTranscription.getResults().getTranscripts().get(0).getTranscript()
                                         .split("[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9|\\s]");
                                 String[][] result = new String[dd.length][2];
-                                for(int i=0; i<dd.length; i++)
-                                {
+                                for (int i = 0; i < dd.length; i++) {
                                     result[i][0] = "spk_0";
                                     result[i][1] = dd[i];
                                 }
@@ -199,7 +301,6 @@ public class ChatActivity extends AppCompatActivity {
                                         .subscribe(addList());
 
                             }
-
 
 
                         }
@@ -216,6 +317,33 @@ public class ChatActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private Observer<? super String> updateLabel(View popView) {
+        return new Observer<String>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(@NonNull String s) {
+                popup_set_date = popView.findViewById(R.id.set_date);
+                popup_set_date.setText(s);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+
+        };
     }
 
     private Observer<? super List<List<String>>> addList() {
@@ -246,6 +374,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
+
     private AmazonTranscription download(String uri) throws IOException {
 
 
@@ -259,6 +388,7 @@ public class ChatActivity extends AppCompatActivity {
 
         return gson.fromJson(result, AmazonTranscription.class);
     }
+
 
 
 }

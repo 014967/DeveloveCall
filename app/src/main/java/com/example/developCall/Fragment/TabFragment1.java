@@ -36,7 +36,10 @@ public class TabFragment1 extends Fragment {
 
 
 
-    TabFragment1(String userId, String friendId) {
+    public TabFragment1()
+    {}
+
+    public TabFragment1(String userId, String friendId) {
         this.userId = userId;
         this.friendId = friendId;
     }

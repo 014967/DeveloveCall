@@ -18,6 +18,9 @@ import java.util.ArrayList;
 public class TabFragment2 extends Fragment {
     ArrayList<Ob_Chat> profileDataList;
 
+    public TabFragment2()
+    {}
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
