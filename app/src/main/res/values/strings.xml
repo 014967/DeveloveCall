@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">디벨럽콜</string>
+    <string name="facebook_app_id">3375893455807907</string>
+    <string name="fb_login_protocol_scheme">fb3375893455807907</string>
+
+    <string name="title">Develove Call</string>
+    <string name="findID">아이디 찾기</string>
+    <string name="findPW"> 비밀번호 찾기</string>
+    <string name="getStart">GET STARTED</string>
+
+
+    <string name="SignUp">회원가입</string>
+    <string name="signupwith">SNS 계정으로 간편 로그인하세요.</string>
+    <string name="login">Login</string>
+    <string name="save_id">아이디 저장</string>
+    <string name="auto_login">자동 로그인</string>
+    <string name="edit">편집</string>
+
+    <string name="category">Family</string>
+
+    <string name="memo_01">· 떡볶이를 먹기로 했다!</string>
+    <string name="memo_02">· 한이음 뿌셔뿌셔 </string>
+
+
+    <string name="blank_fragment"> empty </string>
+
+
+    <string name="title_activity_f_d_f_d_f">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_qr_bottom">MainActivity</string>
+
+    <string name="ok">확인</string>
+
+
+    <!-- activity_my_qr -->
+
+
+    <!-- activity_qr_info -->
+    <string name="qr_info_title">서울과학기술대학교 미래관</string>
+    <string name="list_address">서울시 노원구 공릉동</string>
+    <string name="list_phone_number">010-1234-5678</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

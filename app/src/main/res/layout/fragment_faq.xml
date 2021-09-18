@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/ic_back_thin" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="FAQ"
+            android:textSize="15dp" />
+
+    </RelativeLayout>
+
+    <!--회색 구분선-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color"/>
+
+    <!--카테고리1-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:gravity="center_vertical"
+        android:background="@color/light_gray"
+        android:textColor="@color/dark_black"
+        android:paddingLeft="20dp"
+        android:text="사용자 관리"/>
+
+    <!--질문1-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textColor="@color/pink_orange"
+                android:text="Q."/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+
+                android:paddingRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:textColor="@color/dark_black"
+                android:text="사용자는 어떻게 등록하나요?"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_arrow_top"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textColor="@color/dark_black"
+                android:text="A."/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:textColor="@color/dark_black"
+                android:text="친구 목록에서 + 버튼을 눌러 기존 휴대폰 전화번호부에서 가져올
+수 있습니다."/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <!--회색 구분선-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.3dp"
+        android:background="@color/line_color"/>
+
+    <!--질문2-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textColor="@color/pink_orange"
+                android:text="Q."/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+
+                android:paddingRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:textColor="@color/dark_black"
+                android:text="사용자는 어떻게 등록하나요?"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_arrow_top"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textColor="@color/dark_black"
+                android:text="A."/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:textColor="@color/dark_black"
+                android:text="친구 목록에서 + 버튼을 눌러 기존 휴대폰 전화번호부에서 가져올
+수 있습니다."/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <!--회색 구분선-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.3dp"
+        android:background="@color/line_color"/>
+
+    <!--질문3-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textColor="@color/pink_orange"
+                android:text="Q."/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+
+                android:paddingRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:textColor="@color/dark_black"
+                android:text="사용자는 어떻게 등록하나요?"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_arrow_top"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textColor="@color/dark_black"
+                android:text="A."/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:textColor="@color/dark_black"
+                android:text="친구 목록에서 + 버튼을 눌러 기존 휴대폰 전화번호부에서 가져올
+수 있습니다."/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <!--카테고리2-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:gravity="center_vertical"
+        android:background="@color/light_gray"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/dark_black"
+        android:text="주문/배송"/>
+
+    <!--질문4-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textColor="@color/pink_orange"
+                android:text="Q."/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+
+                android:paddingRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:textColor="@color/dark_black"
+                android:text="사용자는 어떻게 등록하나요?"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_arrow_bottom"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--회색 구분선-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.3dp"
+        android:background="@color/line_color"/>
+
+    <!--질문4-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:textColor="@color/pink_orange"
+                android:text="Q."/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:gravity="center_vertical"
+
+                android:paddingRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="13dp"
+                android:textColor="@color/dark_black"
+                android:text="사용자는 어떻게 등록하나요?"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_arrow_bottom"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--회색 구분선-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.3dp"
+        android:background="@color/line_color"/>
+
+</LinearLayout>

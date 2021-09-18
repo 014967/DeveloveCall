@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/search_tab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="연락처" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/search_tab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="대화 내용" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/search_tab3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="메모" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <FrameLayout
+        android:id="@+id/search_tabframe"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:background="@color/white"/>
+
+
+
+</LinearLayout>
