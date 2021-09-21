@@ -161,7 +161,9 @@ public class Calendar_Fragment extends Fragment {
                     String [] dummy = btnday.split(" ");
 
                     String str2 = dummy[1];
-                    fileName = v.getId() + ".json";
+
+                    fileName = getYear + getMonth + v.getId() + ".json";
+
                     String Name = "";
 
                     day.setText(str2);
@@ -298,46 +300,6 @@ public class Calendar_Fragment extends Fragment {
         dataList.add(data3);
     }
 
-    public final View.OnClickListener btnListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Button tempbtn = (Button)v.findViewById(v.getId());
-            String btnday = tempbtn.getText().toString();
-            int max = btnday.length();
-
-            ListView listView = (ListView) getActivity().findViewById(R.id.listview);
-            final CalendarAdapter calendarAdapter = new CalendarAdapter(v.getContext(), dataList);
-            listView.setAdapter(calendarAdapter);
-
-            if(v.getId() == R.id.add) {
-                Intent intent = new Intent(v.getContext(), AddPopUpActivity.class);
-                startActivityResult.launch(intent);
-            }
-            else {
-                String str1 = btnday.substring(0, btnday.indexOf(" "));
-                String str2 = btnday.substring(4, max);
-                fileName = v.getId() + ".json";
-                String Name = "";
-
-                day.setText(str2);
-                weekDay.setText(str1);
-
-                try {
-                    if (!oldFileName.equals("")) {
-                        writeFile(oldFileName, dataList);
-                    }
-                    Name = getJsonString(fileName);
-                    jsonParsing(Name);
-                    oldFileName = fileName;
-                    oldName = Name;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }
-    };
-
     public final View.OnTouchListener btnTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent motionEvent)  {
@@ -432,74 +394,6 @@ public class Calendar_Fragment extends Fragment {
         }
     }
 
-    ActivityResultLauncher<Intent> startActivityResult = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        String titleresult = data.getStringExtra("title");
-                        String nameresult = data.getStringExtra("name");
-
-                        if(!nameresult.equals("") && !titleresult.equals("")) {
-                            CalendarData adddata = new CalendarData();
-
-                            adddata.setTitle(titleresult);
-                            adddata.setName(nameresult);
-
-                            dataList.add(adddata);
-
-                            try {
-                                if (!oldFileName.equals("")) {
-                                    writeFile(oldFileName, dataList);
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    else if (result.getResultCode() == 1){
-                        Intent data = result.getData();
-                        String retitle = data.getStringExtra("title");
-                        String rename = data.getStringExtra("name");
-                        int position = data.getIntExtra("position",0);
-
-                        CalendarData redata = new CalendarData();
-
-                        redata.setTitle(retitle);
-                        redata.setName(rename);
-
-                        dataList.set(position, redata);
-                        listView.setAdapter(calendarAdapter);
-
-                        try {
-                            if (!oldFileName.equals("")) {
-                                writeFile(oldFileName, dataList);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    else if (result.getResultCode() == 2){
-                        Intent data = result.getData();
-                        int position = data.getIntExtra("position",0);
-
-                        dataList.remove(position);
-                        listView.setAdapter(calendarAdapter);
-
-                        String Name = "";
-
-                        try {
-                            if (!oldFileName.equals("")) {
-                                writeFile(oldFileName, dataList);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });
 
     public static boolean setListViewHeightBasedOnItems(ListView listView) {
 

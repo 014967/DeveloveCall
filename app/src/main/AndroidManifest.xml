@@ -46,10 +46,13 @@
         <activity android:name=".Calendar.ListPopUpActivity" android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".Alarm.Alarm_AddList"/>
         <activity android:name=".Search.SearchActivity" />
+
         <activity android:name=".CalendarPopUpActivity" android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" />
         <activity android:name=".CalendarMenuActivity" android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar"/>
 
+
         <receiver android:name=".Alarm.Alarm_Receiver"/>
+
 
 
 

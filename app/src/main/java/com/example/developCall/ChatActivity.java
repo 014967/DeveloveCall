@@ -2,17 +2,21 @@ package com.example.developCall;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+
 import android.content.Intent;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +39,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -97,6 +102,7 @@ public class ChatActivity extends AppCompatActivity {
     Calendar myCalendar = Calendar.getInstance();
 
 
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +154,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
                 PopupMenu popup = new PopupMenu(getApplicationContext(), v);
                 MenuInflater inflater = popup.getMenuInflater();
                 inflater.inflate(R.menu.option_menu, popup.getMenu());
@@ -172,6 +179,7 @@ public class ChatActivity extends AppCompatActivity {
                         return false;
                     }
                 });
+
 
             }
         });
@@ -315,6 +323,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         };
     }
+
 
 
     private AmazonTranscription download(String uri) throws IOException {

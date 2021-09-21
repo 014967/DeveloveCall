@@ -174,7 +174,9 @@ public class Alarm_Fragment extends Fragment {
         listData.setProfile(Profile);
         listData.setName(Name);
         listData.setContent(Content);
-        alarm_listData.add(listData);
+
+        alarm_listData.add(0, listData);
+
         return alarm_listData;
     }
 
@@ -246,7 +248,9 @@ public class Alarm_Fragment extends Fragment {
                 data.setName(dataObject.getString("name"));
                 data.setContent(dataObject.getString("content"));
 
-                alarm_listData.add(0, data);
+
+                alarm_listData.add(data);
+
             }
         }catch (JSONException e) {
             e.printStackTrace();
