@@ -1,9 +1,7 @@
 package com.amplifyframework.datastore.generated.model;
 
 
-import java.util.List;
-import java.util.UUID;
-import java.util.Objects;
+import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
 import androidx.core.util.ObjectsCompat;
 
@@ -13,7 +11,8 @@ import com.amplifyframework.core.model.annotations.ModelConfig;
 import com.amplifyframework.core.model.annotations.ModelField;
 import com.amplifyframework.core.model.query.predicate.QueryField;
 
-import static com.amplifyframework.core.model.query.predicate.QueryField.field;
+import java.util.Objects;
+import java.util.UUID;
 
 /** This is an auto generated class representing the Chat type in your schema. */
 @SuppressWarnings("all")
@@ -273,14 +272,6 @@ public final class Chat implements Model {
      */
     public BuildStep id(String id) throws IllegalArgumentException {
         this.id = id;
-        
-        try {
-            UUID.fromString(id); // Check that ID is in the UUID format - if not an exception is thrown
-        } catch (Exception exception) {
-          throw new IllegalArgumentException("Model IDs must be unique in the format of UUID.",
-                    exception);
-        }
-        
         return this;
     }
   }

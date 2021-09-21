@@ -160,10 +160,21 @@ public class Calendar_Fragment extends Fragment {
                     String str1 = btnday.substring(0, btnday.indexOf(" "));
                     String [] dummy = btnday.split(" ");
 
-                    String str2 = dummy[1];
+                    String str2 = dummy[1]; // 2일말하는거
+                    String st_monthYear = monthYear.getText().toString();  // 09 2021
 
-                    fileName = getYear + getMonth + v.getId() + ".json";
 
+
+                    if(str2.length() == 1)
+                    {
+                        str2 = "0"+str2;
+                    }
+
+                    String st_date = str2+st_monthYear;
+
+                    fileName = st_date+ v.getId() + ".json";
+
+                  //  fileName = getYear + getMonth + v.getId() + ".json";
                     String Name = "";
 
                     day.setText(str2);
@@ -393,7 +404,6 @@ public class Calendar_Fragment extends Fragment {
             e.printStackTrace();
         }
     }
-
 
     public static boolean setListViewHeightBasedOnItems(ListView listView) {
 

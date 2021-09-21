@@ -36,8 +36,9 @@
 
         <!--이름+전화번호-->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="4"
             android:layout_marginLeft="10dp"
             android:orientation="vertical"
             android:layout_gravity="center_vertical"
@@ -57,13 +58,13 @@
         <!--검색창-->
 
         <LinearLayout
-            android:layout_width="180dp"
+            android:layout_width="0dp"
             android:layout_height="41dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="26dp"
             android:background="@drawable/round_rec_fill_white"
             android:gravity="center_vertical"
-            android:layout_weight="2"
+            android:layout_weight="10"
             android:paddingLeft="14dp"
             android:paddingRight="14dp">
 
@@ -98,9 +99,9 @@
         <!--햄버거-->
         <ImageView
             android:id="@+id/addMemo"
-            android:layout_width="20dp"
+            android:layout_width="0dp"
             android:layout_height="20dp"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:layout_gravity="right|center_vertical"
             android:src="@drawable/ic_menu_circle"/>
 

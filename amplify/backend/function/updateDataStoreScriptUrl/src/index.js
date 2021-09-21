@@ -33,6 +33,9 @@ exports.handler = async (event) => {
     console.log(uploadTime);
 
 
+    var date = new Date().toISOString();
+    var lastchangedat = Date.now();
+
     var params = {
         TableName : tablename,
         Item :
@@ -45,6 +48,11 @@ exports.handler = async (event) => {
                                     "keyWord" : "",
                                     "summary" : "",
                                     "memo" : "",
+                                    "_lastChangedAt" : lastchangedat,
+                                    "createdAt" : date,
+                                    "updatedAt" : date,
+                                    "_version" : 1,
+
             }
 
     }

@@ -2,21 +2,17 @@ package com.example.developCall;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-
 import android.content.Intent;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.core.Amplify;
 import com.example.developCall.Adapter.ChatRecyclerAdapter;
 import com.example.developCall.Object.AmazonTranscription;
 import com.example.developCall.Service.serviceImpl;
@@ -39,7 +36,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -102,6 +98,8 @@ public class ChatActivity extends AppCompatActivity {
     Calendar myCalendar = Calendar.getInstance();
 
 
+    String userId;
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -111,6 +109,7 @@ public class ChatActivity extends AppCompatActivity {
 
         loading = findViewById(R.id.loading);
 
+        userId = Amplify.Auth.getCurrentUser().getUserId();
         recyclerView = findViewById(R.id.recylcerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         chatRecyclerAdapter = new ChatRecyclerAdapter(this, list);
@@ -123,6 +122,8 @@ public class ChatActivity extends AppCompatActivity {
         tv_date = findViewById(R.id.tv_date);
         String st_name = getIntent().getStringExtra("name");
 
+        String chat_Id = getIntent().getStringExtra("chatId");
+        String friendId= getIntent().getStringExtra("friendId");
         username.setText(st_name);
 
 
@@ -176,6 +177,13 @@ public class ChatActivity extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         System.out.println(2);
+                        Intent intent = new Intent(getApplicationContext(),MemoMenuActivity.class);
+                        intent.putExtra("date", tv_date.getText().toString());
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("username", username.getText().toString());
+                        intent.putExtra("chatId", chat_Id);
+                        intent.putExtra("friendId", friendId);
+                        startActivity(intent);
                         return false;
                     }
                 });

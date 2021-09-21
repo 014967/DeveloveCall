@@ -23,7 +23,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".MemoMenuActivity"
+            android:theme = "@android:style/Theme.DeviceDefault.Dialog.NoActionBar"
+            android:exported="true" />
         <activity android:name=".ContactActivity" />
         <activity android:name=".EmailConfirmationActivity" />
         <activity android:name=".AssignActivity" />
@@ -38,25 +41,31 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".ChatActivity" />
-
-        <activity android:name=".Alarm.Alarm_CalendarPopUp" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".Alarm.Alarm_CyclePopUp" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".Alarm.Alarm_TimePopUp" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".Calendar.AddPopUpActivity" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".Calendar.ListPopUpActivity" android:theme="@android:style/Theme.Dialog"/>
-        <activity android:name=".Alarm.Alarm_AddList"/>
+        <activity
+            android:name=".Alarm.Alarm_CalendarPopUp"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Alarm.Alarm_CyclePopUp"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Alarm.Alarm_TimePopUp"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Calendar.AddPopUpActivity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".Calendar.ListPopUpActivity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity android:name=".Alarm.Alarm_AddList" />
         <activity android:name=".Search.SearchActivity" />
+        <activity
+            android:name=".CalendarPopUpActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" />
+        <activity
+            android:name=".CalendarMenuActivity"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" />
 
-        <activity android:name=".CalendarPopUpActivity" android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" />
-        <activity android:name=".CalendarMenuActivity" android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar"/>
-
-
-        <receiver android:name=".Alarm.Alarm_Receiver"/>
-
-
-
-
-
+        <receiver android:name=".Alarm.Alarm_Receiver" />
 
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"

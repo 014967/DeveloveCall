@@ -67,7 +67,9 @@ public class ListAdapter extends BaseAdapter {
               //https://developcall-transcribe-output.s3.ap-northeast-2.amazonaws.com/dd5341b7-db9f-40de-b5d3-a82b878d698b_faf53472-bcd0-43e9-bc2c-bf75dfc335c6_08092021191628.m4a.json
                 String httpUrl = "developcall-transcribe-output.s3.ap-northeast-2.amazonaws.com/" + url[3];
                 Intent in = new Intent(mContext, ChatActivity.class);
+                in.putExtra("chatId",sample.get(position).getId());
                 in.putExtra("name",username);
+                in.putExtra("friendId", sample.get(position).getFriendID());
                 in.putExtra("url",httpUrl);
                 mContext.startActivity(in);
 
