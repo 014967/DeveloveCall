@@ -2,16 +2,17 @@ package com.example.developCall;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +35,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -97,17 +97,6 @@ public class ChatActivity extends AppCompatActivity {
     Calendar myCalendar = Calendar.getInstance();
 
 
-
-    DatePickerDialog.OnDateSetListener myDatePicker = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet( DatePicker datePicker, int year, int month, int dayOfMonth) {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, month);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-        }
-    };
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,77 +147,31 @@ public class ChatActivity extends AppCompatActivity {
         btn_addMemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogBuilder = new AlertDialog.Builder(ChatActivity.this);
-                View popView = getLayoutInflater().inflate(R.layout.popup_calendar, null);
-                popup_tv_date = popView.findViewById(R.id.tv_date);
-                popup_set_date = popView.findViewById(R.id.set_date);
 
+                PopupMenu popup = new PopupMenu(getApplicationContext(), v);
+                MenuInflater inflater = popup.getMenuInflater();
+                inflater.inflate(R.menu.option_menu, popup.getMenu());
+                popup.show();
 
-
-
-                if (popView.getParent() != null)
-                    ((ViewGroup) popView.getParent()).removeView(popView);
-                dialogBuilder.setView(popView);
-                dialog = dialogBuilder.create();
-                dialog.show();
-
-
-                popup_set_date.setOnClickListener(new View.OnClickListener() {
+                popup.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        System.out.println(1);
 
+                        //startActivity(intent);
+                        Intent intent = new Intent(getApplicationContext(), CalendarMenuActivity.class);
+                        startActivity(intent);
 
-
-                        datePickerDialog =
-                                new DatePickerDialog(dialog.getContext(),
-                                        myDatePicker, myCalendar.get(Calendar.YEAR),
-                                        myCalendar.get(Calendar.MONTH),
-                                        myCalendar.get(Calendar.DAY_OF_MONTH));
-
-
-
-
-                        datePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE, "확인",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        String myFormat = "yyyy/MM/dd";    // 출력형식   2021/07/26
-                                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
-
-                                        Observable.just(sdf.format(myCalendar.getTime()))
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(updateLabel(popView));
-                                        datePickerDialog.dismiss();
-                                    }
-                                });
-                        datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "취소",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        datePickerDialog.dismiss();
-                                    }
-                                });
-
-
-                        datePickerDialog.show();
-
+                        return false;
                     }
                 });
-
-                dialog.setButton(DialogInterface.BUTTON_POSITIVE, "확인",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "취소",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                popup.getMenu().getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        System.out.println(2);
+                        return false;
+                    }
+                });
 
             }
         });
@@ -374,7 +317,6 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
-
     private AmazonTranscription download(String uri) throws IOException {
 
 
@@ -388,6 +330,7 @@ public class ChatActivity extends AppCompatActivity {
 
         return gson.fromJson(result, AmazonTranscription.class);
     }
+
 
 
 
