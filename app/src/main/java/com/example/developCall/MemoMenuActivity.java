@@ -13,6 +13,7 @@ import com.amplifyframework.core.model.Model;
 import com.amplifyframework.datastore.DataStoreException;
 import com.amplifyframework.datastore.DataStoreItemChange;
 import com.amplifyframework.datastore.generated.model.Chat;
+import com.amplifyframework.datastore.generated.model.User;
 
 public class MemoMenuActivity extends Activity {
 
@@ -66,45 +67,42 @@ public class MemoMenuActivity extends Activity {
                 title = et_title.getText().toString();
                 content = et_content.getText().toString();
 
-                /*Amplify.DataStore.query(Chat.class, Where.id(chatId),
-                        matches -> {
-                            if (matches.hasNext()) {
-                                Chat original = matches.next();
-                                Chat edited = original.copyOfBuilder()
-                                        .memo(title + chatId + content)
-                                        .build();
-                                Amplify.DataStore.save(edited,
-                                        updated -> Log.i("MyAmplifyApp", "Updated a post."),
-                                        failure -> Log.e("MyAmplifyApp", "Update failed.", failure)
-                                );
-                            }
-                        },
-                        failure -> Log.e("MyAmplifyApp", "Query failed.", failure)
-                );
-*/
+
+
                 Amplify.API.query(
-                        ModelQuery.list(Chat.class, Chat.ID.contains(chatId)),
+                        ModelQuery.list(User.class, User.ID.contains(userId)),
                         response ->
                         {
-                            Chat original = response.getData().iterator().next();
-                            Chat newChat = original.copyOfBuilder()
-                                    .memo(title + chatId + content).build();
-                            Amplify.DataStore.save(newChat
-                            ,this::onSavedSucess
-                            ,this::onError);
+                            for (User user : response.getData()) {
+                                for (Chat chat : user.getChat()) {
+                                    if (chat.getId().equals(chatId)) {
+                                        Chat newChat = chat.copyOfBuilder().memo(title + chatId + content).build();
+                                        Amplify.DataStore.save(newChat
+                                                , this::onSavedSucess,
+                                                this::onError);
+
+                                    }
+                                }
+                            }
                         }, error ->
                         {
 
                         }
                 );
 
+
+
             }
 
             private void onError(DataStoreException e) {
+                System.out.println(e);
             }
 
             private <T extends Model> void onSavedSucess(DataStoreItemChange<T> tDataStoreItemChange) {
 
+                System.out.println(tDataStoreItemChange.item().toString());
+                System.out.println(tDataStoreItemChange.uuid().toString());
+                onBackPressed();
             }
         });
     }

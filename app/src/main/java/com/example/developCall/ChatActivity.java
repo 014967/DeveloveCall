@@ -11,7 +11,10 @@ import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,11 +22,14 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amazonaws.mobile.auth.core.internal.util.ThreadUtils;
 import com.amplifyframework.core.Amplify;
 import com.example.developCall.Adapter.ChatRecyclerAdapter;
+import com.example.developCall.Adapter.ChatRecyclerAdapter.OnTextClickListener;
 import com.example.developCall.Object.AmazonTranscription;
 import com.example.developCall.Service.serviceImpl;
 import com.google.gson.Gson;
@@ -48,7 +54,7 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import jodd.http.HttpResponse;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements OnTextClickListener {
 
 
     RecyclerView recyclerView;
@@ -100,6 +106,11 @@ public class ChatActivity extends AppCompatActivity {
 
     String userId;
 
+    SearchView searchView;
+    LinearLayout search_support;
+    Button btn_up;
+    Button btn_down;
+    int index = 0;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -112,7 +123,7 @@ public class ChatActivity extends AppCompatActivity {
         userId = Amplify.Auth.getCurrentUser().getUserId();
         recyclerView = findViewById(R.id.recylcerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        chatRecyclerAdapter = new ChatRecyclerAdapter(this, list);
+        chatRecyclerAdapter = new ChatRecyclerAdapter(this, list, this::onTextClick);
         recyclerView.setAdapter(chatRecyclerAdapter);
 
         btn_addMemo = findViewById(R.id.addMemo);
@@ -120,10 +131,15 @@ public class ChatActivity extends AppCompatActivity {
         btn_back = findViewById(R.id.btn_back);
         username = findViewById(R.id.username);
         tv_date = findViewById(R.id.tv_date);
+        searchView = findViewById(R.id.search_view);
+        search_support = findViewById(R.id.search_support);
+        btn_up = findViewById(R.id.up);
+        btn_down = findViewById(R.id.down);
+
         String st_name = getIntent().getStringExtra("name");
 
         String chat_Id = getIntent().getStringExtra("chatId");
-        String friendId= getIntent().getStringExtra("friendId");
+        String friendId = getIntent().getStringExtra("friendId");
         username.setText(st_name);
 
 
@@ -151,6 +167,22 @@ public class ChatActivity extends AppCompatActivity {
         }
 
 
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                chatRecyclerAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+
+                return false;
+            }
+        });
+
         btn_addMemo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,7 +209,7 @@ public class ChatActivity extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         System.out.println(2);
-                        Intent intent = new Intent(getApplicationContext(),MemoMenuActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), MemoMenuActivity.class);
                         intent.putExtra("date", tv_date.getText().toString());
                         intent.putExtra("userId", userId);
                         intent.putExtra("username", username.getText().toString());
@@ -333,7 +365,6 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 
-
     private AmazonTranscription download(String uri) throws IOException {
 
 
@@ -351,4 +382,66 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
+
+    @Override
+    public void onTextClick(List<Integer> data) {
+
+        ThreadUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                search_support.setVisibility(View.VISIBLE);
+
+                int max = data.size();
+
+//                recyclerView.findViewHolderForLayoutPosition(data.get(index))
+//                        .itemView.findViewById(R.id.chatText).setBackgroundColor(Color.WHITE);
+
+                recyclerView.getLayoutManager().scrollToPosition(data.get(index));
+//                recyclerView.getLayoutManager().findViewByPosition(data.get(index)).setBackgroundColor(Color.BLUE);
+
+                btn_up.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        index++;
+                        if(index <max)
+                        {
+//                            recyclerView.findViewHolderForLayoutPosition(data.get(index))
+//                                    .itemView.findViewById(R.id.chatText).setBackgroundColor(Color.WHITE);
+                            recyclerView.getLayoutManager().scrollToPosition(data.get(index));
+                            //recyclerView.findViewHolderForAdapterPosition(data.get(index)).
+            //                recyclerView.getLayoutManager().findViewByPosition(data.get(index)).setBackgroundColor(Color.BLUE);
+
+                        }
+
+
+                    }
+                });
+                btn_down.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (index == 0) {
+//                            recyclerView.findViewHolderForLayoutPosition(data.get(index))
+//                                    .itemView.findViewById(R.id.chatText).setBackgroundColor(Color.WHITE);
+                            recyclerView.getLayoutManager().scrollToPosition(data.get(index));
+
+
+
+                        } else {
+                            index--;
+                        }
+
+//                        recyclerView.findViewHolderForLayoutPosition(data.get(index))
+//                                .itemView.findViewById(R.id.chatText).setBackgroundColor(Color.WHITE);
+                        recyclerView.getLayoutManager().scrollToPosition(data.get(index));
+
+                    }
+                });
+
+            }
+        });
+
+    }
 }

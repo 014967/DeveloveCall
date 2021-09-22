@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,16 +16,30 @@ import com.example.developCall.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapter.ViewHolder> {
+public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapter.ViewHolder> implements Filterable {
 
     List<List<String>> data = new ArrayList<>();
     Context context;
+    RecyclerView recyclerView;
+    int count = 0;
+
+    List<Integer> indexArray = new ArrayList<>();
 
 
-    public ChatRecyclerAdapter(Context context, List<List<String>> data) {
+    OnTextClickListener listener;
+
+    public interface OnTextClickListener {
+        void onTextClick(List<Integer> data);
+    }
+
+
+    public ChatRecyclerAdapter(Context context, List<List<String>> data, OnTextClickListener listener ) {
 
         this.data = data;
         this.context = context;
+        this.listener = listener;
+
+
     }
 
 
@@ -81,13 +97,58 @@ public class ChatRecyclerAdapter extends RecyclerView.Adapter<ChatRecyclerAdapte
 
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if(charString.isEmpty())
+                {
+
+                }else
+                {
+
+                    for(List<String> list : data)
+                    {
+
+                        if(list.get(1).contains(charString))
+                        {
+                                int pos = data.indexOf(list);
+                                //System.out.println(list.get(1));
+                                //System.out.println(pos);
+
+
+                            indexArray.add(pos);
+
+
+//                            ThreadUtils.runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    recyclerView.getLayoutManager().scrollToPosition(pos);
+//                                }
+//                            });
+
+                        }
+                    }
+                    listener.onTextClick(indexArray);
+                }
+                return null;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            }
+        };
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
         TextView textView;
 
         public ViewHolder(@NonNull View itemView) {
-
 
             super(itemView);
             textView = itemView.findViewById(R.id.chatText);

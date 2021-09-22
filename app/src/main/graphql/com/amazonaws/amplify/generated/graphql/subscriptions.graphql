@@ -38,6 +38,21 @@ subscription OnCreateUser {
       nextToken
       startedAt
     }
+    inquiry {
+      items {
+        id
+        userID
+        title
+        content
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -75,6 +90,21 @@ subscription OnUpdateUser {
         userID
         id
         name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    inquiry {
+      items {
+        id
+        userID
+        title
+        content
         _version
         _deleted
         _lastChangedAt
@@ -130,6 +160,60 @@ subscription OnDeleteUser {
       nextToken
       startedAt
     }
+    inquiry {
+      items {
+        id
+        userID
+        title
+        content
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateInquiry {
+  onCreateInquiry {
+    id
+    userID
+    title
+    content
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateInquiry {
+  onUpdateInquiry {
+    id
+    userID
+    title
+    content
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteInquiry {
+  onDeleteInquiry {
+    id
+    userID
+    title
+    content
     _version
     _deleted
     _lastChangedAt

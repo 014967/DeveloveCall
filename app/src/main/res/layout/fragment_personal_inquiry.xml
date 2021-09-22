@@ -45,6 +45,7 @@
         android:layout_height="110dp"
         android:orientation="vertical">
         <TextView
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
@@ -60,25 +61,18 @@
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
             android:background="@drawable/inquiry_round_line">
-            <TextView
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/et_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:layout_marginLeft="20dp"
-                android:textColor="@color/text_gray"
-                android:text="기본"/>
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15dp"
-                android:textColor="@color/text_gray"
                 android:layout_marginRight="20dp"
-                android:text="▼"/>
+                android:hint="제목을 입력해주세요"
+                />
+
+
+
         </LinearLayout>
     </LinearLayout>
 
@@ -102,15 +96,24 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:paddingTop="20dp"
+
             android:background="@drawable/inquiry_round_line">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <EditText
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:textSize="15dp"
-                android:layout_marginLeft="20dp"
-                android:textColor="@color/text_gray"
-                android:text="내용을 입력해 주세요. (최대 1500자)"/>
+                android:padding="20dp"
+                android:gravity="top"
+                android:inputType="text|textMultiLine"
+                android:maxLength="1500"
+                android:background="@null"
+                android:hint="내용을 입력해 주세요. (최대 1500자)"
+                />
+            </ScrollView>
 
         </LinearLayout>
     </LinearLayout>
@@ -136,13 +139,14 @@
             android:layout_marginRight="20dp"
             android:gravity="center_vertical"
             android:background="@drawable/inquiry_round_line">
-            <TextView
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
                 android:layout_marginLeft="20dp"
-                android:textColor="@color/text_gray"
-                android:text="aaa@gmail.com"/>
+                android:layout_marginRight="20dp"
+                android:hint="답변받을 이메일"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -152,6 +156,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
     <TextView
+        android:id="@+id/tv_submit"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_height="84dp"

@@ -7,8 +7,17 @@ type User @model
   userImg : String
   chat : [Chat] @connection(keyName : "userId", fields: ["id"])
   group : [Group] @connection(keyName : "userId", fields: ["id"])
+  inquiry : [Inquiry] @connection(keyName:"userId", fields: ["id"])
 }
 
+type Inquiry @model
+@key(name:"userId", fields : ["userID"])
+{
+  id : ID!
+  userID : ID!
+  title : String
+  content : String
+}
 type Friend @model
 @key(name: "groupId", fields : ["groupID"])
 {

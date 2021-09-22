@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.User;
 import com.example.developCall.Alarm.Alarm_Fragment;
 import com.example.developCall.Calendar.Calendar_Fragment;
 import com.example.developCall.Fragment.Fragment1;
@@ -52,11 +55,17 @@ public class HomeActivity extends AppCompatActivity {
     String check ="";
 
 
+    String username;
+    String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
         mReceiveer = new CallReceiver2();
+
+        userId = Amplify.Auth.getCurrentUser().getUserId();
+        getUser(userId);
 
 
         Intent intent = getIntent();
@@ -82,6 +91,8 @@ public class HomeActivity extends AppCompatActivity {
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view);
         bottomNavigationView.getMenu().getItem(2).setChecked(true);
+
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -125,5 +136,25 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void getUser(String userId)
+    {
+        Amplify.API.query(
+                ModelQuery.list(User.class, User.ID.contains(userId)),
+                response ->
+                {
+                    for(User user : response.getData())
+                    {
+                        username = user.getName();
+                    }
+                },
+                error ->
+                {
+
+                }
+
+        );
+    }
+
 
 }

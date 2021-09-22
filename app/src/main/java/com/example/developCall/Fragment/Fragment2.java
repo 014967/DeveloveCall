@@ -223,7 +223,7 @@ public class Fragment2 extends Fragment {
 
 
         fragment1 = new TabFragment1(userId, ob_friend.getId());
-        fragment2 = new TabFragment2();
+        fragment2 = new TabFragment2(userId, ob_friend.getId());
         fragment3 = new TabFragment3();
 
 
@@ -232,6 +232,7 @@ public class Fragment2 extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putSerializable("name", ob_friend.getName());
         fragment1.setArguments(bundle);
+        fragment2.setArguments(bundle);
         transaction.replace(R.id.tabFrame,fragment1).commit();
        // requireActivity().getSupportFragmentManager().beginTransaction().add(R.id.tabFrame, fragment1).commit();
 

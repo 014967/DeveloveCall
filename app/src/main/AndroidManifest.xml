@@ -24,9 +24,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".MemoActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar"/>
+        <activity
             android:name=".MemoMenuActivity"
-            android:theme = "@android:style/Theme.DeviceDefault.Dialog.NoActionBar"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" />
         <activity android:name=".ContactActivity" />
         <activity android:name=".EmailConfirmationActivity" />
         <activity android:name=".AssignActivity" />

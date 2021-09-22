@@ -1,6 +1,5 @@
 package com.amplifyframework.datastore.generated.model;
 
-import com.amplifyframework.core.model.annotations.HasMany;
 
 import java.util.List;
 import java.util.UUID;
@@ -8,10 +7,7 @@ import java.util.Objects;
 
 import androidx.core.util.ObjectsCompat;
 
-import com.amplifyframework.core.model.AuthStrategy;
 import com.amplifyframework.core.model.Model;
-import com.amplifyframework.core.model.ModelOperation;
-import com.amplifyframework.core.model.annotations.AuthRule;
 import com.amplifyframework.core.model.annotations.Index;
 import com.amplifyframework.core.model.annotations.ModelConfig;
 import com.amplifyframework.core.model.annotations.ModelField;
@@ -19,56 +15,40 @@ import com.amplifyframework.core.model.query.predicate.QueryField;
 
 import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
-/** This is an auto generated class representing the User type in your schema. */
+/** This is an auto generated class representing the Inquiry type in your schema. */
 @SuppressWarnings("all")
-@ModelConfig(pluralName = "Users", authRules = {
-  @AuthRule(allow = AuthStrategy.OWNER, ownerField = "owner", identityClaim = "cognito:username", operations = { ModelOperation.CREATE, ModelOperation.DELETE, ModelOperation.UPDATE })
-})
-public final class User implements Model {
+@ModelConfig(pluralName = "Inquiries")
+@Index(name = "userId", fields = {"userID"})
+public final class Inquiry implements Model {
   public static final QueryField ID = field("id");
-  public static final QueryField NAME = field("name");
-  public static final QueryField OWNER = field("owner");
-  public static final QueryField USER_IMG = field("userImg");
+  public static final QueryField USER_ID = field("userID");
+  public static final QueryField TITLE = field("title");
+  public static final QueryField CONTENT = field("content");
   private final @ModelField(targetType="ID", isRequired = true) String id;
-  private final @ModelField(targetType="String") String name;
-  private final @ModelField(targetType="String") String owner;
-  private final @ModelField(targetType="String") String userImg;
-  private final @ModelField(targetType="Chat") @HasMany(associatedWith = "userID", type = Chat.class) List<Chat> chat = null;
-  private final @ModelField(targetType="Group") @HasMany(associatedWith = "userID", type = Group.class) List<Group> group = null;
-  private final @ModelField(targetType="Inquiry") @HasMany(associatedWith = "userID", type = Inquiry.class) List<Inquiry> inquiry = null;
+  private final @ModelField(targetType="ID", isRequired = true) String userID;
+  private final @ModelField(targetType="String") String title;
+  private final @ModelField(targetType="String") String content;
   public String getId() {
       return id;
   }
   
-  public String getName() {
-      return name;
+  public String getUserId() {
+      return userID;
   }
   
-  public String getOwner() {
-      return owner;
+  public String getTitle() {
+      return title;
   }
   
-  public String getUserImg() {
-      return userImg;
+  public String getContent() {
+      return content;
   }
   
-  public List<Chat> getChat() {
-      return chat;
-  }
-  
-  public List<Group> getGroup() {
-      return group;
-  }
-  
-  public List<Inquiry> getInquiry() {
-      return inquiry;
-  }
-  
-  private User(String id, String name, String owner, String userImg) {
+  private Inquiry(String id, String userID, String title, String content) {
     this.id = id;
-    this.name = name;
-    this.owner = owner;
-    this.userImg = userImg;
+    this.userID = userID;
+    this.title = title;
+    this.content = content;
   }
   
   @Override
@@ -78,11 +58,11 @@ public final class User implements Model {
       } else if(obj == null || getClass() != obj.getClass()) {
         return false;
       } else {
-      User user = (User) obj;
-      return ObjectsCompat.equals(getId(), user.getId()) &&
-              ObjectsCompat.equals(getName(), user.getName()) &&
-              ObjectsCompat.equals(getOwner(), user.getOwner()) &&
-              ObjectsCompat.equals(getUserImg(), user.getUserImg());
+      Inquiry inquiry = (Inquiry) obj;
+      return ObjectsCompat.equals(getId(), inquiry.getId()) &&
+              ObjectsCompat.equals(getUserId(), inquiry.getUserId()) &&
+              ObjectsCompat.equals(getTitle(), inquiry.getTitle()) &&
+              ObjectsCompat.equals(getContent(), inquiry.getContent());
       }
   }
   
@@ -90,9 +70,9 @@ public final class User implements Model {
    public int hashCode() {
     return new StringBuilder()
       .append(getId())
-      .append(getName())
-      .append(getOwner())
-      .append(getUserImg())
+      .append(getUserId())
+      .append(getTitle())
+      .append(getContent())
       .toString()
       .hashCode();
   }
@@ -100,16 +80,16 @@ public final class User implements Model {
   @Override
    public String toString() {
     return new StringBuilder()
-      .append("User {")
+      .append("Inquiry {")
       .append("id=" + String.valueOf(getId()) + ", ")
-      .append("name=" + String.valueOf(getName()) + ", ")
-      .append("owner=" + String.valueOf(getOwner()) + ", ")
-      .append("userImg=" + String.valueOf(getUserImg()))
+      .append("userID=" + String.valueOf(getUserId()) + ", ")
+      .append("title=" + String.valueOf(getTitle()) + ", ")
+      .append("content=" + String.valueOf(getContent()))
       .append("}")
       .toString();
   }
   
-  public static BuildStep builder() {
+  public static UserIdStep builder() {
       return new Builder();
   }
   
@@ -122,7 +102,7 @@ public final class User implements Model {
    * @return an instance of this model with only ID populated
    * @throws IllegalArgumentException Checks that ID is in the proper format
    */
-  public static User justId(String id) {
+  public static Inquiry justId(String id) {
     try {
       UUID.fromString(id); // Check that ID is in the UUID format - if not an exception is thrown
     } catch (Exception exception) {
@@ -132,7 +112,7 @@ public final class User implements Model {
               "creating a new object, use the standard builder method and leave the ID field blank."
       );
     }
-    return new User(
+    return new Inquiry(
       id,
       null,
       null,
@@ -142,50 +122,55 @@ public final class User implements Model {
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
-      name,
-      owner,
-      userImg);
+      userID,
+      title,
+      content);
   }
-  public interface BuildStep {
-    User build();
-    BuildStep id(String id) throws IllegalArgumentException;
-    BuildStep name(String name);
-    BuildStep owner(String owner);
-    BuildStep userImg(String userImg);
+  public interface UserIdStep {
+    BuildStep userId(String userId);
   }
   
 
-  public static class Builder implements BuildStep {
+  public interface BuildStep {
+    Inquiry build();
+    BuildStep id(String id) throws IllegalArgumentException;
+    BuildStep title(String title);
+    BuildStep content(String content);
+  }
+  
+
+  public static class Builder implements UserIdStep, BuildStep {
     private String id;
-    private String name;
-    private String owner;
-    private String userImg;
+    private String userID;
+    private String title;
+    private String content;
     @Override
-     public User build() {
+     public Inquiry build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
-        return new User(
+        return new Inquiry(
           id,
-          name,
-          owner,
-          userImg);
+          userID,
+          title,
+          content);
     }
     
     @Override
-     public BuildStep name(String name) {
-        this.name = name;
+     public BuildStep userId(String userId) {
+        Objects.requireNonNull(userId);
+        this.userID = userId;
         return this;
     }
     
     @Override
-     public BuildStep owner(String owner) {
-        this.owner = owner;
+     public BuildStep title(String title) {
+        this.title = title;
         return this;
     }
     
     @Override
-     public BuildStep userImg(String userImg) {
-        this.userImg = userImg;
+     public BuildStep content(String content) {
+        this.content = content;
         return this;
     }
     
@@ -212,26 +197,26 @@ public final class User implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String name, String owner, String userImg) {
+    private CopyOfBuilder(String id, String userId, String title, String content) {
       super.id(id);
-      super.name(name)
-        .owner(owner)
-        .userImg(userImg);
+      super.userId(userId)
+        .title(title)
+        .content(content);
     }
     
     @Override
-     public CopyOfBuilder name(String name) {
-      return (CopyOfBuilder) super.name(name);
+     public CopyOfBuilder userId(String userId) {
+      return (CopyOfBuilder) super.userId(userId);
     }
     
     @Override
-     public CopyOfBuilder owner(String owner) {
-      return (CopyOfBuilder) super.owner(owner);
+     public CopyOfBuilder title(String title) {
+      return (CopyOfBuilder) super.title(title);
     }
     
     @Override
-     public CopyOfBuilder userImg(String userImg) {
-      return (CopyOfBuilder) super.userImg(userImg);
+     public CopyOfBuilder content(String content) {
+      return (CopyOfBuilder) super.content(content);
     }
   }
   

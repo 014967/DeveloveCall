@@ -41,6 +41,21 @@ mutation CreateUser(
       nextToken
       startedAt
     }
+    inquiry {
+      items {
+        id
+        userID
+        title
+        content
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -81,6 +96,21 @@ mutation UpdateUser(
         userID
         id
         name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    inquiry {
+      items {
+        id
+        userID
+        title
+        content
         _version
         _deleted
         _lastChangedAt
@@ -139,6 +169,69 @@ mutation DeleteUser(
       nextToken
       startedAt
     }
+    inquiry {
+      items {
+        id
+        userID
+        title
+        content
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateInquiry(
+  $input: CreateInquiryInput!
+  $condition: ModelInquiryConditionInput
+) {
+  createInquiry(input: $input, condition: $condition) {
+    id
+    userID
+    title
+    content
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateInquiry(
+  $input: UpdateInquiryInput!
+  $condition: ModelInquiryConditionInput
+) {
+  updateInquiry(input: $input, condition: $condition) {
+    id
+    userID
+    title
+    content
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteInquiry(
+  $input: DeleteInquiryInput!
+  $condition: ModelInquiryConditionInput
+) {
+  deleteInquiry(input: $input, condition: $condition) {
+    id
+    userID
+    title
+    content
     _version
     _deleted
     _lastChangedAt

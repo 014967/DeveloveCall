@@ -5,7 +5,7 @@ var docClient = new aws.DynamoDB.DocumentClient();
 
 
 
-exports.handler = async (event) => {
+exports.handler = async (event , context) => {
     // TODO implement
 
 
@@ -18,7 +18,7 @@ exports.handler = async (event) => {
     //var dirtyNumber =  /(.*)(-.+)(-.+)(?<=$)/.exec(removeFormatString[0]);
     var dirtyNumber = removeFormatString[0].split("_");
 
-
+    var uid = context.awsRequestId;
     var userId = dirtyNumber[0];
     var friendId = dirtyNumber[1];
     var uploadTime = dirtyNumber[2];
@@ -36,13 +36,14 @@ exports.handler = async (event) => {
     var date = new Date().toISOString();
     var lastchangedat = Date.now();
 
+    var newId = userId + friendId + uploadTime;
     var params = {
         TableName : tablename,
         Item :
             {
                      "userID" : userId,
                                    "friendID" : friendId,
-                                   "id" : jobName,
+                                   "id" : uid,
                                     "date" : uploadTime,
                                     "s3_url" : fileUrl,
                                     "keyWord" : "",
