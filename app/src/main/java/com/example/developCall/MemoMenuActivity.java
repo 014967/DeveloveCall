@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
@@ -39,7 +40,7 @@ public class MemoMenuActivity extends Activity {
         setContentView(R.layout.activity_memo_menu);
 
         btn_save = findViewById(R.id.btn_save);
-        btn_return = findViewById(R.id.btn_return);
+
         et_title = findViewById(R.id.et_title);
         et_content = findViewById(R.id.et_content);
 
@@ -52,13 +53,6 @@ public class MemoMenuActivity extends Activity {
         friendId = (String) intent.getExtras().get("friendId");
 
 
-        btn_return.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,29 +61,32 @@ public class MemoMenuActivity extends Activity {
                 title = et_title.getText().toString();
                 content = et_content.getText().toString();
 
+                if (title.equals("") || content.equals("")) {
+                    Toast.makeText(getApplicationContext(), "입력칸을 모두 채워주세요", Toast.LENGTH_SHORT).show();
+                } else {
+                    Amplify.API.query(
+                            ModelQuery.list(User.class, User.ID.contains(userId)),
+                            response ->
+                            {
+                                for (User user : response.getData()) {
+                                    for (Chat chat : user.getChat()) {
+                                        if (chat.getId().equals(chatId)) {
+                                            Chat newChat = chat.copyOfBuilder().memo(title + chatId + content).build();
+                                            Amplify.DataStore.save(newChat
+                                                    , this::onSavedSucess,
+                                                    this::onError);
 
-
-                Amplify.API.query(
-                        ModelQuery.list(User.class, User.ID.contains(userId)),
-                        response ->
-                        {
-                            for (User user : response.getData()) {
-                                for (Chat chat : user.getChat()) {
-                                    if (chat.getId().equals(chatId)) {
-                                        Chat newChat = chat.copyOfBuilder().memo(title + chatId + content).build();
-                                        Amplify.DataStore.save(newChat
-                                                , this::onSavedSucess,
-                                                this::onError);
-
+                                        }
                                     }
                                 }
+                            }, error ->
+                            {
+
                             }
-                        }, error ->
-                        {
+                    );
 
-                        }
-                );
 
+                }
 
 
             }

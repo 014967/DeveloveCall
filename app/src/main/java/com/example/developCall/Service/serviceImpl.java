@@ -4,10 +4,18 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.amplifyframework.api.graphql.GraphQLResponse;
+import com.amplifyframework.api.graphql.PaginatedResult;
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.User;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Calendar;
+
+import io.reactivex.rxjava3.core.Single;
 
 
 public class serviceImpl implements service {
@@ -254,10 +262,6 @@ public class serviceImpl implements service {
     }
 
 
-
-
-
-
     public String[][] getTokenizedArray(String item) {
         String dummy[];
         String array[][];
@@ -338,4 +342,27 @@ public class serviceImpl implements service {
         }
         return modifyArray;
     }
+
+    public Single<GraphQLResponse<PaginatedResult<User>>> getData(String userId)
+    {
+        return Single.create(singleSubscriber ->
+        {
+            Amplify.API.query(
+                    ModelQuery.list(User.class,User.ID.contains(userId))
+                    ,response ->
+                    {
+                            singleSubscriber.onSuccess(response);
+                    },error ->
+                    {
+
+                    }
+            ) ;
+        });
+    }
+
+
+
+
+
+
 }

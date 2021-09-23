@@ -39,7 +39,7 @@ public class CalendarMenuActivity extends Activity {
     Calendar calendar = Calendar.getInstance();
 
     Button btn_save;
-    Button btn_return;
+
     boolean bl_alarm;
 
     @Override
@@ -51,15 +51,10 @@ public class CalendarMenuActivity extends Activity {
         tv_date = findViewById(R.id.tv_date);
         sw_alarm = findViewById(R.id.sw_alarm);
         btn_save = findViewById(R.id.btn_save);
-        btn_return = findViewById(R.id.btn_return);
 
 
-        btn_return.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
+
 
         sw_alarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

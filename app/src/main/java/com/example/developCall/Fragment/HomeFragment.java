@@ -6,9 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import android.widget.TextView;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,12 +24,17 @@ import com.amplifyframework.datastore.generated.model.Group;
 import com.amplifyframework.datastore.generated.model.User;
 import com.example.developCall.Adapter.Home_FriendListAdapter;
 import com.example.developCall.Object.Ob_Friend;
+import com.example.developCall.Object.Ob_lastCall;
 import com.example.developCall.R;
 import com.example.developCall.Search.SearchActivity;
-
+import com.example.developCall.Service.serviceImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment {
 
@@ -47,6 +50,8 @@ public class HomeFragment extends Fragment {
 
 
     ImageView searchbtn;
+
+    serviceImpl service = new serviceImpl();
 
     @Nullable
     @Override
@@ -68,6 +73,35 @@ public class HomeFragment extends Fragment {
         home_rv_friend = view.findViewById(R.id.home_rv_friend);
         userId = Amplify.Auth.getCurrentUser().getUserId();
         friendListAdapter = new Home_FriendListAdapter(friendListArray);
+
+        //ArrayList<Ob_lastCall> arr = service.getCall(userId);
+        //System.out.println(Arrays.asList(arr));
+
+        ArrayList<Ob_lastCall> ob = new ArrayList<>();
+        service.getData(userId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(data ->
+                {
+                    for (User user : data.getData()) {
+                        for (Group group : user.getGroup()) {
+                            for (Friend friend : group.getFriend()) {
+                                Ob_lastCall ob_lastCall = new Ob_lastCall();
+                                ob_lastCall.setFriendName(friend.getName());
+                                ob_lastCall.setLastCall(friend.getLastContact());
+                                ob.add(ob_lastCall);
+
+                            }
+                        }
+                    }
+                    // 0 { friendName : ddd, lastcall : 13092021210130 } 1 { ~~~~ 각 배열마다 이름이랑 마지막 통화시간 넣어놧어
+                    //용학아 여기서 데이터 이용해야해
+                    System.out.println("96" + Arrays.asList(ob));
+
+                }, error ->
+                {
+
+                });
+
 
 
         home_rv_friend.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));

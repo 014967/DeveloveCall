@@ -160,21 +160,8 @@ public class Calendar_Fragment extends Fragment {
                     String str1 = btnday.substring(0, btnday.indexOf(" "));
                     String [] dummy = btnday.split(" ");
 
-                    String str2 = dummy[1]; // 2일말하는거
-                    String st_monthYear = monthYear.getText().toString();  // 09 2021
-
-
-
-                    if(str2.length() == 1)
-                    {
-                        str2 = "0"+str2;
-                    }
-
-                    String st_date = str2+st_monthYear;
-
-                    fileName = st_date+ v.getId() + ".json";
-
-                  //  fileName = getYear + getMonth + v.getId() + ".json";
+                    String str2 = dummy[1];
+                    fileName = getYear + getMonth + v.getId() + ".json";
                     String Name = "";
 
                     day.setText(str2);

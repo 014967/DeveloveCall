@@ -87,6 +87,7 @@ public class Fragment2 extends Fragment {
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
 
+    AlarmSet_Fragment alarmSet_fragment;
 
     String userId;
 
@@ -101,7 +102,7 @@ public class Fragment2 extends Fragment {
 
         fragmentManager = getActivity().getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
-        AlarmSet_Fragment alarmSet_fragment = new AlarmSet_Fragment();
+        alarmSet_fragment  = new AlarmSet_Fragment();
 
 
         txt_pf_name = view.findViewById(R.id.txt_pf_name);
@@ -121,7 +122,8 @@ public class Fragment2 extends Fragment {
         txt_category2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                transaction.replace(R.id.home_frame, alarmSet_fragment).commitAllowingStateLoss();
+                transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.home_frame, alarmSet_fragment).commit();
             }
         });
 
