@@ -123,12 +123,12 @@
         android:visibility="gone">
 
     </TextView>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recylcerView"
+    <ListView
+        android:id="@+id/chatListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:scrollbars="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+    </ListView>
 </LinearLayout>

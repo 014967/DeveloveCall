@@ -314,6 +314,10 @@ query SyncChats(
       keyWord
       summary
       memo
+      detailChat {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -334,6 +338,23 @@ query GetChat($id: ID!) {
     keyWord
     summary
     memo
+    detailChat {
+      items {
+        id
+        chatID
+        start_time
+        end_time
+        content
+        speaker_label
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -356,11 +377,82 @@ query ListChats(
       keyWord
       summary
       memo
+      detailChat {
+        nextToken
+        startedAt
+      }
       _version
       _deleted
       _lastChangedAt
       createdAt
       updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncDetailChats(
+  $filter: ModelDetailChatFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncDetailChats(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      chatID
+      start_time
+      end_time
+      content
+      speaker_label
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetDetailChat($id: ID!) {
+  getDetailChat(id: $id) {
+    id
+    chatID
+    start_time
+    end_time
+    content
+    speaker_label
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
+query ListDetailChats(
+  $filter: ModelDetailChatFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listDetailChats(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      chatID
+      start_time
+      end_time
+      content
+      speaker_label
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
     nextToken
     startedAt
@@ -441,6 +533,64 @@ query ListGroups(
         nextToken
         startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncNotices(
+  $filter: ModelNoticeFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncNotices(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      content
+      dummy
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetNotice($id: ID!) {
+  getNotice(id: $id) {
+    id
+    content
+    dummy
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListNotices(
+  $filter: ModelNoticeFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listNotices(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      content
+      dummy
       _version
       _deleted
       _lastChangedAt

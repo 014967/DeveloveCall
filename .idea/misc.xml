@@ -23,7 +23,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_memo.xml" value="0.1900900900900901" />
         <entry key="app/src/main/res/layout/activity_memo_menu.xml" value="0.22477477477477478" />
-        <entry key="app/src/main/res/layout/activity_popup_calendar.xml" value="0.2018018018018018" />
+        <entry key="app/src/main/res/layout/activity_popup_calendar.xml" value="0.25" />
         <entry key="app/src/main/res/layout/alarm_calendarpopup.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/alarm_cyclepopup.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/alarm_getservicexml.xml" value="0.2708333333333333" />

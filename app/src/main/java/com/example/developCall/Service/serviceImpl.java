@@ -8,6 +8,7 @@ import com.amplifyframework.api.graphql.GraphQLResponse;
 import com.amplifyframework.api.graphql.PaginatedResult;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.DetailChat;
 import com.amplifyframework.datastore.generated.model.User;
 
 import java.text.SimpleDateFormat;
@@ -223,7 +224,7 @@ public class serviceImpl implements service {
         String result[][];
         String pre;
         for (int i = 0; i < array1.length; i++) {
-            for (int j = 0; j < array2.length; j++) {
+            for (int j = 0; j < array2.length; j++) {  //포문을 한번만 돌릴 수도 있을 꺼같음
                 if (array1[i][0].equals(array2[j][0])) {
                     array1[i][3] = array2[j][3];
                 }
@@ -357,6 +358,24 @@ public class serviceImpl implements service {
 
                     }
             ) ;
+        });
+    }
+
+
+
+    public Single<GraphQLResponse<PaginatedResult<DetailChat>>> getChatList(String chatId)
+    {
+        return Single.create(singleSubscriber ->
+        {
+           Amplify.API.query(
+                   ModelQuery.list(DetailChat.class, DetailChat.CHAT_ID.contains(chatId))
+                   ,response ->
+                   {
+                       singleSubscriber.onSuccess(response);
+                   },error ->{
+
+                   }
+           );
         });
     }
 

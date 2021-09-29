@@ -5,9 +5,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,61 +12,47 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.amazonaws.mobile.auth.core.internal.util.ThreadUtils;
 import com.amplifyframework.core.Amplify;
-import com.example.developCall.Adapter.ChatRecyclerAdapter;
-import com.example.developCall.Adapter.ChatRecyclerAdapter.OnTextClickListener;
+import com.amplifyframework.datastore.generated.model.DetailChat;
+import com.example.developCall.Adapter.ChatListAdapter;
+import com.example.developCall.Adapter.ChatListAdapter.OnTextClickListener;
 import com.example.developCall.Object.AmazonTranscription;
+import com.example.developCall.Object.Ob_DetailChat;
+import com.example.developCall.Object.Ob_Text;
+import com.example.developCall.Service.service;
 import com.example.developCall.Service.serviceImpl;
 import com.google.gson.Gson;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.disposables.Disposable;
-import jodd.http.HttpResponse;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ChatActivity extends AppCompatActivity implements OnTextClickListener {
 
 
-    RecyclerView recyclerView;
-    ChatRecyclerAdapter chatRecyclerAdapter;
+    ListView chatListView;
+    ChatListAdapter chatListAdapter;
 
     serviceImpl service = new serviceImpl();
 
-    String[][] chatArray;
-    //merge array
-    String item1;
-    String item2;
-    String[] dummy1;
-    String[][] array1;
-    String[] dummy2;
-    String[][] array2;
     String st_date;
 
     ProgressBar loading;
@@ -81,6 +64,7 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
     String[][] modifi;
 
     List<List<String>> list = new ArrayList<>();
+    List<Ob_DetailChat> chatList = new ArrayList<>();
     TextView nonechat;
     TextView username;
     TextView tv_date;
@@ -112,6 +96,9 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
     Button btn_down;
     int index = 0;
 
+
+    service sv = new serviceImpl();
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,10 +108,9 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
         loading = findViewById(R.id.loading);
 
         userId = Amplify.Auth.getCurrentUser().getUserId();
-        recyclerView = findViewById(R.id.recylcerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        chatRecyclerAdapter = new ChatRecyclerAdapter(this, list, this::onTextClick);
-        recyclerView.setAdapter(chatRecyclerAdapter);
+        chatListView = findViewById(R.id.chatListView);
+        chatListAdapter = new ChatListAdapter(this, chatList, this::onTextClick);
+        chatListView.setAdapter(chatListAdapter);
 
         btn_addMemo = findViewById(R.id.addMemo);
         nonechat = findViewById(R.id.noneText);
@@ -144,7 +130,7 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
 
 
         String url = getIntent().getStringExtra("url");
-//developcall-transcribe-output.s3.ap-northeast-2.amazonaws.com/27181b7c-50cc-4cd7-a3f2-c36720eb5e42_f309adee-26e4-4707-a7e7-41588d552b4f_13092021210444.m4a.json
+
 
         String expression = "(developcall-transcribe-output.s3.ap-northeast-2.amazonaws.com/)(.*)(.m4a.json)";
         Pattern pattern = Pattern.compile(expression);
@@ -171,7 +157,7 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                chatRecyclerAdapter.getFilter().filter(query);
+                chatListAdapter.getFilter().filter(query);
                 return false;
             }
 
@@ -231,160 +217,33 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
                 onBackPressed();
             }
         });
-        Executors.newSingleThreadExecutor().execute(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-
-                    try {
-                        amazonTranscription = download(url);
-                        //amazonTranscription = download();
-
-                        if (amazonTranscription.getResults().getTranscripts().get(0).getTranscript().equals("")) {
-                            Handler handler = new Handler(Looper.getMainLooper());
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    loading.setVisibility(View.GONE);
-                                    nonechat.setVisibility(View.VISIBLE);
-                                    Toast.makeText(getApplicationContext(), "통화내용이 없습니다.", Toast.LENGTH_SHORT).show();
-                                }
-                            }, 0);
-                            break;
-                        } else {
 
 
-                            if (amazonTranscription.getResults().getSpeaker_labels().getSpeakers() == 2) {
-                                item1 = amazonTranscription.getResults().getSpeaker_labels().toString();
-                                item2 = amazonTranscription.getResults().getItems().toString();
+        sv.getChatList(chat_Id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(data ->
+                {
+                    loading.setVisibility(View.GONE);
+                    for (DetailChat chat : data.getData()) {
 
-
-                                item1 = item1.replace("[", "").replace("]", "");
-                                item2 = item2.replace("[", "").replace("]", "");
-
-
-                                array1 = service.getTokenizedArray(item1);
-                                array2 = service.getTokenizedArray(item2);
-
-                                modifi = service.mergeArray(array1, array2);
-
-
-                                list = Arrays.stream(modifi)
-                                        .map(Arrays::asList)
-                                        .collect(Collectors.toList());
-                                Observable.just(list)
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(addList());
-                            } else {
-                                // 화자가 1 일때
-                                String[] dd = amazonTranscription.getResults().getTranscripts().get(0).getTranscript()
-                                        .split("[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9|\\s]");
-                                String[][] result = new String[dd.length][2];
-                                for (int i = 0; i < dd.length; i++) {
-                                    result[i][0] = "spk_0";
-                                    result[i][1] = dd[i];
-                                }
-
-                                list = Arrays.stream(result).map(Arrays::asList)
-                                        .collect(Collectors.toList());
-                                Observable.just(list)
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(addList());
-
-                            }
-
-
-                        }
-
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        Ob_DetailChat ob_detailChat = new Ob_DetailChat();
+                        ob_detailChat.setSpk(chat.getSpeakerLabel());
+                        ob_detailChat.setContent(chat.getContent());
+                        ob_detailChat.setCreated_at(chat.getCreatedAt());
+                        chatList.add(ob_detailChat);
                     }
-                    break;
-                }
+                    chatListAdapter.passData(chatList);
+                    chatListAdapter.notifyDataSetChanged();
 
 
-            }
-        });
+                });
 
 
     }
-
-    private Observer<? super String> updateLabel(View popView) {
-        return new Observer<String>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(@NonNull String s) {
-                popup_set_date = popView.findViewById(R.id.set_date);
-                popup_set_date.setText(s);
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-
-
-        };
-    }
-
-    private Observer<? super List<List<String>>> addList() {
-        return new Observer<List<List<String>>>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(@NonNull List<List<String>> lists) {
-                chatRecyclerAdapter.initData(lists);
-                chatRecyclerAdapter.notifyDataSetChanged();
-                loading.setVisibility(View.GONE);
-
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        };
-    }
-
-
-    private AmazonTranscription download(String uri) throws IOException {
-
-
-        jodd.http.HttpRequest httpRequest = jodd.http.HttpRequest.get(uri);
-        HttpResponse response = httpRequest.get(uri).send();
-
-        String result = response.charset("UTF-8").bodyText();
-
-        Log.d("텍스트", result);
-
-
-        return gson.fromJson(result, AmazonTranscription.class);
-    }
-
-
-
 
 
     @Override
-    public void onTextClick(List<Integer> data) {
+    public void onTextClick(List<Ob_Text> data) {
 
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
@@ -393,11 +252,14 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
 
                 int max = data.size();
 
-//                recyclerView.findViewHolderForLayoutPosition(data.get(index))
-//                        .itemView.findViewById(R.id.chatText).setBackgroundColor(Color.WHITE);
 
-                recyclerView.getLayoutManager().scrollToPosition(data.get(index));
-//                recyclerView.getLayoutManager().findViewByPosition(data.get(index)).setBackgroundColor(Color.BLUE);
+
+
+                chatListView.setSelection(0);
+                chatListView.setSelection(data.get(index).getIndex());
+
+
+
 
                 btn_up.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -405,14 +267,12 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
 
 
                         index++;
-                        if(index <max)
-                        {
-//                            recyclerView.findViewHolderForLayoutPosition(data.get(index))
-//                                    .itemView.findViewById(R.id.chatText).setBackgroundColor(Color.WHITE);
-                            recyclerView.getLayoutManager().scrollToPosition(data.get(index));
-                            //recyclerView.findViewHolderForAdapterPosition(data.get(index)).
-            //                recyclerView.getLayoutManager().findViewByPosition(data.get(index)).setBackgroundColor(Color.BLUE);
+                        if (index < max) {
+                            chatListView.setSelection(data.get(index).getIndex());
 
+                        } else {
+                            index--;
+                            chatListView.setSelection(data.get(index).getIndex());
                         }
 
 
@@ -423,19 +283,14 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
                     public void onClick(View v) {
 
                         if (index == 0) {
-//                            recyclerView.findViewHolderForLayoutPosition(data.get(index))
-//                                    .itemView.findViewById(R.id.chatText).setBackgroundColor(Color.WHITE);
-                            recyclerView.getLayoutManager().scrollToPosition(data.get(index));
-
+                            chatListView.setSelection(data.get(index).getIndex());
 
 
                         } else {
                             index--;
                         }
 
-//                        recyclerView.findViewHolderForLayoutPosition(data.get(index))
-//                                .itemView.findViewById(R.id.chatText).setBackgroundColor(Color.WHITE);
-                        recyclerView.getLayoutManager().scrollToPosition(data.get(index));
+                        chatListView.setSelection(data.get(index).getIndex());
 
                     }
                 });

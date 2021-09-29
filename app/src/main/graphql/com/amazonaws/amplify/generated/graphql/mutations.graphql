@@ -369,6 +369,23 @@ mutation CreateChat(
     keyWord
     summary
     memo
+    detailChat {
+      items {
+        id
+        chatID
+        start_time
+        end_time
+        content
+        speaker_label
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -389,6 +406,23 @@ mutation UpdateChat(
     keyWord
     summary
     memo
+    detailChat {
+      items {
+        id
+        chatID
+        start_time
+        end_time
+        content
+        speaker_label
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -409,11 +443,82 @@ mutation DeleteChat(
     keyWord
     summary
     memo
+    detailChat {
+      items {
+        id
+        chatID
+        start_time
+        end_time
+        content
+        speaker_label
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
     createdAt
     updatedAt
+  }
+}
+mutation CreateDetailChat(
+  $input: CreateDetailChatInput!
+  $condition: ModelDetailChatConditionInput
+) {
+  createDetailChat(input: $input, condition: $condition) {
+    id
+    chatID
+    start_time
+    end_time
+    content
+    speaker_label
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
+mutation UpdateDetailChat(
+  $input: UpdateDetailChatInput!
+  $condition: ModelDetailChatConditionInput
+) {
+  updateDetailChat(input: $input, condition: $condition) {
+    id
+    chatID
+    start_time
+    end_time
+    content
+    speaker_label
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
+mutation DeleteDetailChat(
+  $input: DeleteDetailChatInput!
+  $condition: ModelDetailChatConditionInput
+) {
+  deleteDetailChat(input: $input, condition: $condition) {
+    id
+    chatID
+    start_time
+    end_time
+    content
+    speaker_label
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
   }
 }
 mutation CreateGroup(
@@ -511,6 +616,51 @@ mutation DeleteGroup(
       nextToken
       startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateNotice(
+  $input: CreateNoticeInput!
+  $condition: ModelNoticeConditionInput
+) {
+  createNotice(input: $input, condition: $condition) {
+    id
+    content
+    dummy
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateNotice(
+  $input: UpdateNoticeInput!
+  $condition: ModelNoticeConditionInput
+) {
+  updateNotice(input: $input, condition: $condition) {
+    id
+    content
+    dummy
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteNotice(
+  $input: DeleteNoticeInput!
+  $condition: ModelNoticeConditionInput
+) {
+  deleteNotice(input: $input, condition: $condition) {
+    id
+    content
+    dummy
     _version
     _deleted
     _lastChangedAt

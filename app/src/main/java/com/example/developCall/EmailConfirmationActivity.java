@@ -124,7 +124,7 @@ public class EmailConfirmationActivity extends AppCompatActivity {
             private <T extends Model> void onSavedSuccess(DataStoreItemChange<T> tDataStoreItemChange)
             {
 
-
+                System.out.println(tDataStoreItemChange);
 
                 Intent intent = new Intent(getApplicationContext(),AssginCompleteActivity.class);
 

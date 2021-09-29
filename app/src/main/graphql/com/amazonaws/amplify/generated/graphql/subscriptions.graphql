@@ -339,6 +339,23 @@ subscription OnCreateChat {
     keyWord
     summary
     memo
+    detailChat {
+      items {
+        id
+        chatID
+        start_time
+        end_time
+        content
+        speaker_label
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -356,6 +373,23 @@ subscription OnUpdateChat {
     keyWord
     summary
     memo
+    detailChat {
+      items {
+        id
+        chatID
+        start_time
+        end_time
+        content
+        speaker_label
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
@@ -373,11 +407,73 @@ subscription OnDeleteChat {
     keyWord
     summary
     memo
+    detailChat {
+      items {
+        id
+        chatID
+        start_time
+        end_time
+        content
+        speaker_label
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
     _version
     _deleted
     _lastChangedAt
     createdAt
     updatedAt
+  }
+}
+subscription OnCreateDetailChat {
+  onCreateDetailChat {
+    id
+    chatID
+    start_time
+    end_time
+    content
+    speaker_label
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
+subscription OnUpdateDetailChat {
+  onUpdateDetailChat {
+    id
+    chatID
+    start_time
+    end_time
+    content
+    speaker_label
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
+subscription OnDeleteDetailChat {
+  onDeleteDetailChat {
+    id
+    chatID
+    start_time
+    end_time
+    content
+    speaker_label
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
   }
 }
 subscription OnCreateGroup {
@@ -466,6 +562,42 @@ subscription OnDeleteGroup {
       nextToken
       startedAt
     }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateNotice {
+  onCreateNotice {
+    id
+    content
+    dummy
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateNotice {
+  onUpdateNotice {
+    id
+    content
+    dummy
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteNotice {
+  onDeleteNotice {
+    id
+    content
+    dummy
     _version
     _deleted
     _lastChangedAt

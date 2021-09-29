@@ -24,17 +24,12 @@ import com.amplifyframework.datastore.generated.model.Group;
 import com.amplifyframework.datastore.generated.model.User;
 import com.example.developCall.Adapter.Home_FriendListAdapter;
 import com.example.developCall.Object.Ob_Friend;
-import com.example.developCall.Object.Ob_lastCall;
 import com.example.developCall.R;
 import com.example.developCall.Search.SearchActivity;
 import com.example.developCall.Service.serviceImpl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomeFragment extends Fragment {
 
@@ -74,8 +69,8 @@ public class HomeFragment extends Fragment {
         userId = Amplify.Auth.getCurrentUser().getUserId();
         friendListAdapter = new Home_FriendListAdapter(friendListArray);
 
-        //ArrayList<Ob_lastCall> arr = service.getCall(userId);
-        //System.out.println(Arrays.asList(arr));
+
+/*
 
         ArrayList<Ob_lastCall> ob = new ArrayList<>();
         service.getData(userId).subscribeOn(Schedulers.io())
@@ -101,7 +96,7 @@ public class HomeFragment extends Fragment {
                 {
 
                 });
-
+*/
 
 
         home_rv_friend.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));

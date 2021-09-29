@@ -3,12 +3,35 @@
 var aws = require('aws-sdk');
 var docClient = new aws.DynamoDB.DocumentClient();
 
+const { randomUUID } = require('crypto');
+
+const s3 = new aws.S3({ apiVersion: '2006-03-01' });
+
+
+Items = function(start_time, end_time, spk, content){
+this.start_time = start_time;
+this.end_time = end_time;
+this.spk = spk;
+this.content = content;
+
+}
+
+
+
+
+
 
 
 exports.handler = async (event , context) => {
     // TODO implement
 
 
+
+console.log(randomUUID());
+
+
+
+console.log(event)
 
 
 // get id from event
@@ -28,15 +51,29 @@ exports.handler = async (event , context) => {
 
     var friendTableName = "Friend-6tai4sqoubaihizrtoyvo7a5da-dev";
 
+    var detailChatTableName = "DetailChat-6tai4sqoubaihizrtoyvo7a5da-dev";
+
     console.log(userId);
     console.log(friendId);
     console.log(uploadTime);
+
+
+    var bucketname = "developcall-transcribe-output"
+    var key = jobName + ".json"
+
+
+
 
 
     var date = new Date().toISOString();
     var lastchangedat = Date.now();
 
     var newId = userId + friendId + uploadTime;
+
+
+
+
+
     var params = {
         TableName : tablename,
         Item :
@@ -71,6 +108,12 @@ exports.handler = async (event , context) => {
         ReturnValues:"UPDATED_NEW"
     };
 
+    var transcriptParams = {
+            Bucket : "developcall-transcribe-output",
+            Key : jobName+".json",
+    };
+
+
     async function createItem(){
     try {
         await docClient.put(params).promise();
@@ -94,9 +137,233 @@ exports.handler = async (event , context) => {
 
 
 
+    async function updateScript()
+    {
+        try {
+        const  data = await s3.getObject(transcriptParams).promise();
+        let parseJson = JSON.parse(data.Body.toString());
+        var script  = parseJson.results.transcripts[0].transcript;
+
+        var segment = parseJson.results.speaker_labels.segments;
+        var mainitem = parseJson.results.items;
+
+        var item1 = new Array();
+        var item2= new Array();
+        for (var items = 0 ; items< segment.length; items++) {
+
+
+            for( var result = 0 ; result < segment[items].items.length; result++)
+            {
+                console.log(segment[items].items[result]);
+                var start  = segment[items].items[result].start_time;
+                var end = segment[items].items[result].end_time;
+                var sp = segment[items].items[result].speaker_label;
+                item1.push(new Items(start, end, sp , ""));
+            }
+
+        }
+
+        for( var value = 0; value < mainitem.length; value++)
+        {
+
+            var start = mainitem[value].start_time;
+            var end = mainitem[value].end_time;
+
+
+            for( var innervalue = 0; innervalue < mainitem[value].alternatives.length; innervalue++)
+            {
+                var content = mainitem[value].alternatives[innervalue].content;
+                var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
+                if(typeof start == "undefined")
+                {
+
+                } else
+                {
+                item2.push(new Items(start,end,"null",content));
+                }
+
+
+
+            }
+        }
+
+
+
+
+       var array = new Array();
+       var final = mergeArray(item1,item2,array);
+
+
+        try{
+        await callBack(final);
+        }
+        catch (err)
+        {
+        console.log(err);
+        }
+
+
+
+        var scriptparam = {
+            TableName : tablename,
+                    Key : {
+                        "id" : uid,
+                    },
+                    UpdateExpression : "set summary = :s",
+                    ExpressionAttributeValues:{
+                        ":s" : script,
+                    },
+                    ReturnValues:"UPDATED_NEW"
+        };
+        try {
+            await updateDbScript(scriptparam);
+        }
+        catch ( err )
+        {
+            console.log(err);
+        }
+
+
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    function mergeArray(item1, item2 , array)
+    {
+
+
+        var pre;
+        for(var i =0 ; i<item1.length; i++)
+        {
+
+            item1[i].content = item2[i].content;
+            array.push(item1[i]);
+        }
+        pre = array[0].spk;
+
+        var count =1;
+        for(var i= 1; i< array.length; i++)
+        {
+           if(array[i].spk == pre)
+           {
+
+
+           } else
+           {
+            pre = array[i].spk;
+
+            count++;
+           }
+        }
+        var result = new Array(count);
+        for ( var i = 0; i< count; i++)
+        {
+         result[i] = new Array(2);
+         result[i].fill("");
+        }
+
+
+
+        count =0;
+        var newContent = "";
+        for(var i=0; i<array.length; i++)
+        {
+            if(array[i].spk == pre)
+            {
+
+            result[count][0] = pre;
+
+            result[count][1] += array[i].content + " ";
+
+            }
+            else {
+
+
+
+                pre = array[i].spk;
+
+                count++;
+
+                result[count][0] = pre;
+
+                result[count][1] += array[i].content;
+
+            }
+        }
+
+        return result;
+
+    }
+
+
+
+    function createDetailChat(pr)
+    {
+
+            docClient.put(pr).promise();
+
+    }
+
+    async function callBack(result)
+    {
+
+
+        try{
+                for(var i = 0; i<result.length; i++)
+                {
+                               console.log(result[i]);
+                    var detailParams = {
+                        TableName : detailChatTableName,
+                        Item :
+                        {
+                            "chatID" : uid,
+                            "id" : randomUUID(),
+                            "start_time" : "",
+                            "end_time" : "",
+                            "speaker_label" : result[i][0],
+                            "content" : result[i][1],
+                            "_lastChangedAt" : new Date().toISOString(),
+                            "createdAt" : new Date().toISOString(),
+                            "updatedAt" : new Date().toISOString(),
+                            "_version" : 1,
+                        }
+
+                    }
+
+                    createDetailChat(detailParams);
+                }
+
+        }
+        catch(err)
+        {
+        console.log(err);
+        }
+
+    }
+    async function updateDbScript(scriptparam)
+    {
+        try{
+                    await docClient.update(scriptparam).promise();
+                }
+                catch(err)
+                {
+                console.log(err);
+                }
+    }
+
+
+
+
+
+
+
+
     try{
         await createItem();
         await updateContact();
+        await updateScript();
         console.log("success");
 
     }
