@@ -112,10 +112,11 @@ public class CalendarMenuActivity extends Activity {
         }
 
         Date d = (Date) data.getExtras().get("calendar");
+        String time = (String) data.getExtras().get("time").toString();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
         String date = simpleDateFormat.format(d);
 
-        tv_date.setText(date);
+        tv_date.setText(date + time);
 
 
     }

@@ -630,7 +630,6 @@ mutation CreateNotice(
   createNotice(input: $input, condition: $condition) {
     id
     content
-    dummy
     _version
     _deleted
     _lastChangedAt
@@ -645,7 +644,6 @@ mutation UpdateNotice(
   updateNotice(input: $input, condition: $condition) {
     id
     content
-    dummy
     _version
     _deleted
     _lastChangedAt
@@ -660,7 +658,6 @@ mutation DeleteNotice(
   deleteNotice(input: $input, condition: $condition) {
     id
     content
-    dummy
     _version
     _deleted
     _lastChangedAt

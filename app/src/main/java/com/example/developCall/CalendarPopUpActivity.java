@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.TimePicker;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -17,9 +18,13 @@ import java.util.Calendar;
 public class CalendarPopUpActivity extends Activity {
 
     DatePicker datePicker;
+    TimePicker timePicker;
     Calendar calendar= Calendar.getInstance();
     Button btn_save;
     Button btn_return;
+    int hour;
+    int minute;
+    int hourMinute;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,6 +34,7 @@ public class CalendarPopUpActivity extends Activity {
         datePicker = findViewById(R.id.datePicker);
         btn_save = findViewById(R.id.btn_save);
         btn_return = findViewById(R.id.btn_return);
+        timePicker= findViewById(R.id.timePicker);
 
 
 
@@ -42,11 +48,21 @@ public class CalendarPopUpActivity extends Activity {
             }
         });
 
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int min) {
+                hour = hourOfDay;
+                minute = min;
+                hourMinute = hour + minute;
+
+            }
+        });
+
 
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(Activity.RESULT_OK,new Intent().putExtra("calendar", calendar.getTime()));
+                setResult(Activity.RESULT_OK,new Intent().putExtra("calendar", calendar.getTime()).putExtra("time",hourMinute ));
                 finish();
             }
         });

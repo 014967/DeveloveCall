@@ -78,6 +78,6 @@ type Notice @model
 {
     id : ID!
     content : String
-    dummy :String
+
 }
 

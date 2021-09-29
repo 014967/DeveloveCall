@@ -21,10 +21,8 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 public final class Notice implements Model {
   public static final QueryField ID = field("id");
   public static final QueryField CONTENT = field("content");
-  public static final QueryField DUMMY = field("dummy");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String content;
-  private final @ModelField(targetType="String") String dummy;
   public String getId() {
       return id;
   }
@@ -33,14 +31,9 @@ public final class Notice implements Model {
       return content;
   }
   
-  public String getDummy() {
-      return dummy;
-  }
-  
-  private Notice(String id, String content, String dummy) {
+  private Notice(String id, String content) {
     this.id = id;
     this.content = content;
-    this.dummy = dummy;
   }
   
   @Override
@@ -52,8 +45,7 @@ public final class Notice implements Model {
       } else {
       Notice notice = (Notice) obj;
       return ObjectsCompat.equals(getId(), notice.getId()) &&
-              ObjectsCompat.equals(getContent(), notice.getContent()) &&
-              ObjectsCompat.equals(getDummy(), notice.getDummy());
+              ObjectsCompat.equals(getContent(), notice.getContent());
       }
   }
   
@@ -62,7 +54,6 @@ public final class Notice implements Model {
     return new StringBuilder()
       .append(getId())
       .append(getContent())
-      .append(getDummy())
       .toString()
       .hashCode();
   }
@@ -72,8 +63,7 @@ public final class Notice implements Model {
     return new StringBuilder()
       .append("Notice {")
       .append("id=" + String.valueOf(getId()) + ", ")
-      .append("content=" + String.valueOf(getContent()) + ", ")
-      .append("dummy=" + String.valueOf(getDummy()))
+      .append("content=" + String.valueOf(getContent()))
       .append("}")
       .toString();
   }
@@ -103,47 +93,36 @@ public final class Notice implements Model {
     }
     return new Notice(
       id,
-      null,
       null
     );
   }
   
   public CopyOfBuilder copyOfBuilder() {
     return new CopyOfBuilder(id,
-      content,
-      dummy);
+      content);
   }
   public interface BuildStep {
     Notice build();
     BuildStep id(String id) throws IllegalArgumentException;
     BuildStep content(String content);
-    BuildStep dummy(String dummy);
   }
   
 
   public static class Builder implements BuildStep {
     private String id;
     private String content;
-    private String dummy;
     @Override
      public Notice build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
         
         return new Notice(
           id,
-          content,
-          dummy);
+          content);
     }
     
     @Override
      public BuildStep content(String content) {
         this.content = content;
-        return this;
-    }
-    
-    @Override
-     public BuildStep dummy(String dummy) {
-        this.dummy = dummy;
         return this;
     }
     
@@ -170,20 +149,14 @@ public final class Notice implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String content, String dummy) {
+    private CopyOfBuilder(String id, String content) {
       super.id(id);
-      super.content(content)
-        .dummy(dummy);
+      super.content(content);
     }
     
     @Override
      public CopyOfBuilder content(String content) {
       return (CopyOfBuilder) super.content(content);
-    }
-    
-    @Override
-     public CopyOfBuilder dummy(String dummy) {
-      return (CopyOfBuilder) super.dummy(dummy);
     }
   }
   

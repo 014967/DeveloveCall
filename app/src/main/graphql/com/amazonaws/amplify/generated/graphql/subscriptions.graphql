@@ -573,7 +573,6 @@ subscription OnCreateNotice {
   onCreateNotice {
     id
     content
-    dummy
     _version
     _deleted
     _lastChangedAt
@@ -585,7 +584,6 @@ subscription OnUpdateNotice {
   onUpdateNotice {
     id
     content
-    dummy
     _version
     _deleted
     _lastChangedAt
@@ -597,7 +595,6 @@ subscription OnDeleteNotice {
   onDeleteNotice {
     id
     content
-    dummy
     _version
     _deleted
     _lastChangedAt
