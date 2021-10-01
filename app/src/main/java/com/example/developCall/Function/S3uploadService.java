@@ -55,7 +55,7 @@ public class S3uploadService extends Service {
     String userId;
 
 
-    int NOTIFICATION_ID = 10;
+    int NOTIFICATION_ID = 815;
     String CHANNEL_ID = "primary_notification_channel";
     NotificationManager notificationManager;
     boolean flag;

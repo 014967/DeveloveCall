@@ -31,6 +31,9 @@ import com.example.developCall.Service.serviceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class HomeFragment extends Fragment {
 
 
@@ -41,7 +44,7 @@ public class HomeFragment extends Fragment {
 
     RecyclerView home_rv_friend;
     Home_FriendListAdapter friendListAdapter;
-    List<Ob_Friend> friendListArray = new ArrayList<>();
+    List<Ob_Friend> friendListArray;
 
 
     ImageView searchbtn;
@@ -67,7 +70,37 @@ public class HomeFragment extends Fragment {
         txt_user_name = view.findViewById(R.id.txt_user_name);
         home_rv_friend = view.findViewById(R.id.home_rv_friend);
         userId = Amplify.Auth.getCurrentUser().getUserId();
+        friendListArray = new ArrayList<>();
         friendListAdapter = new Home_FriendListAdapter(friendListArray);
+        service.getUserName(userId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(data ->
+                {
+
+                    for(User user : data.getData())
+                    {
+                        username = user.getName();
+                        txt_user_name.setText(username);
+                        for(Group group : user.getGroup())
+                        {
+                            for(Friend friend: group.getFriend())
+                            {
+                                Ob_Friend ob_friend = new Ob_Friend();
+                                ob_friend.setName(friend.getName());
+                                ob_friend.setFriendImg(friend.getFriendImg());
+                                friendListArray.add(ob_friend);
+                            }
+
+                        }
+
+                    }
+                    friendListAdapter.setFriendListArray(friendListArray);
+                    friendListAdapter.notifyDataSetChanged();
+
+                }, error ->
+                {
+                    System.out.println("유저 이름이 없습니다");
+                });
 
 
 /*
@@ -101,7 +134,7 @@ public class HomeFragment extends Fragment {
 
         home_rv_friend.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         home_rv_friend.setAdapter(friendListAdapter);
-        setUserAndFriend(userId);
+       // setUserAndFriend(userId);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

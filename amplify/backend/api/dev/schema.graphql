@@ -59,8 +59,8 @@ type DetailChat @model
     end_time : String
     content : String
     speaker_label : String
-    createdAt : AWSDateTime
-    updatedAt : AWSDateTime
+    createdAt : String
+    updatedAt : String
 
 }
 
@@ -77,7 +77,7 @@ type Group @model
 type Notice @model
 {
     id : ID!
-    content : String
+    item : String
 
 }
 

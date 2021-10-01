@@ -1,6 +1,5 @@
 package com.amplifyframework.datastore.generated.model;
 
-import com.amplifyframework.core.model.temporal.Temporal;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,8 +34,8 @@ public final class DetailChat implements Model {
   private final @ModelField(targetType="String") String end_time;
   private final @ModelField(targetType="String") String content;
   private final @ModelField(targetType="String") String speaker_label;
-  private final @ModelField(targetType="AWSDateTime") Temporal.DateTime createdAt;
-  private final @ModelField(targetType="AWSDateTime") Temporal.DateTime updatedAt;
+  private final @ModelField(targetType="String") String createdAt;
+  private final @ModelField(targetType="String") String updatedAt;
   public String getId() {
       return id;
   }
@@ -61,15 +60,15 @@ public final class DetailChat implements Model {
       return speaker_label;
   }
   
-  public Temporal.DateTime getCreatedAt() {
+  public String getCreatedAt() {
       return createdAt;
   }
   
-  public Temporal.DateTime getUpdatedAt() {
+  public String getUpdatedAt() {
       return updatedAt;
   }
   
-  private DetailChat(String id, String chatID, String start_time, String end_time, String content, String speaker_label, Temporal.DateTime createdAt, Temporal.DateTime updatedAt) {
+  private DetailChat(String id, String chatID, String start_time, String end_time, String content, String speaker_label, String createdAt, String updatedAt) {
     this.id = id;
     this.chatID = chatID;
     this.start_time = start_time;
@@ -187,8 +186,8 @@ public final class DetailChat implements Model {
     BuildStep endTime(String endTime);
     BuildStep content(String content);
     BuildStep speakerLabel(String speakerLabel);
-    BuildStep createdAt(Temporal.DateTime createdAt);
-    BuildStep updatedAt(Temporal.DateTime updatedAt);
+    BuildStep createdAt(String createdAt);
+    BuildStep updatedAt(String updatedAt);
   }
   
 
@@ -199,8 +198,8 @@ public final class DetailChat implements Model {
     private String end_time;
     private String content;
     private String speaker_label;
-    private Temporal.DateTime createdAt;
-    private Temporal.DateTime updatedAt;
+    private String createdAt;
+    private String updatedAt;
     @Override
      public DetailChat build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -248,13 +247,13 @@ public final class DetailChat implements Model {
     }
     
     @Override
-     public BuildStep createdAt(Temporal.DateTime createdAt) {
+     public BuildStep createdAt(String createdAt) {
         this.createdAt = createdAt;
         return this;
     }
     
     @Override
-     public BuildStep updatedAt(Temporal.DateTime updatedAt) {
+     public BuildStep updatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
         return this;
     }
@@ -282,7 +281,7 @@ public final class DetailChat implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String chatId, String startTime, String endTime, String content, String speakerLabel, Temporal.DateTime createdAt, Temporal.DateTime updatedAt) {
+    private CopyOfBuilder(String id, String chatId, String startTime, String endTime, String content, String speakerLabel, String createdAt, String updatedAt) {
       super.id(id);
       super.chatId(chatId)
         .startTime(startTime)
@@ -319,12 +318,12 @@ public final class DetailChat implements Model {
     }
     
     @Override
-     public CopyOfBuilder createdAt(Temporal.DateTime createdAt) {
+     public CopyOfBuilder createdAt(String createdAt) {
       return (CopyOfBuilder) super.createdAt(createdAt);
     }
     
     @Override
-     public CopyOfBuilder updatedAt(Temporal.DateTime updatedAt) {
+     public CopyOfBuilder updatedAt(String updatedAt) {
       return (CopyOfBuilder) super.updatedAt(updatedAt);
     }
   }

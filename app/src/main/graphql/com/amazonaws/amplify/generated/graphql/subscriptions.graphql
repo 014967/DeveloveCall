@@ -572,7 +572,7 @@ subscription OnDeleteGroup {
 subscription OnCreateNotice {
   onCreateNotice {
     id
-    content
+    item
     _version
     _deleted
     _lastChangedAt
@@ -583,7 +583,7 @@ subscription OnCreateNotice {
 subscription OnUpdateNotice {
   onUpdateNotice {
     id
-    content
+    item
     _version
     _deleted
     _lastChangedAt
@@ -594,7 +594,7 @@ subscription OnUpdateNotice {
 subscription OnDeleteNotice {
   onDeleteNotice {
     id
-    content
+    item
     _version
     _deleted
     _lastChangedAt

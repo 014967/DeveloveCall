@@ -344,21 +344,38 @@ public class serviceImpl implements service {
         return modifyArray;
     }
 
-    public Single<GraphQLResponse<PaginatedResult<User>>> getData(String userId)
+    public Single<GraphQLResponse<PaginatedResult<User>>> getData(String userId) {
+        return Single.create(singleSubscriber ->
+        {
+            Amplify.API.query(
+                    ModelQuery.list(User.class, User.ID.contains(userId))
+                    , response ->
+                    {
+                        singleSubscriber.onSuccess(response);
+                    }, error ->
+                    {
+
+                    }
+            );
+        });
+    }
+
+    public Single<GraphQLResponse<PaginatedResult<User>>> getUserName(String userId)
     {
         return Single.create(singleSubscriber ->
         {
             Amplify.API.query(
-                    ModelQuery.list(User.class,User.ID.contains(userId))
+                    ModelQuery.list(User.class, User.ID.contains(userId))
                     ,response ->
                     {
-                            singleSubscriber.onSuccess(response);
+                        singleSubscriber.onSuccess(response);
                     },error ->
                     {
 
                     }
-            ) ;
+            );
         });
+
     }
 
 

@@ -557,7 +557,7 @@ query SyncNotices(
   ) {
     items {
       id
-      content
+      item
       _version
       _deleted
       _lastChangedAt
@@ -571,7 +571,7 @@ query SyncNotices(
 query GetNotice($id: ID!) {
   getNotice(id: $id) {
     id
-    content
+    item
     _version
     _deleted
     _lastChangedAt
@@ -587,7 +587,7 @@ query ListNotices(
   listNotices(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      content
+      item
       _version
       _deleted
       _lastChangedAt

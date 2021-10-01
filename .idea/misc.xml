@@ -59,6 +59,8 @@
         <entry key="app/src/main/res/layout/item_friend.xml" value="0.5100969781491577" />
         <entry key="app/src/main/res/layout/item_group.xml" value="0.125" />
         <entry key="app/src/main/res/layout/list_design.xml" value="0.2045045045045045" />
+        <entry key="app/src/main/res/layout/listview_custom.xml" value="0.21693840579710144" />
+        <entry key="app/src/main/res/layout/listview_popup.xml" value="0.21693840579710144" />
         <entry key="app/src/main/res/layout/login.xml" value="0.18697916666666667" />
         <entry key="app/src/main/res/layout/mypage.xml" value="0.1" />
         <entry key="app/src/main/res/layout/personal_inquiry.xml" value="0.2269021739130435" />

@@ -125,9 +125,7 @@ public class EmailConfirmationActivity extends AppCompatActivity {
             {
 
                 System.out.println(tDataStoreItemChange);
-
-                Intent intent = new Intent(getApplicationContext(),AssginCompleteActivity.class);
-
+                Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
                 startActivity(intent);
             }
             private String getEmail(){

@@ -40,6 +40,7 @@
         android:textSize="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:textColor="@color/black"
         android:background="@null"
         android:inputType="textPersonName" />
 
