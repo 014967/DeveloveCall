@@ -29,8 +29,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-
-
 public class CalendarMenuActivity extends Activity {
 
     EditText et_date;
@@ -41,6 +39,12 @@ public class CalendarMenuActivity extends Activity {
     Button btn_save;
 
     boolean bl_alarm;
+
+    String datetime;
+    ArrayList<CalendarData> dataList;
+    Boolean flag;
+    String exTime;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,13 +57,20 @@ public class CalendarMenuActivity extends Activity {
         btn_save = findViewById(R.id.btn_save);
 
 
+        Date d = calendar.getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
+        String time = simpleDateFormat.format(d);
 
+
+        String time2 = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
+        datetime = time + " / " + time2;
+        tv_date.setText(datetime);
 
 
         sw_alarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
                     // Turn the system on.
                     bl_alarm = isChecked;
                 } else {
@@ -72,25 +83,60 @@ public class CalendarMenuActivity extends Activity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(et_date.getText().toString() == "")
-                {
+                if (et_date.getText().toString() == "") {
                     Toast.makeText(getApplicationContext(), "제목을 입력해주세요", Toast.LENGTH_LONG).show();
                     return;
+                } else {
+
+                    String calJson;
+                     flag= false;
+
+
+                    String dummy[] = datetime.split(" / ");
+                    exTime = dummy[1]; //'2021.9.14
+                    String[] date = dummy[0].split("\\.");
+
+                    if (date[1].length() == 1) {
+                        date[1] = "0" + date[1];
+                    }
+                    if (date[2].length() == 1) {
+                        date[2] = "0" + date[2];
+                    }
+                    String jsonTitle = date[0] + date[1] + date[2] + ".json";
+
+
+                    calJson = getJsonString(jsonTitle);
+
+                    if(flag ==true)
+                    {
+                        System.out.println("false");
+                        finish();
+
+                    }
+                    else
+                    {
+                        jsonParsing(calJson);
+                        CalendarData data = new CalendarData();
+                        data.setTitle(et_date.getText().toString());
+                        data.setName("더미");
+                        data.setTime(exTime);
+                        dataList.add(data);
+                        try {
+                            writeFile(jsonTitle, dataList);
+                            finish();
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+                    }
+
+
+
                 }
-                else
-                {
-                    String st_title = et_date.getText().toString();
-                    String st_date =  tv_date.getText().toString();
-                    //System.out.println(bl_alarm);
-                }
+
 
 
             }
         });
-        Date d = calendar.getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-        String time = simpleDateFormat.format(d);
-        tv_date.setText(time);
 
 
         tv_date.setOnClickListener(new View.OnClickListener() {
@@ -111,12 +157,16 @@ public class CalendarMenuActivity extends Activity {
             return;
         }
 
-        Date d = (Date) data.getExtras().get("calendar");
+        //    Date d = (Date) data.getExtras().get("calendar");
         String time = (String) data.getExtras().get("time").toString();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
-        String date = simpleDateFormat.format(d);
+        //  SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
+        //String date = simpleDateFormat.format(d);
 
-        tv_date.setText(date + time);
+        String date = (String) data.getExtras().get("calendar");
+
+
+        datetime = date + " / " + time;
+        tv_date.setText(datetime);
 
 
     }
@@ -147,10 +197,10 @@ public class CalendarMenuActivity extends Activity {
     }
 
 
-    private String getJsonString(String fileName)
-    {
+    private String getJsonString(String fileName) {
         String json = "";
-        try {
+
+        try{
             InputStream calendarStream = getApplicationContext().openFileInput(fileName);
             int fileSize = calendarStream.available();
 
@@ -160,16 +210,61 @@ public class CalendarMenuActivity extends Activity {
 
             json = new String(buffer, "UTF-8");
         }
-        catch (IOException ex)
+
+        catch(IOException e)
         {
-            ex.printStackTrace();
+            flag = true;
+
+            dataList= new ArrayList<>();
+            CalendarData data = new CalendarData();
+            data.setTitle(et_date.getText().toString());
+            data.setName("더미");
+            data.setTime(exTime);
+            dataList.add(data);
+            try{
+                writeFile(fileName,dataList);
+            }
+            catch(Exception exception)
+            {
+                exception.printStackTrace();
+            }
+
+
         }
+
 
         return json;
     }
 
 
+    private void jsonParsing(String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
 
+            JSONArray dataArray = jsonObject.getJSONArray("Calendar");
+
+            dataList=new ArrayList<>();
+            dataList.clear();
+
+            for (int i = 0; i < dataArray.length(); i++) {
+                JSONObject dataObject = dataArray.getJSONObject(i);
+
+                CalendarData data = new CalendarData();
+
+                data.setTitle(dataObject.getString("title"));
+                data.setName(dataObject.getString("name"));
+                try {
+                    data.setTime(dataObject.getString("time"));
+                } catch (JSONException e) {
+                    data.setTime("Every Time");
+                }
+
+                dataList.add(data);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 

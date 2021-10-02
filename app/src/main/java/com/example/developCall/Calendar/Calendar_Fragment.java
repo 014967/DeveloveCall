@@ -161,7 +161,12 @@ public class Calendar_Fragment extends Fragment {
                     String [] dummy = btnday.split(" ");
 
                     String str2 = dummy[1];
-                    fileName = getYear + getMonth + v.getId() + ".json";
+                    if(str2.length() == 1)
+                    {
+                        str2 = "0"+str2;
+                    }
+
+                    fileName = getYear + getMonth + str2+ ".json";
                     String Name = "";
 
                     day.setText(str2);

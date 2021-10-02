@@ -24,7 +24,7 @@ public class CalendarPopUpActivity extends Activity {
     Button btn_return;
     int hour;
     int minute;
-    int hourMinute;
+    String hourMinute;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,18 +43,22 @@ public class CalendarPopUpActivity extends Activity {
 
             @Override
             public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                Log.d("Date", "Year=" + year + " Month=" + (month) + " day=" + dayOfMonth);
+                Log.d("Date", "Year=" + year + " Month=" + month + " day=" + dayOfMonth);
                 calendar.set(year, month, dayOfMonth);
             }
         });
 
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
+        hourMinute = hour + ":" + minute;
+        System.out.println(hourMinute);
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker view, int hourOfDay, int min) {
                 hour = hourOfDay;
                 minute = min;
-                hourMinute = hour + minute;
-
+                hourMinute = hour + ":"+ minute;
+                System.out.println(hourMinute);
             }
         });
 
@@ -62,7 +66,11 @@ public class CalendarPopUpActivity extends Activity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(Activity.RESULT_OK,new Intent().putExtra("calendar", calendar.getTime()).putExtra("time",hourMinute ));
+
+                int month = calendar.get(Calendar.MONTH)+1;
+                String date = calendar.get(Calendar.YEAR) +"." + month + "." + calendar.get(Calendar.DAY_OF_MONTH);
+
+                setResult(Activity.RESULT_OK,new Intent().putExtra("calendar", date).putExtra("time",hourMinute ));
                 finish();
             }
         });
