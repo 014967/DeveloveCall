@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AssignActivity"
+    android:background="#FAF8F5"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginTop="250dp"
+        android:orientation="vertical">
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verify"
+            android:layout_marginLeft="25dp"
+            android:textSize="30sp"/>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="45dp"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/round_rec_fill_white">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="123456"
+                android:id="@+id/Confirmation_Code"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:background="@null"
+                android:textSize="50dp"
+                android:inputType="textPassword"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/btn_Confirm"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_rec_fill_light_orange"
+        android:text="Confirm"
+        android:textColor="@color/white">
+    </Button>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Didn't you get the number?"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/text_gray"
+        android:textSize="15sp"/>
+
+
+</LinearLayout>

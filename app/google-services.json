@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "248950872544",
+    "project_id": "developcall",
+    "storage_bucket": "developcall.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248950872544:android:b19dfb213c61ad92bb7385",
+        "android_client_info": {
+          "package_name": "com.example.developCall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "248950872544-fs79iklkl7r8behu9c9pdpf3smjhe1lo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvArhH2p57_yWL-T4msIJ7cxRKam3xH7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "248950872544-fs79iklkl7r8behu9c9pdpf3smjhe1lo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

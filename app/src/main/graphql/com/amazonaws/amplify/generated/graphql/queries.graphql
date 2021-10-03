@@ -1,0 +1,600 @@
+# this is an auto generated file. This will be overwritten
+query SyncUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncUsers(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      name
+      owner
+      userImg
+      chat {
+        nextToken
+        startedAt
+      }
+      group {
+        nextToken
+        startedAt
+      }
+      inquiry {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    name
+    owner
+    userImg
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    group {
+      items {
+        userID
+        id
+        name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    inquiry {
+      items {
+        id
+        userID
+        title
+        content
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      owner
+      userImg
+      chat {
+        nextToken
+        startedAt
+      }
+      group {
+        nextToken
+        startedAt
+      }
+      inquiry {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncInquiries(
+  $filter: ModelInquiryFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncInquiries(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      userID
+      title
+      content
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetInquiry($id: ID!) {
+  getInquiry(id: $id) {
+    id
+    userID
+    title
+    content
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListInquirys(
+  $filter: ModelInquiryFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listInquirys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      userID
+      title
+      content
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncFriends(
+  $filter: ModelFriendFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncFriends(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      number
+      name
+      lastContact
+      remindDate
+      friendImg
+      groupID
+      favorite
+      chat {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetFriend($id: ID!) {
+  getFriend(id: $id) {
+    id
+    number
+    name
+    lastContact
+    remindDate
+    friendImg
+    groupID
+    favorite
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListFriends(
+  $filter: ModelFriendFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listFriends(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      number
+      name
+      lastContact
+      remindDate
+      friendImg
+      groupID
+      favorite
+      chat {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncChats(
+  $filter: ModelChatFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncChats(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      userID
+      friendID
+      id
+      date
+      s3_url
+      keyWord
+      summary
+      memo
+      detailChat {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetChat($id: ID!) {
+  getChat(id: $id) {
+    userID
+    friendID
+    id
+    date
+    s3_url
+    keyWord
+    summary
+    memo
+    detailChat {
+      items {
+        id
+        chatID
+        start_time
+        end_time
+        content
+        speaker_label
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListChats(
+  $filter: ModelChatFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listChats(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      userID
+      friendID
+      id
+      date
+      s3_url
+      keyWord
+      summary
+      memo
+      detailChat {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncDetailChats(
+  $filter: ModelDetailChatFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncDetailChats(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      chatID
+      start_time
+      end_time
+      content
+      speaker_label
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetDetailChat($id: ID!) {
+  getDetailChat(id: $id) {
+    id
+    chatID
+    start_time
+    end_time
+    content
+    speaker_label
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
+query ListDetailChats(
+  $filter: ModelDetailChatFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listDetailChats(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      chatID
+      start_time
+      end_time
+      content
+      speaker_label
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncGroups(
+  $filter: ModelGroupFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncGroups(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      userID
+      id
+      name
+      friend {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetGroup($id: ID!) {
+  getGroup(id: $id) {
+    userID
+    id
+    name
+    friend {
+      items {
+        id
+        number
+        name
+        lastContact
+        remindDate
+        friendImg
+        groupID
+        favorite
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListGroups(
+  $filter: ModelGroupFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      userID
+      id
+      name
+      friend {
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query SyncNotices(
+  $filter: ModelNoticeFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncNotices(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      item
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
+query GetNotice($id: ID!) {
+  getNotice(id: $id) {
+    id
+    item
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+query ListNotices(
+  $filter: ModelNoticeFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listNotices(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      item
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+    nextToken
+    startedAt
+  }
+}
