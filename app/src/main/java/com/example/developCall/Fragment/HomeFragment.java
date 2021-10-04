@@ -103,6 +103,36 @@ public class HomeFragment extends Fragment {
         alarm_manager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
         alarmName = "임시 이름";
 
+        service.getUserName(userId).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(data ->
+                {
+
+                    for(User user : data.getData())
+                    {
+                        username = user.getName();
+                        txt_user_name.setText(username);
+                        for(Group group : user.getGroup())
+                        {
+                            for(Friend friend: group.getFriend())
+                            {
+                                Ob_Friend ob_friend = new Ob_Friend();
+                                ob_friend.setName(friend.getName());
+                                ob_friend.setFriendImg(friend.getFriendImg());
+                                friendListArray.add(ob_friend);
+                            }
+
+                        }
+
+                    }
+                    friendListAdapter.setFriendListArray(friendListArray);
+                    friendListAdapter.notifyDataSetChanged();
+
+                }, error ->
+                {
+                    System.out.println("유저 이름이 없습니다");
+                });
+
         ArrayList<Ob_lastCall> ob = new ArrayList<>();
         service.getData(userId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -126,11 +156,16 @@ public class HomeFragment extends Fragment {
                     String getDate = "";
 
                     for(int i = 0; i < ob.size(); i++){
-                        String tempName = ob.get(i).getFriendName();
-                        String tempCall = ob.get(i).getLastCall();
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(view.getContext(), tempName.charAt(0), alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        if(ob.get(i).getLastCall() == null)
+                        {
 
-                        //임시로 현재 날짜를 지정
+                        }else
+                        {
+                            String tempName = ob.get(i).getFriendName();
+                            String tempCall = ob.get(i).getLastCall();
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(view.getContext(), tempName.charAt(0), alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                            //임시로 현재 날짜를 지정
                                 /*long now = System.currentTimeMillis();
                                 Date date = new Date(now);
                                 SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
@@ -138,74 +173,76 @@ public class HomeFragment extends Fragment {
                                 String getMonth = monthFormat.format(date);
                                 String getDay = dayFormat.format(date);*/
 
-                        String getMonth = tempCall.substring(2,4);
-                        String getDay = tempCall.substring(0,2);
-                        int addMonth = Integer.parseInt(getMonth)+cycleresult-1;
-                        int addOneWeekMonth = Integer.parseInt(getMonth)-1;
-                        int addTwoWeekMonth = Integer.parseInt(getMonth)-1;
-                        int addOneWeek = Integer.parseInt(getDay) + 7;
-                        int addTwoWeek = Integer.parseInt(getDay) + 14;
-                        if(getMonth == "01" || getMonth == "03" || getMonth == "05" || getMonth == "07" || getMonth == "08" || getMonth == "10" || getMonth == "12"){
-                            if(addOneWeek > 31){
-                                addOneWeek = addOneWeek - 31;
-                                addOneWeekMonth++;
+                            String getMonth = tempCall.substring(2,4);
+                            String getDay = tempCall.substring(0,2);
+                            int addMonth = Integer.parseInt(getMonth)+cycleresult-1;
+                            int addOneWeekMonth = Integer.parseInt(getMonth)-1;
+                            int addTwoWeekMonth = Integer.parseInt(getMonth)-1;
+                            int addOneWeek = Integer.parseInt(getDay) + 7;
+                            int addTwoWeek = Integer.parseInt(getDay) + 14;
+                            if(getMonth == "01" || getMonth == "03" || getMonth == "05" || getMonth == "07" || getMonth == "08" || getMonth == "10" || getMonth == "12"){
+                                if(addOneWeek > 31){
+                                    addOneWeek = addOneWeek - 31;
+                                    addOneWeekMonth++;
+                                }
+                                if(addTwoWeek > 31){
+                                    addTwoWeek = addTwoWeek - 31;
+                                    addTwoWeekMonth++;
+                                }
                             }
-                            if(addTwoWeek > 31){
-                                addTwoWeek = addTwoWeek - 31;
-                                addTwoWeekMonth++;
+                            else if(getMonth == "02"){
+                                if(addOneWeek > 28){
+                                    addOneWeek = addOneWeek - 28;
+                                    addOneWeekMonth++;
+                                }
+                                if(addTwoWeek > 28){
+                                    addTwoWeek = addTwoWeek - 28;
+                                    addTwoWeekMonth++;
+                                }
                             }
+                            else{
+                                if(addOneWeek > 30){
+                                    addOneWeek = addOneWeek - 30;
+                                    addOneWeekMonth++;
+                                }
+                                if(addTwoWeek > 30){
+                                    addTwoWeek = addTwoWeek - 30;
+                                    addTwoWeekMonth++;
+                                }
+                            }
+
+                            if (cycleresult != 0 && cycleresult != 1) {
+                                alarmCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getDay));
+                                alarmCalendar.set(Calendar.MONTH, addMonth);
+                            } else if (cycleresult == 0) {
+                                alarmCalendar.set(Calendar.DAY_OF_MONTH, addOneWeek);
+                                alarmCalendar.set(Calendar.MONTH, addOneWeekMonth);
+                            } else {
+                                alarmCalendar.set(Calendar.DAY_OF_MONTH, addTwoWeek);
+                                alarmCalendar.set(Calendar.MONTH, addTwoWeekMonth);
+                            }
+                            alarmCalendar.set(Calendar.HOUR_OF_DAY, timeresult);
+                            alarmCalendar.set(Calendar.MINUTE, 0);
+                            alarmCalendar.set(Calendar.SECOND, 0);
+
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                            Date tempDate = new Date(alarmCalendar.getTimeInMillis());
+                            getDate = dateFormat.format(tempDate);
+
+                            Intent intent = new Intent(view.getContext(), Alarm_Receiver.class);
+                            intent.putExtra("alarmContent", getDate);
+
+                            Toast.makeText(view.getContext(), tempDate + " ", Toast.LENGTH_LONG).show();
+
+                            try {
+                                writeFile("alarmFileName", alarm_listData);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            alarm_manager.set(AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(), pendingIntent);
                         }
-                        else if(getMonth == "02"){
-                            if(addOneWeek > 28){
-                                addOneWeek = addOneWeek - 28;
-                                addOneWeekMonth++;
-                            }
-                            if(addTwoWeek > 28){
-                                addTwoWeek = addTwoWeek - 28;
-                                addTwoWeekMonth++;
-                            }
-                        }
-                        else{
-                            if(addOneWeek > 30){
-                                addOneWeek = addOneWeek - 30;
-                                addOneWeekMonth++;
-                            }
-                            if(addTwoWeek > 30){
-                                addTwoWeek = addTwoWeek - 30;
-                                addTwoWeekMonth++;
-                            }
-                        }
 
-                        if (cycleresult != 0 && cycleresult != 1) {
-                            alarmCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getDay));
-                            alarmCalendar.set(Calendar.MONTH, addMonth);
-                        } else if (cycleresult == 0) {
-                            alarmCalendar.set(Calendar.DAY_OF_MONTH, addOneWeek);
-                            alarmCalendar.set(Calendar.MONTH, addOneWeekMonth);
-                        } else {
-                            alarmCalendar.set(Calendar.DAY_OF_MONTH, addTwoWeek);
-                            alarmCalendar.set(Calendar.MONTH, addTwoWeekMonth);
-                        }
-                        alarmCalendar.set(Calendar.HOUR_OF_DAY, timeresult);
-                        alarmCalendar.set(Calendar.MINUTE, 0);
-                        alarmCalendar.set(Calendar.SECOND, 0);
-
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                        Date tempDate = new Date(alarmCalendar.getTimeInMillis());
-                        getDate = dateFormat.format(tempDate);
-
-                        Intent intent = new Intent(view.getContext(), Alarm_Receiver.class);
-                        intent.putExtra("alarmContent", getDate);
-
-                        Toast.makeText(view.getContext(), tempDate + " ", Toast.LENGTH_LONG).show();
-
-                        try {
-                            writeFile("alarmFileName", alarm_listData);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        alarm_manager.set(AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(), pendingIntent);
                     }
 
                     alarm_listData = AddData(alarm_listData, listData, alarmName, getDate, 0);

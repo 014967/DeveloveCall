@@ -6,6 +6,21 @@
         <entry key="../../../layout/custom_preview.xml" value="0.22135416666666666" />
         <entry key="..\:/Android Project/21_hf012-0915-finalmerge/app/src/main/res/layout/search_history_list.xml" value="0.2957427536231884" />
         <entry key="..\:/Android Project/21_hf012-0915-finalmerge/app/src/main/res/layout/search_result.xml" value="0.1" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/drawable-v24/round_rec_bg.xml" value="0.36036036036036034" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/drawable/cardview_chat_right.xml" value="0.35555555555555557" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/layout/activity_chat.xml" value="0.3319746376811594" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/layout/activity_email_confirmation.xml" value="0.1690853122251539" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/layout/activity_main.xml" value="0.3463963963963964" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/layout/activity_memo.xml" value="0.3463963963963964" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/layout/activity_popup_calendar.xml" value="0.3463963963963964" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/layout/assign_complete.xml" value="0.26811594202898553" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/layout/chatcardleft.xml" value="0.3319746376811594" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/layout/chatcardright.xml" value="0.3319746376811594" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/layout/fragment_home.xml" value="0.26811594202898553" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/layout/fragment_personal_inquiry.xml" value="0.1690853122251539" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/layout/home.xml" value="0.26811594202898553" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/layout/item_friend.xml" value="0.3463963963963964" />
+        <entry key="..\:/Users/FAMILY/Documents/GitHub/21_hf012/app/src/main/res/layout/profile.xml" value="0.1690853122251539" />
         <entry key="app/src/main/res/drawable-v24/nav_menu_selector_color.xml" value="0.32135416666666666" />
         <entry key="app/src/main/res/drawable-v24/round_rec_bg.xml" value="0.21846846846846846" />
         <entry key="app/src/main/res/drawable-v24/round_rec_fill.xml" value="0.2756756756756757" />
@@ -59,8 +74,6 @@
         <entry key="app/src/main/res/layout/item_friend.xml" value="0.5100969781491577" />
         <entry key="app/src/main/res/layout/item_group.xml" value="0.125" />
         <entry key="app/src/main/res/layout/list_design.xml" value="0.2045045045045045" />
-        <entry key="app/src/main/res/layout/listview_custom.xml" value="0.21693840579710144" />
-        <entry key="app/src/main/res/layout/listview_popup.xml" value="0.21693840579710144" />
         <entry key="app/src/main/res/layout/login.xml" value="0.18697916666666667" />
         <entry key="app/src/main/res/layout/mypage.xml" value="0.1" />
         <entry key="app/src/main/res/layout/personal_inquiry.xml" value="0.2269021739130435" />
