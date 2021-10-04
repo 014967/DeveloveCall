@@ -1,11 +1,17 @@
 package com.example.developCall.Search;
 
 import android.content.Context;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +19,9 @@ import androidx.fragment.app.Fragment;
 
 
 import com.example.developCall.Calendar.CalendarData;
+
+import com.example.developCall.Calendar.ListPopUpActivity;
+
 import com.example.developCall.R;
 
 import org.json.JSONArray;
@@ -31,13 +40,22 @@ public class Search_HistoryFragment extends Fragment {
     Search_HistoryListAdapter search_historyListAdapter;
     ListView searchListview;
 
+    TextView searchText;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.search_history_list, container, false);
+
+        View view2 = inflater.inflate(R.layout.search_result, container, false);
+
         context = container.getContext();
 
         this.InitializeData();
+
+
+        searchText = (TextView) view2.findViewById(R.id.search_contents);
 
 
         search_historyListData = new ArrayList<Search_HistoryListData>();
@@ -49,6 +67,15 @@ public class Search_HistoryFragment extends Fragment {
         search_historyListAdapter = new Search_HistoryListAdapter(view.getContext(), search_historyListData);
 
         searchListview.setAdapter(search_historyListAdapter);
+
+
+        searchListview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView parent, View v, int position, long id){
+                ((SearchActivity)getActivity()).searchContents.setText(search_historyListAdapter.getItem(position).getContent());
+            }
+        });
+
 
         return view;
     }

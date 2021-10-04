@@ -22,7 +22,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Friend;
+import com.amplifyframework.datastore.generated.model.Group;
+import com.amplifyframework.datastore.generated.model.User;
+import com.example.developCall.Object.Ob_lastCall;
 import com.example.developCall.R;
+import com.example.developCall.Service.serviceImpl;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,8 +41,13 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Alarm_Fragment extends Fragment {
 
@@ -44,9 +57,11 @@ public class Alarm_Fragment extends Fragment {
     //Alarm_ListData listData;
     String alarmFileName, alarmTempName;
 
+    String userId;
+
     AlarmManager alarm_manager;
     Context context;
-    PendingIntent pendingIntent;
+
 
     Button alarmset;
     FragmentManager alarmFragment;
@@ -61,6 +76,10 @@ public class Alarm_Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.alarm_layout, container, false);
         context = container.getContext();
+
+
+        serviceImpl service = new serviceImpl();
+
 
         alarmSet_fragment = new AlarmSet_Fragment();
         alarmFragment = getActivity().getSupportFragmentManager();
@@ -77,6 +96,9 @@ public class Alarm_Fragment extends Fragment {
         alarmFileName = "alarmFileName";
         alarmName = "임시 이름";
 
+        userId = Amplify.Auth.getCurrentUser().getUserId();
+
+
         alarmset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,10 +106,11 @@ public class Alarm_Fragment extends Fragment {
             }
         });
 
+
         if(bundle != null){
             onoff = bundle.getInt("onoff");
             check = bundle.getInt("check");
-            pendingIntent = PendingIntent.getBroadcast(view.getContext(), 0, alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
 
             if(check == 1){
                 alarm_listData = new ArrayList<Alarm_ListData>();
@@ -105,55 +128,132 @@ public class Alarm_Fragment extends Fragment {
                 timeresult = bundle.getInt("timeresult");
                 cycleresult = bundle.getInt("cycleresult");
                 calendarresult = bundle.getInt("calendarresult");
-                check = bundle.getInt("check");
 
-                //임시로 현재 날짜를 지정
-                long now = System.currentTimeMillis();
-                Date date = new Date(now);
-                SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
-                SimpleDateFormat monthFormat = new SimpleDateFormat("mm");
-                String getMonth = monthFormat.format(date);
-                String getDay = dayFormat.format(date);
-                int addMonth = Integer.parseInt(getMonth)+cycleresult-1;
-
-                if (cycleresult != 0 && cycleresult != 1) {
-                    alarmCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getDay));
-                    alarmCalendar.set(Calendar.MONTH, addMonth);
-                } else if (cycleresult == 0) {
-                    alarmCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getDay) + 7);
-                } else {
-                    alarmCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getDay) + 14);
-                }
-                alarmCalendar.set(Calendar.HOUR_OF_DAY, timeresult);
-                alarmCalendar.set(Calendar.MINUTE, 0);
-                alarmCalendar.set(Calendar.SECOND, 0);
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                Date tempDate = new Date(alarmCalendar.getTimeInMillis());
-                String getDate = dateFormat.format(tempDate);
-
-                Intent intent = new Intent(view.getContext(), Alarm_Receiver.class);
-                intent.putExtra("alarmContent", getDate);
-
-                pendingIntent = PendingIntent.getBroadcast(view.getContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                Toast.makeText(view.getContext(), tempDate + " ", Toast.LENGTH_LONG).show();
-
-                alarm_listData = new ArrayList<Alarm_ListData>();
-                Alarm_ListData listData = new Alarm_ListData();
-                alarmTempName = alarmGetJsonString(alarmFileName);
-                alarmJsonParsing(alarmTempName);
-
-                alarm_listData = AddData(alarm_listData, listData, alarmName, getDate, 0);
 
                 try {
-                    writeFile(alarmFileName, alarm_listData);
+                    writeAlarmSetting(timeresult, cycleresult, calendarresult);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                alarm_manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
-                //alarm_manager.set(AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(), pendingIntent);
+
+                ArrayList<Ob_lastCall> ob = new ArrayList<>();
+                service.getData(userId).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(data ->
+                        {
+                            for (User user : data.getData()) {
+                                for (Group group : user.getGroup()) {
+                                    for (Friend friend : group.getFriend()) {
+                                        Ob_lastCall ob_lastCall = new Ob_lastCall();
+                                        ob_lastCall.setFriendName(friend.getName());
+                                        ob_lastCall.setLastCall(friend.getLastContact());
+                                        ob.add(ob_lastCall);
+                                    }
+                                }
+                            }
+                            String getDate = "";
+                            alarm_listData = new ArrayList<Alarm_ListData>();
+                            Alarm_ListData listData = new Alarm_ListData();
+                            alarmTempName = alarmGetJsonString(alarmFileName);
+                            alarmJsonParsing(alarmTempName);
+
+                            for(int i = 0; i < ob.size(); i++){
+                                String tempName = ob.get(i).getFriendName();
+                                String tempCall = ob.get(i).getLastCall();
+                                PendingIntent pendingIntent = PendingIntent.getBroadcast(view.getContext(), tempName.charAt(0), alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                                //임시로 현재 날짜를 지정
+                                /*long now = System.currentTimeMillis();
+                                Date date = new Date(now);
+                                SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
+                                SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
+                                SimpleDateFormat minuteFormat = new SimpleDateFormat("mm");
+                                String tempMonth = monthFormat.format(date);
+                                String tempDay = dayFormat.format(date);
+                                String tempMin = minuteFormat.format(date);*/
+
+                                String getMonth = tempCall.substring(2,4);
+                                String getDay = tempCall.substring(0,2);
+                                int addMonth = Integer.parseInt(getMonth)+cycleresult-1;
+                                int addOneWeekMonth = Integer.parseInt(getMonth)-1;
+                                int addTwoWeekMonth = Integer.parseInt(getMonth)-1;
+                                int addOneWeek = Integer.parseInt(getDay) + 7;
+                                int addTwoWeek = Integer.parseInt(getDay) + 14;
+                                if(getMonth == "01" || getMonth == "03" || getMonth == "05" || getMonth == "07" || getMonth == "08" || getMonth == "10" || getMonth == "12"){
+                                    if(addOneWeek > 31){
+                                        addOneWeek = addOneWeek - 31;
+                                        addOneWeekMonth++;
+                                    }
+                                    if(addTwoWeek > 31){
+                                        addTwoWeek = addTwoWeek - 31;
+                                        addTwoWeekMonth++;
+                                    }
+                                }
+                                else if(getMonth == "02"){
+                                    if(addOneWeek > 28){
+                                        addOneWeek = addOneWeek - 28;
+                                        addOneWeekMonth++;
+                                    }
+                                    if(addTwoWeek > 28){
+                                        addTwoWeek = addTwoWeek - 28;
+                                        addTwoWeekMonth++;
+                                    }
+                                }
+                                else{
+                                    if(addOneWeek > 30){
+                                        addOneWeek = addOneWeek - 30;
+                                        addOneWeekMonth++;
+                                    }
+                                    if(addTwoWeek > 30){
+                                        addTwoWeek = addTwoWeek - 30;
+                                        addTwoWeekMonth++;
+                                    }
+                                }
+
+                                if (cycleresult != 0 && cycleresult != 1) {
+                                    alarmCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getDay));
+                                    alarmCalendar.set(Calendar.MONTH, addMonth);
+                                } else if (cycleresult == 0) {
+                                    alarmCalendar.set(Calendar.DAY_OF_MONTH, addOneWeek);
+                                    alarmCalendar.set(Calendar.MONTH, addOneWeekMonth);
+                                } else {
+                                    alarmCalendar.set(Calendar.DAY_OF_MONTH, addTwoWeek);
+                                    alarmCalendar.set(Calendar.MONTH, addTwoWeekMonth);
+                                }
+                                alarmCalendar.set(Calendar.HOUR_OF_DAY, timeresult);
+                                alarmCalendar.set(Calendar.MINUTE, 0);
+                                alarmCalendar.set(Calendar.SECOND, 0);
+
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                                Date tempDate = new Date(alarmCalendar.getTimeInMillis());
+                                getDate = dateFormat.format(tempDate);
+
+                                Intent intent = new Intent(view.getContext(), Alarm_Receiver.class);
+                                intent.putExtra("alarmContent", getDate);
+
+                                Toast.makeText(view.getContext(), tempDate + " ", Toast.LENGTH_LONG).show();
+                                Log.d("tag",tempDate + " ");
+
+                                try {
+                                    writeFile(alarmFileName, alarm_listData);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                //alarm_manager.set(AlarmManager.RTC_WAKEUP, tempCalendar.getTimeInMillis(), pendingIntent);
+                                alarm_manager.set(AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(), pendingIntent);
+                            }
+
+                            alarm_listData = AddData(alarm_listData, listData, alarmName, getDate, 0);
+
+                        }, error ->
+                        {
+
+                        });
+
+
             }
         }
         else {
@@ -203,6 +303,48 @@ public class Alarm_Fragment extends Fragment {
         calendarWriter.write(JsonData);
         calendarWriter.close();
     }
+
+
+    public void writeAlarmSetting(int timeresult, int cycleresult, int calendarresult) throws IOException {
+        JSONObject obj = new JSONObject();
+        try {
+            JSONArray jArray = new JSONArray();//배열이 필요할때
+            JSONObject sObject = new JSONObject();//배열 내에 들어갈 json
+            sObject.put("time",timeresult);
+            sObject.put("cycle", cycleresult);
+            sObject.put("calendar", calendarresult);
+            jArray.put(sObject);
+            obj.put("AlarmSetting", jArray);//배열을 넣음
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String JsonData = obj.toString();
+
+        OutputStreamWriter calendarWriter = new OutputStreamWriter(getActivity().openFileOutput("AlarmSetting", Context.MODE_PRIVATE));
+        calendarWriter.write(JsonData);
+        calendarWriter.close();
+    }
+
+    /*public void writeLastCall(String userName, String lastCall) throws IOException {
+        JSONObject obj = new JSONObject();
+        try {
+            JSONArray jArray = new JSONArray();//배열이 필요할때
+            JSONObject sObject = new JSONObject();//배열 내에 들어갈 json
+            sObject.put("lastcall", lastCall);
+            jArray.put(sObject);
+            obj.put(userName, jArray);//배열을 넣음
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String JsonData = obj.toString();
+
+        OutputStreamWriter calendarWriter = new OutputStreamWriter(getActivity().openFileOutput(userName, Context.MODE_PRIVATE));
+        calendarWriter.write(JsonData);
+        calendarWriter.close();
+    }*/
+
 
     private String alarmGetJsonString(String fileName)
     {
@@ -256,6 +398,41 @@ public class Alarm_Fragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+
+    private int alarmJsonLastCallParsing(String json, String userName)
+    {
+        int tempLastCall = 0;
+        try{
+            JSONObject jsonObject = new JSONObject(json);
+
+            JSONArray dataArray = jsonObject.getJSONArray(userName);
+            JSONObject dataObject = dataArray.getJSONObject(0);
+            tempLastCall = dataObject.getInt("lastcall");
+
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return tempLastCall;
+    }
+
+    private void alarmJsonSettingParsing(String json)
+    {
+        try{
+            JSONObject jsonObject = new JSONObject(json);
+
+            JSONArray dataArray = jsonObject.getJSONArray("AlarmSetting");
+
+            JSONObject dataObject = dataArray.getJSONObject(0);
+            timeresult = dataObject.getInt("time");
+            cycleresult = dataObject.getInt("cycle");
+            calendarresult = dataObject.getInt("calendar");
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static boolean setListViewHeightBasedOnItems(ListView listView) {
 

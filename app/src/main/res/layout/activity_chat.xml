@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     android:padding="10dp"
+
     android:background="@color/white"
     tools:context=".ChatActivity">
 
@@ -72,9 +74,11 @@
         <!--햄버거-->
         <ImageView
             android:id="@+id/addMemo"
+
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_weight="1"
+
             android:layout_gravity="right|center_vertical"
             android:src="@drawable/ic_menu_circle"/>
 
@@ -128,6 +132,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+
+        android:dividerHeight="0px"
+        android:divider="#FFFFFF"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+
         android:scrollbars="vertical">
 
     </ListView>
