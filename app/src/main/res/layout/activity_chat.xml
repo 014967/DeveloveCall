@@ -6,17 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    android:padding="10dp"
-
     android:background="@color/white"
     tools:context=".ChatActivity">
 
     <LinearLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="116dp"
+        android:layout_height="100dp"
         android:orientation="horizontal"
-        android:paddingTop="22dp"
         android:background="@color/bg_yellow">
 
 
