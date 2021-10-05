@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "dev",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authdevf2047c1c",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

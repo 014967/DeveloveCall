@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
+
+            <Button
+                android:id="@+id/alarmtime1"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="00:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime2"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="01:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime3"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="02:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime4"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="03:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime5"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="04:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime6"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="05:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime7"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="06:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime8"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="07:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime9"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="08:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime10"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="09:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime11"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="10:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime12"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="11:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime13"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="12:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime14"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="13:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime15"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="14:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime16"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="15:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime17"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="16:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime18"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="17:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime19"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="18:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime20"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="19:00" />
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime21"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="20:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime22"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="21:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime23"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="22:00"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmtime24"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="23:00"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

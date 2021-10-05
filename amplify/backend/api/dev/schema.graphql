@@ -1,0 +1,83 @@
+type User @model
+@auth(rules : [{allow : owner, operations:[create ,delete, update]}])
+{
+    id : ID!
+    name : String
+    owner: String
+    userImg : String
+    chat : [Chat] @connection(keyName : "userId", fields: ["id"])
+    group : [Group] @connection(keyName : "userId", fields: ["id"])
+    inquiry : [Inquiry] @connection(keyName:"userId", fields: ["id"])
+}
+
+
+type Inquiry @model
+@key(name:"userId", fields : ["userID"])
+{
+    id : ID!
+    userID : ID!
+    title : String
+    content : String
+}
+type Friend @model
+@key(name: "groupId", fields : ["groupID"])
+{
+
+    id : ID!
+    number : String
+    name : String
+    lastContact : String
+    remindDate: String
+    friendImg : String
+    groupID : ID!
+    favorite : Boolean
+    chat : [Chat] @connection(keyName : "friendId" , fields : ["id"])
+}
+
+type Chat @model
+@key(name : "userId" , fields : ["userID"])
+@key(name : "friendId" , fields : ["friendID"])
+{
+    userID : ID!
+    friendID : ID!
+    id : ID!
+    date : String
+    s3_url : String
+    keyWord : String
+    summary : String
+    memo : String
+    detailChat : [DetailChat] @connection(keyName : "chatId", fields : ["id"])
+
+}
+
+type DetailChat @model
+@key(name : "chatId" , fields: ["chatID"])
+{
+    id : ID!
+    chatID : ID!
+    start_time : String
+    end_time : String
+    content : String
+    speaker_label : String
+    createdAt : String
+    updatedAt : String
+
+}
+
+type Group @model
+@key(name : "userId" , fields : ["userID"])
+{
+    userID : ID!
+    id : ID!
+    name : String
+    friend : [Friend]  @connection(keyName : "groupId", fields : ["id"])
+}
+
+
+type Notice @model
+{
+    id : ID!
+    item : String
+
+}
+

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <Button
+                android:id="@+id/alarmcycle1"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="1주일"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmcycle2"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="2주일"/>
+            <View style="@style/Divider_list_white" />
+
+
+            <Button
+                android:id="@+id/alarmcycle3"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="1개월"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmcycle4"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="2개월"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmcycle5"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="3개월"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmcycle6"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="4개월"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmcycle7"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="5개월"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmcycle8"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="6개월"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

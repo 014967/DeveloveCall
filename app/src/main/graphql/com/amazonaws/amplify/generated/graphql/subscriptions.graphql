@@ -1,0 +1,604 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateUser {
+  onCreateUser {
+    id
+    name
+    owner
+    userImg
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    group {
+      items {
+        userID
+        id
+        name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    inquiry {
+      items {
+        id
+        userID
+        title
+        content
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateUser {
+  onUpdateUser {
+    id
+    name
+    owner
+    userImg
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    group {
+      items {
+        userID
+        id
+        name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    inquiry {
+      items {
+        id
+        userID
+        title
+        content
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteUser {
+  onDeleteUser {
+    id
+    name
+    owner
+    userImg
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    group {
+      items {
+        userID
+        id
+        name
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    inquiry {
+      items {
+        id
+        userID
+        title
+        content
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateInquiry {
+  onCreateInquiry {
+    id
+    userID
+    title
+    content
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateInquiry {
+  onUpdateInquiry {
+    id
+    userID
+    title
+    content
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteInquiry {
+  onDeleteInquiry {
+    id
+    userID
+    title
+    content
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateFriend {
+  onCreateFriend {
+    id
+    number
+    name
+    lastContact
+    remindDate
+    friendImg
+    groupID
+    favorite
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateFriend {
+  onUpdateFriend {
+    id
+    number
+    name
+    lastContact
+    remindDate
+    friendImg
+    groupID
+    favorite
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteFriend {
+  onDeleteFriend {
+    id
+    number
+    name
+    lastContact
+    remindDate
+    friendImg
+    groupID
+    favorite
+    chat {
+      items {
+        userID
+        friendID
+        id
+        date
+        s3_url
+        keyWord
+        summary
+        memo
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateChat {
+  onCreateChat {
+    userID
+    friendID
+    id
+    date
+    s3_url
+    keyWord
+    summary
+    memo
+    detailChat {
+      items {
+        id
+        chatID
+        start_time
+        end_time
+        content
+        speaker_label
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateChat {
+  onUpdateChat {
+    userID
+    friendID
+    id
+    date
+    s3_url
+    keyWord
+    summary
+    memo
+    detailChat {
+      items {
+        id
+        chatID
+        start_time
+        end_time
+        content
+        speaker_label
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteChat {
+  onDeleteChat {
+    userID
+    friendID
+    id
+    date
+    s3_url
+    keyWord
+    summary
+    memo
+    detailChat {
+      items {
+        id
+        chatID
+        start_time
+        end_time
+        content
+        speaker_label
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateDetailChat {
+  onCreateDetailChat {
+    id
+    chatID
+    start_time
+    end_time
+    content
+    speaker_label
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
+subscription OnUpdateDetailChat {
+  onUpdateDetailChat {
+    id
+    chatID
+    start_time
+    end_time
+    content
+    speaker_label
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
+subscription OnDeleteDetailChat {
+  onDeleteDetailChat {
+    id
+    chatID
+    start_time
+    end_time
+    content
+    speaker_label
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+  }
+}
+subscription OnCreateGroup {
+  onCreateGroup {
+    userID
+    id
+    name
+    friend {
+      items {
+        id
+        number
+        name
+        lastContact
+        remindDate
+        friendImg
+        groupID
+        favorite
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateGroup {
+  onUpdateGroup {
+    userID
+    id
+    name
+    friend {
+      items {
+        id
+        number
+        name
+        lastContact
+        remindDate
+        friendImg
+        groupID
+        favorite
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteGroup {
+  onDeleteGroup {
+    userID
+    id
+    name
+    friend {
+      items {
+        id
+        number
+        name
+        lastContact
+        remindDate
+        friendImg
+        groupID
+        favorite
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      nextToken
+      startedAt
+    }
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateNotice {
+  onCreateNotice {
+    id
+    item
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateNotice {
+  onUpdateNotice {
+    id
+    item
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteNotice {
+  onDeleteNotice {
+    id
+    item
+    _version
+    _deleted
+    _lastChangedAt
+    createdAt
+    updatedAt
+  }
+}

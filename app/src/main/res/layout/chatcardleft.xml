@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="7dp"
+    android:gravity="left">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        android:layout_marginRight="100dp"
+
+        app:cardBackgroundColor="@color/chat_left">
+
+        <TextView
+            android:id="@+id/chatText"
+            android:text=""
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="12dp"
+            android:textColor="@color/dark_black"
+
+            android:maxLength="200"
+            android:maxLines="4"
+            android:layout_gravity="center" />
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
