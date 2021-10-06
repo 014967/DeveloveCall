@@ -57,7 +57,7 @@ public class EmailConfirmationActivity extends AppCompatActivity {
             }
             private void onError(AuthException e )
             {
-
+                e.printStackTrace();
                 runOnUiThread(()->
                 {
                     Toast.makeText(getApplicationContext(),"Email Auth error",Toast.LENGTH_LONG).show();
@@ -66,6 +66,7 @@ public class EmailConfirmationActivity extends AppCompatActivity {
             }
             private void onSuccess(AuthSignUpResult authSignUpResult)
             {
+
                 reLogin();
             }
 

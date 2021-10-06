@@ -31,14 +31,14 @@
 
 
         </LinearLayout>
-        <Button
+        <ImageButton
             android:id="@+id/btn_chat"
             android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="chat">
 
-        </Button>
+        </ImageButton>
 
 
 </LinearLayout>

@@ -6,10 +6,12 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
+import android.provider.CallLog;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -53,7 +55,7 @@ public class S3uploadService extends Service {
     SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
     String uploadDate = formatter.format(date);
     String userId;
-
+    String callNumber;
 
     int NOTIFICATION_ID = 815;
     String CHANNEL_ID = "primary_notification_channel";
@@ -105,64 +107,86 @@ public class S3uploadService extends Service {
     public int onStartCommand(@NonNull Intent intent, int flags, int startId) {
 
 
-        userId = intent.getExtras().get("userId").toString();
-        String callNumber = intent.getExtras().get("callNumber").toString();
-
-        File directory = new File(Environment.getStorageDirectory().getAbsolutePath() + "/emulated/0/Call");
-        File[] files = directory.listFiles();
-        sortFileList(files);
-
-        file = files[files.length - 1];
-        uri = Uri.fromFile(file);
-        format = file.getName().split("\\.");
 
 
-       flag = false;
+        Uri uriCallLogs= Uri.parse("content://call_log/calls");
+        Cursor cursorCallLogs = getContentResolver().query(uriCallLogs, null ,null,null);
+        cursorCallLogs.moveToFirst();
+
+        String ff = cursorCallLogs.getString(cursorCallLogs.getColumnIndex(CallLog.Calls.DURATION));
+        if(ff.equals("0"))
+        {
+            notificationManager.cancel(NOTIFICATION_ID);
+            stopForeground(true);
+
+        }
+        else
+        {
+            userId = intent.getExtras().get("userId").toString();
+
+            callNumber = intent.getExtras().get("callNumber").toString();
 
 
-        Amplify.API.query(
-                ModelQuery.list(User.class, User.ID.contains(userId)),
-                response ->
-                {
-                    for (User user : response.getData()) {
-                        for (Group group : user.getGroup()) {
-                            for (Friend friend : group.getFriend()) {
-                                try {
-                                    if (friend.getNumber().equals(callNumber)) {
+
+            File directory = new File(Environment.getStorageDirectory().getAbsolutePath() + "/emulated/0/Call");
+            File[] files = directory.listFiles();
+            sortFileList(files);
+
+            file = files[files.length - 1];
+            uri = Uri.fromFile(file);
+            format = file.getName().split("\\.");
 
 
-                                        flag = true;
-                                        Observable.just(friend.getId())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(getObserver());
+            flag = false;
 
 
-                                    } else {
+            Amplify.API.query(
+                    ModelQuery.list(User.class, User.ID.contains(userId)),
+                    response ->
+                    {
+                        for (User user : response.getData()) {
+                            for (Group group : user.getGroup()) {
+                                for (Friend friend : group.getFriend()) {
+                                    try {
+                                        if (friend.getNumber().equals(callNumber)) {
 
+
+                                            flag = true;
+                                            Observable.just(friend.getId())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe(getObserver());
+
+
+                                        } else {
+
+                                        }
+
+                                    } catch (Exception e) {
+                                        Log.d("error : ", e.toString());
                                     }
 
-                                } catch (Exception e) {
-                                    Log.d("error : ", e.toString());
                                 }
 
+
                             }
-
-
+                            if(flag == false)
+                            {
+                                notificationManager.cancel(NOTIFICATION_ID);
+                                stopForeground(true);
+                                Log.d("S3UPLOADSERVICE", "can't find friend");
+                            }
                         }
-                        if(flag == false)
-                        {
-                            notificationManager.cancel(NOTIFICATION_ID);
-                            stopForeground(true);
-                            Log.d("S3UPLOADSERVICE", "can't find friend");
-                        }
+
+                    },
+                    error ->
+                    {
+                        Log.d("error : ", error.toString());
                     }
+            );
+        }
 
-                },
-                error ->
-                {
-                    Log.d("error : ", error.toString());
-                }
-        );
+
+
 
 
         return super.onStartCommand(intent, flags, startId);

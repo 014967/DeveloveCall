@@ -3,11 +3,13 @@ package com.example.developCall;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -56,14 +58,16 @@ public class HomeActivity extends AppCompatActivity {
     String username;
     String userId;
 
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
+
+
         mReceiveer = new CallReceiver2();
 
         userId = Amplify.Auth.getCurrentUser().getUserId();
-
 
 
         Intent intent = getIntent();

@@ -95,20 +95,20 @@
         android:gravity="start"
         android:visibility="gone">
 
-        <Button
+        <ImageButton
             android:id="@+id/up"
             android:text="up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             >
 
-        </Button>
-        <Button
+        </ImageButton>
+        <ImageButton
             android:text="down"
             android:id="@+id/down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        </Button>
+        </ImageButton>
 
 
     </LinearLayout>

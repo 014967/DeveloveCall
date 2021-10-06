@@ -3,6 +3,7 @@ package com.example.developCall;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +15,6 @@ import com.amplifyframework.core.model.Model;
 import com.amplifyframework.datastore.DataStoreException;
 import com.amplifyframework.datastore.DataStoreItemChange;
 import com.amplifyframework.datastore.generated.model.Chat;
-import com.amplifyframework.datastore.generated.model.User;
 
 public class MemoMenuActivity extends Activity {
 
@@ -64,21 +64,30 @@ public class MemoMenuActivity extends Activity {
                 if (title.equals("") || content.equals("")) {
                     Toast.makeText(getApplicationContext(), "입력칸을 모두 채워주세요", Toast.LENGTH_SHORT).show();
                 } else {
+
+
+
                     Amplify.API.query(
-                            ModelQuery.list(User.class, User.ID.contains(userId)),
+                            ModelQuery.list(Chat.class, Chat.ID.contains(chatId)),
                             response ->
                             {
-                                for (User user : response.getData()) {
-                                    for (Chat chat : user.getChat()) {
-                                        if (chat.getId().equals(chatId)) {
-                                            Chat newChat = chat.copyOfBuilder().memo(title + chatId + content).build();
-                                            Amplify.DataStore.save(newChat
-                                                    , this::onSavedSucess,
-                                                    this::onError);
 
-                                        }
-                                    }
-                                }
+                                String st_memo = title + chatId + content;
+                                Chat c = response.getData().getItems().iterator().next().copyOfBuilder().memo(st_memo).build();
+                                Log.d("c" , c.toString());
+
+
+                                Amplify.DataStore.save(c,
+                                        this::onSavedSucess,
+                                        this::onError);
+
+
+
+
+
+                            /// lambda로 생성하는 chat와 detail chat의 lastchangedat의 형식이 맞지않음
+
+
                             }, error ->
                             {
 
@@ -91,15 +100,18 @@ public class MemoMenuActivity extends Activity {
 
             }
 
+
+
             private void onError(DataStoreException e) {
-                System.out.println(e);
+
+                e.printStackTrace();
             }
 
             private <T extends Model> void onSavedSucess(DataStoreItemChange<T> tDataStoreItemChange) {
 
                 System.out.println(tDataStoreItemChange.item().toString());
                 System.out.println(tDataStoreItemChange.uuid().toString());
-                onBackPressed();
+                finish();
             }
         });
     }

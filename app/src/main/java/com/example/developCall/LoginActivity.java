@@ -82,8 +82,9 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
-            private void onLoginError(AuthException e )
+          private void onLoginError(AuthException e )
             {
+                e.printStackTrace();
                 runOnUiThread(()->
                 {
 

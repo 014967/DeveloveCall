@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -26,6 +27,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
 
 
     List<Ob_Friend> friendListArray = new ArrayList<>();
+
+    List<Ob_Friend> filterFriend;
+
+
+    String charString;
 
     public FriendListAdapter(List<Ob_Friend> friendListArray) {
         this.friendListArray = friendListArray;
@@ -95,6 +101,46 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         }
 
 
+    }
+
+    public Filter getFilter()
+    {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                charString = constraint.toString();
+
+                if(charString.isEmpty())
+                {
+                    filterFriend = friendListArray;
+                }
+                else
+                {
+                    List<Ob_Friend> filteringList= new ArrayList<>();
+                    for(Ob_Friend friend : friendListArray)
+                    {
+                        if(friend.getName().contains(charString))
+                        {
+                            filteringList.add(friend);
+                        }
+                    }
+                    filterFriend = filteringList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filterFriend;
+
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+
+                friendListArray = (List<Ob_Friend>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
 

@@ -9,7 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -92,8 +92,8 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
 
     SearchView searchView;
     LinearLayout search_support;
-    Button btn_up;
-    Button btn_down;
+    ImageButton btn_up;
+    ImageButton btn_down;
     int index = 0;
 
 
