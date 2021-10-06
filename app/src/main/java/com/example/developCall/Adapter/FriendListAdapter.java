@@ -29,6 +29,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
     List<Ob_Friend> friendListArray = new ArrayList<>();
 
     List<Ob_Friend> filterFriend;
+    List<Ob_Friend> tempFriend;
 
 
     String charString;
@@ -110,9 +111,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
             protected FilterResults performFiltering(CharSequence constraint) {
                 charString = constraint.toString();
 
+
                 if(charString.isEmpty())
                 {
                     filterFriend = friendListArray;
+
                 }
                 else
                 {

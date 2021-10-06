@@ -110,6 +110,11 @@ public class FriendListFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
 
+                if(newText.equals(""))
+                {
+                    friendListAdapter.setFriendListArray(friendListArray);
+                    friendListAdapter.notifyDataSetChanged();
+                }
                 return false;
             }
         });

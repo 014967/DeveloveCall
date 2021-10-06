@@ -378,6 +378,26 @@ public class serviceImpl implements service {
 
     }
 
+    public Single<GraphQLResponse<PaginatedResult<User>>> getFriendList(String userId)
+    {
+
+        return Single.create(singleSubscriber ->
+        {
+            Amplify.API.query(
+                    ModelQuery.list(User.class, User.ID.contains(userId))
+                    ,response ->
+                    {
+                        singleSubscriber.onSuccess(response);
+                    }
+                    ,error ->
+                    {}
+
+            );
+        });
+
+    }
+
+
 
 
     public Single<GraphQLResponse<PaginatedResult<DetailChat>>> getChatList(String chatId)
