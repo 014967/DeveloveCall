@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -49,6 +50,7 @@ public class FriendListFragment extends Fragment {
     List<Ob_Friend> passFriendList = new ArrayList<>();
     Ob_Group ob_group;
 
+
     SearchView friendSearchView;
 
     //AlertDialog
@@ -84,9 +86,8 @@ public class FriendListFragment extends Fragment {
         btn_addFriend = view.findViewById(R.id.btn_addFriend);
         friendRv = view.findViewById(R.id.friendRv);
         progressBar.setVisibility(View.VISIBLE);
+
         friendSearchView = view.findViewById(R.id.friendSeacrhView);
-
-
 
 
 
@@ -96,6 +97,7 @@ public class FriendListFragment extends Fragment {
             friendListAdapter.setHasStableIds(true);
         }
         friendRv.setAdapter(friendListAdapter);
+
 
 
 

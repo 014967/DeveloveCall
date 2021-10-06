@@ -68,8 +68,10 @@
         <activity
             android:name=".CalendarMenuActivity"
             android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" />
+
         <activity android:name=".FriendPopUp"
             android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar"/>
+
 
         <receiver android:name=".Alarm.Alarm_Receiver" />
 

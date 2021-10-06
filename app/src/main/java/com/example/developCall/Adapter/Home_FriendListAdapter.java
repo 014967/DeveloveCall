@@ -1,5 +1,6 @@
 package com.example.developCall.Adapter;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.developCall.Fragment.Fragment2;
+
 import com.example.developCall.Object.Ob_Friend;
 import com.example.developCall.R;
 
@@ -51,6 +54,7 @@ public class Home_FriendListAdapter extends RecyclerView.Adapter<Home_FriendList
             String url = END_POINT+friend.getFriendImg();
             Glide.with(holder.itemView.getContext()).load(url).into(holder.img_profile);
         }
+
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("ob_friend", friend);

@@ -15,6 +15,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -80,12 +81,14 @@ public class ChatListAdapter extends BaseAdapter implements Filterable {
         if (viewType == 1) {
 
             view = layoutInflater.inflate(R.layout.chatcardright, parent, false);
+
             CardView c = view.findViewById(R.id.rightCard);
             c.setElevation(0);
 
 
         } else {
             view = layoutInflater.inflate(R.layout.chatcardleft, parent, false);
+
             CardView c = view.findViewById(R.id.leftCard);
             c.setElevation(0);
 

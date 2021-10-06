@@ -63,9 +63,11 @@
         android:text="대상"
         />
 
+
     <TextView
         android:id="@+id/content"
         android:hint="대상을 선택해주세요"
+
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginTop="5dp"

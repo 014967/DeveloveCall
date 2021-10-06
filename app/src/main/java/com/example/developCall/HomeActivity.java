@@ -3,12 +3,14 @@ package com.example.developCall;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -58,16 +60,17 @@ public class HomeActivity extends AppCompatActivity {
     String username;
     String userId;
 
+
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
 
-
         mReceiveer = new CallReceiver2();
 
         userId = Amplify.Auth.getCurrentUser().getUserId();
+
 
 
         Intent intent = getIntent();
@@ -95,6 +98,21 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationView.getMenu().getItem(2).setChecked(true);
 
 
+        try {
+            if (check.equals("1")) {
+                Log.d("tag", "확인 성공");
+                Bundle bundle = new Bundle();
+                bundle.putInt("check", 1);
+                alarm_fragment = new Alarm_Fragment();
+                alarm_fragment.setArguments(bundle);
+                transaction.replace(R.id.home_frame, alarm_fragment).commitAllowingStateLoss();
+            }
+        } catch (Exception e) {
+
+        }
+
+
+
 
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -118,16 +136,6 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.navigation_4:
                         item.setChecked(true);
                         alarm_fragment = new Alarm_Fragment();
-                        try {
-                            if (check.equals("1")) {
-                                Log.d("tag", "확인 성공");
-                                Bundle bundle = new Bundle();
-                                bundle.putInt("check", 1);
-                                alarm_fragment.setArguments(bundle);
-                            }
-                        } catch (Exception e) {
-
-                        }
                         transaction.replace(R.id.home_frame, alarm_fragment).commitAllowingStateLoss();
                         break;
                     case R.id.navigation_5:

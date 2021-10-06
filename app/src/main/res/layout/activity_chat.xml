@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    android:padding="10dp"
 
     android:background="@color/white"
     tools:context=".ChatActivity">
@@ -14,9 +13,9 @@
     <LinearLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="116dp"
+
+        android:layout_height="100dp"
         android:orientation="horizontal"
-        android:paddingTop="22dp"
         android:background="@color/bg_yellow">
 
 
@@ -95,6 +94,7 @@
         android:gravity="start"
         android:visibility="gone">
 
+
         <ImageButton
             android:id="@+id/up"
             android:text="up"
@@ -102,13 +102,16 @@
             android:layout_height="wrap_content"
             >
 
+
         </ImageButton>
         <ImageButton
             android:text="down"
             android:id="@+id/down"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
         </ImageButton>
+
 
 
     </LinearLayout>

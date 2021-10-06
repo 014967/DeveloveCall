@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class Personal_Inquiry extends Fragment {
     String content;
     String email;
 
+
     ImageView btn_back;
     String userId;
 
@@ -47,10 +49,12 @@ public class Personal_Inquiry extends Fragment {
         et_content = view.findViewById(R.id.et_content);
         et_email = view.findViewById(R.id.et_email);
         tv_submit = view.findViewById(R.id.tv_submit);
+
         btn_back = view.findViewById(R.id.btn_back);
 
 
         userId = Amplify.Auth.getCurrentUser().getUserId();
+
 
 
         btn_back.setOnClickListener(new View.OnClickListener() {

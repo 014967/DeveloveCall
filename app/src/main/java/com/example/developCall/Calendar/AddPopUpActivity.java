@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+
 import android.widget.TextView;
 
 import com.example.developCall.FriendPopUp;
@@ -15,10 +16,12 @@ import com.example.developCall.R;
 
 public class AddPopUpActivity extends Activity {
 
+
     EditText title;
     TextView name;
     Button finish, addclose;
     String addname, addtitle;
+
 
 
 
@@ -30,6 +33,7 @@ public class AddPopUpActivity extends Activity {
         setContentView(R.layout.popup_layout);
 
         title = (EditText)findViewById(R.id.title);
+
         name = (TextView) findViewById(R.id.content);
         finish = (Button)findViewById(R.id.finish);
         addclose = (Button)findViewById(R.id.addclose);
@@ -43,6 +47,7 @@ public class AddPopUpActivity extends Activity {
                 startActivityForResult(intent,1);
             }
         });
+
 
         finish.setOnClickListener(new View.OnClickListener() {
             @Override

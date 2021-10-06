@@ -8,12 +8,18 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import android.widget.Toast;
+
+
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,10 +36,12 @@ import com.amplifyframework.datastore.generated.model.Friend;
 import com.amplifyframework.datastore.generated.model.Group;
 import com.amplifyframework.datastore.generated.model.User;
 import com.example.developCall.Adapter.Home_FriendListAdapter;
+
 import com.example.developCall.Alarm.Alarm_ListData;
 import com.example.developCall.Alarm.Alarm_Receiver;
 import com.example.developCall.Object.Ob_Friend;
 import com.example.developCall.Object.Ob_lastCall;
+
 import com.example.developCall.R;
 import com.example.developCall.Search.SearchActivity;
 import com.example.developCall.Service.serviceImpl;
@@ -49,6 +57,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -73,6 +82,9 @@ public class HomeFragment extends Fragment {
     int timeresult, cycleresult, calendarresult;
 
 
+    View view;
+
+
     ImageView searchbtn;
 
     serviceImpl service = new serviceImpl();
@@ -80,7 +92,9 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+
 
         searchbtn = (ImageView) view.findViewById(R.id.img_btn_search_white);
 
@@ -120,6 +134,7 @@ public class HomeFragment extends Fragment {
                             for(Friend friend: group.getFriend())
                             {
                                 Ob_Friend ob_friend = new Ob_Friend();
+
                                 ob_friend.setId(friend.getId());
                                 ob_friend.setName(friend.getName());
                                 ob_friend.setNumber(friend.getNumber());
@@ -132,6 +147,7 @@ public class HomeFragment extends Fragment {
                                 } else {
                                     ob_friend.setFavorite(friend.getFavorite());
                                 }
+
 
                                 ob_friend.setFriendImg(friend.getFriendImg());
                                 friendListArray.add(ob_friend);
@@ -164,10 +180,7 @@ public class HomeFragment extends Fragment {
                             }
                         }
                     }
-                    alarm_listData = new ArrayList<Alarm_ListData>();
-                    Alarm_ListData listData = new Alarm_ListData();
-                    String alarmTempName = alarmGetJsonString("AlarmSetting");
-                    alarmJsonParsing(alarmTempName);
+
 
                     String getDate = "";
 
@@ -250,53 +263,30 @@ public class HomeFragment extends Fragment {
 
                             Toast.makeText(view.getContext(), tempDate + " ", Toast.LENGTH_LONG).show();
 
-                            try {
-                                writeFile("alarmFileName", alarm_listData);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
 
                             alarm_manager.set(AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(), pendingIntent);
                         }
 
                     }
 
-                    alarm_listData = AddData(alarm_listData, listData, alarmName, getDate, 0);
-
-                }, error ->
-                {
-
-                });
 
 
-
-/*
-
-        ArrayList<Ob_lastCall> ob = new ArrayList<>();
-        service.getData(userId).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(data ->
-                {
-                    for (User user : data.getData()) {
-                        for (Group group : user.getGroup()) {
-                            for (Friend friend : group.getFriend()) {
-                                Ob_lastCall ob_lastCall = new Ob_lastCall();
-                                ob_lastCall.setFriendName(friend.getName());
-                                ob_lastCall.setLastCall(friend.getLastContact());
-                                ob.add(ob_lastCall);
-
-                            }
-                        }
+                    alarm_listData = new ArrayList<Alarm_ListData>();
+                    Alarm_ListData listData = new Alarm_ListData();
+                    String alarmTempName = alarmGetJsonString("AlarmSetting.json");
+                    alarmJsonParsing(alarmTempName);
+                    String alarmListName = alarmGetJsonString("alarmFileName");
+                    alarmListJsonParsing(alarmListName);
+                    try {
+                        writeFile("alarmFileName", alarm_listData);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    // 0 { friendName : ddd, lastcall : 13092021210130 } 1 { ~~~~ 각 배열마다 이름이랑 마지막 통화시간 넣어놧어
-                    //용학아 여기서 데이터 이용해야해
-                    System.out.println("96" + Arrays.asList(ob));
 
                 }, error ->
                 {
 
                 });
-*/
 
 
         home_rv_friend.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
@@ -365,16 +355,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public ArrayList<Alarm_ListData> AddData(ArrayList<Alarm_ListData> alarm_listData, Alarm_ListData listData, String Name, String Content, int Profile){
-        listData.setProfile(Profile);
-        listData.setName(Name);
-        listData.setContent(Content);
-
-        alarm_listData.add(0, listData);
-
-        return alarm_listData;
-    }
-
     public void writeFile(String fileName, ArrayList<Alarm_ListData> dataList) throws IOException {
         JSONObject obj = new JSONObject();
         try {
@@ -394,7 +374,9 @@ public class HomeFragment extends Fragment {
 
         String JsonData = obj.toString();
 
-        OutputStreamWriter calendarWriter = new OutputStreamWriter(getActivity().openFileOutput(fileName, Context.MODE_PRIVATE));
+
+        OutputStreamWriter calendarWriter = new OutputStreamWriter(view.getContext().openFileOutput(fileName, Context.MODE_PRIVATE));
+
         calendarWriter.write(JsonData);
         calendarWriter.close();
     }
@@ -403,7 +385,9 @@ public class HomeFragment extends Fragment {
     {
         String json = "";
         try {
-            InputStream calendarStream = getActivity().openFileInput(fileName);
+
+            InputStream calendarStream = view.getContext().openFileInput(fileName);
+
             int fileSize = calendarStream.available();
 
             byte[] buffer = new byte[fileSize];
@@ -437,6 +421,38 @@ public class HomeFragment extends Fragment {
         }
     }
 
+
+    private void alarmListJsonParsing(String json)
+    {
+        try{
+            JSONObject jsonObject = new JSONObject(json);
+
+            JSONArray dataArray = jsonObject.getJSONArray("Alarm");
+
+            try {
+                alarm_listData.clear();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            for(int i=0; i<dataArray.length(); i++)
+            {
+                JSONObject dataObject = dataArray.getJSONObject(i);
+
+                Alarm_ListData data = new Alarm_ListData();
+
+                data.setProfile(dataObject.getInt("profile"));
+                data.setName(dataObject.getString("name"));
+                data.setContent(dataObject.getString("content"));
+
+
+                alarm_listData.add(data);
+
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 

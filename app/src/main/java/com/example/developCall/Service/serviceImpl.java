@@ -378,6 +378,7 @@ public class serviceImpl implements service {
 
     }
 
+
     public Single<GraphQLResponse<PaginatedResult<User>>> getFriendList(String userId)
     {
 
@@ -396,6 +397,7 @@ public class serviceImpl implements service {
         });
 
     }
+
 
 
 

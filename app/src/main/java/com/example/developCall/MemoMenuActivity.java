@@ -3,6 +3,7 @@ package com.example.developCall;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -67,6 +68,7 @@ public class MemoMenuActivity extends Activity {
 
 
 
+
                     Amplify.API.query(
                             ModelQuery.list(Chat.class, Chat.ID.contains(chatId)),
                             response ->
@@ -88,6 +90,7 @@ public class MemoMenuActivity extends Activity {
                             /// lambda로 생성하는 chat와 detail chat의 lastchangedat의 형식이 맞지않음
 
 
+
                             }, error ->
                             {
 
@@ -102,9 +105,11 @@ public class MemoMenuActivity extends Activity {
 
 
 
+
             private void onError(DataStoreException e) {
 
                 e.printStackTrace();
+
             }
 
             private <T extends Model> void onSavedSucess(DataStoreItemChange<T> tDataStoreItemChange) {

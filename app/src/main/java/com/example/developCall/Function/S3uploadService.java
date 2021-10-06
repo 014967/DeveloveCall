@@ -6,11 +6,13 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.IBinder;
+
 import android.provider.CallLog;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -55,6 +57,7 @@ public class S3uploadService extends Service {
     SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyyHHmmss");
     String uploadDate = formatter.format(date);
     String userId;
+
     String callNumber;
 
     int NOTIFICATION_ID = 815;
@@ -184,6 +187,7 @@ public class S3uploadService extends Service {
                     }
             );
         }
+
 
 
 

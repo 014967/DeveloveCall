@@ -15,7 +15,7 @@
         <entry key="app/src/main/res/layout/activity_alarm_addList.xml" value="0.2557291666666667" />
         <entry key="app/src/main/res/layout/activity_calendar_menu.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.22135416666666666" />
-        <entry key="app/src/main/res/layout/activity_contact.xml" value="0.21603260869565216" />
+        <entry key="app/src/main/res/layout/activity_contact.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_dummy.xml" value="0.2708333333333333" />
         <entry key="app/src/main/res/layout/activity_email_confirmation.xml" value="0.20969202898550723" />
         <entry key="app/src/main/res/layout/activity_friendpopup.xml" value="0.1837837837837838" />
@@ -23,13 +23,13 @@
         <entry key="app/src/main/res/layout/activity_launch.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_memo.xml" value="0.1900900900900901" />
-        <entry key="app/src/main/res/layout/activity_memo_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_memo_menu.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_popup_calendar.xml" value="0.25" />
         <entry key="app/src/main/res/layout/alarm_calendarpopup.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/alarm_cyclepopup.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/alarm_getservicexml.xml" value="0.2708333333333333" />
         <entry key="app/src/main/res/layout/alarm_layout.xml" value="0.2171875" />
-        <entry key="app/src/main/res/layout/alarm_listview.xml" value="0.2171875" />
+        <entry key="app/src/main/res/layout/alarm_listview.xml" value="0.25" />
         <entry key="app/src/main/res/layout/alarm_setting.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/alarm_timepopup.xml" value="0.2171875" />
         <entry key="app/src/main/res/layout/assign_complete.xml" value="0.22072072072072071" />

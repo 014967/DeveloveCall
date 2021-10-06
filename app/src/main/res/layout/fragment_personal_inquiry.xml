@@ -68,6 +68,8 @@
                 android:textSize="15dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+
+                android:background="@null"
                 android:hint="제목을 입력해주세요"
                 />
 
@@ -146,6 +148,8 @@
                 android:textSize="15dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+
+                android:background="@null"
                 android:hint="답변받을 이메일"/>
 
         </LinearLayout>

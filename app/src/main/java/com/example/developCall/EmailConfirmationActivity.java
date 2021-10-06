@@ -57,6 +57,7 @@ public class EmailConfirmationActivity extends AppCompatActivity {
             }
             private void onError(AuthException e )
             {
+
                 e.printStackTrace();
                 runOnUiThread(()->
                 {
@@ -66,7 +67,6 @@ public class EmailConfirmationActivity extends AppCompatActivity {
             }
             private void onSuccess(AuthSignUpResult authSignUpResult)
             {
-
                 reLogin();
             }
 

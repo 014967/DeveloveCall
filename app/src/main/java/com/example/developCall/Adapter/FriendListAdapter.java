@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.Filter;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -33,7 +34,6 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
 
 
     String charString;
-
     public FriendListAdapter(List<Ob_Friend> friendListArray) {
         this.friendListArray = friendListArray;
     }
@@ -103,6 +103,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
 
 
     }
+
 
     public Filter getFilter()
     {

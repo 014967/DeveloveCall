@@ -65,10 +65,12 @@ console.log(event)
 
 
 
+
     var date = new Date();
 
     var dateString  = date.toISOString();
     var lastchangedat = date.getTime();
+
 
     var newId = userId + friendId + uploadTime;
 
@@ -89,8 +91,10 @@ console.log(event)
                                     "summary" : "",
                                     "memo" : "",
                                     "_lastChangedAt" : lastchangedat,
+
                                     "createdAt" : dateString,
                                     "updatedAt" : dateString,
+
                                     "_version" : 1,
 
             }
@@ -270,7 +274,9 @@ console.log(event)
 
         count =0;
         var newContent = "";
+
         pre = array[0].spk;
+
         for(var i=0; i<array.length; i++)
         {
             if(array[i].spk == pre)
@@ -327,7 +333,9 @@ console.log(event)
                             "end_time" : "",
                             "speaker_label" : result[i][0],
                             "content" : result[i][1],
+
                             "_lastChangedAt" : new Date().getTime(),
+
                             "createdAt" : new Date().toISOString(),
                             "updatedAt" : new Date().toISOString(),
                             "_version" : 1,

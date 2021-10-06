@@ -58,6 +58,8 @@ public class Alarm_Fragment extends Fragment {
     AlarmManager alarm_manager;
     Context context;
 
+    View view;
+
 
     Button alarmset;
     FragmentManager alarmFragment;
@@ -70,7 +72,8 @@ public class Alarm_Fragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.alarm_layout, container, false);
+
+        view = inflater.inflate(R.layout.alarm_layout, container, false);
         context = container.getContext();
 
 
@@ -150,10 +153,6 @@ public class Alarm_Fragment extends Fragment {
                                 }
                             }
                             String getDate = "";
-                            alarm_listData = new ArrayList<Alarm_ListData>();
-                            Alarm_ListData listData = new Alarm_ListData();
-                            alarmTempName = alarmGetJsonString(alarmFileName);
-                            alarmJsonParsing(alarmTempName);
 
                             for(int i = 0; i < ob.size(); i++){
                                 if(ob.get(i).getLastCall() == null)
@@ -234,22 +233,37 @@ public class Alarm_Fragment extends Fragment {
                                     Intent intent = new Intent(view.getContext(), Alarm_Receiver.class);
                                     intent.putExtra("alarmContent", getDate);
 
-                                    Toast.makeText(view.getContext(), tempDate + " ", Toast.LENGTH_LONG).show();
+
+                                    //Toast.makeText(view.getContext(), tempDate + " ", Toast.LENGTH_LONG).show();
                                     Log.d("tag",tempDate + " ");
 
-                                    try {
-                                        writeFile(alarmFileName, alarm_listData);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                                    //alarm_manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
 
-                                    //alarm_manager.set(AlarmManager.RTC_WAKEUP, tempCalendar.getTimeInMillis(), pendingIntent);
                                     alarm_manager.set(AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(), pendingIntent);
                                 }
 
                             }
 
+
+                            Toast.makeText(view.getContext(),  "알람 설정 완료", Toast.LENGTH_LONG).show();
+                            
+                            alarm_listData = new ArrayList<Alarm_ListData>();
+                            Alarm_ListData listData = new Alarm_ListData();
+                            alarmTempName = alarmGetJsonString(alarmFileName);
+                            alarmJsonParsing(alarmTempName);
+                            alarm_listView = (ListView) view.findViewById(R.id.alarmlist);
+                            alarm_listAdapter = new Alarm_ListAdapter(view.getContext(), alarm_listData);
+                            alarm_listView.setAdapter(alarm_listAdapter);
+                            setListViewHeightBasedOnItems(alarm_listView);
                             alarm_listData = AddData(alarm_listData, listData, alarmName, getDate, 0);
+                            try {
+                                writeFile(alarmFileName, alarm_listData);
+                                Log.d("tag", "저장성공");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+
 
                         }, error ->
                         {
@@ -302,7 +316,9 @@ public class Alarm_Fragment extends Fragment {
 
         String JsonData = obj.toString();
 
-        OutputStreamWriter calendarWriter = new OutputStreamWriter(getActivity().openFileOutput(fileName, Context.MODE_PRIVATE));
+
+        OutputStreamWriter calendarWriter = new OutputStreamWriter(view.getContext().openFileOutput(fileName, Context.MODE_PRIVATE));
+
         calendarWriter.write(JsonData);
         calendarWriter.close();
     }
@@ -324,7 +340,9 @@ public class Alarm_Fragment extends Fragment {
 
         String JsonData = obj.toString();
 
-        OutputStreamWriter calendarWriter = new OutputStreamWriter(getActivity().openFileOutput("AlarmSetting", Context.MODE_PRIVATE));
+
+        OutputStreamWriter calendarWriter = new OutputStreamWriter(view.getContext().openFileOutput("AlarmSetting.json", Context.MODE_PRIVATE));
+
         calendarWriter.write(JsonData);
         calendarWriter.close();
     }
@@ -353,7 +371,9 @@ public class Alarm_Fragment extends Fragment {
     {
         String json = "";
         try {
-            InputStream calendarStream = getActivity().openFileInput(fileName);
+
+            InputStream calendarStream = view.getContext().openFileInput(fileName);
+
             int fileSize = calendarStream.available();
 
             byte[] buffer = new byte[fileSize];

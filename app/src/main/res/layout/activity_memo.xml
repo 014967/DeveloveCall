@@ -14,9 +14,11 @@
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:hint="제목을 입력해주세요"
         android:textColor="@color/black"
         android:gravity="center"
+
 
          />
 
@@ -29,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:maxLength="85"
+
         android:hint="내용을 입력해주세요"
         android:textColor="@color/black"
         android:gravity="top"/>

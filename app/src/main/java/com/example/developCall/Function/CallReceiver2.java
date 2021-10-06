@@ -5,16 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.work.Data;
 
+
 import com.amplifyframework.core.Amplify;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 
 
 
@@ -34,15 +37,11 @@ public class CallReceiver2 extends BroadcastReceiver {
     static Context context;
 
 
-
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(Context context, Intent intent) {
 
         this.context = context;
-
-
 
 
         if (Amplify.Auth.getCurrentUser()==null) {
@@ -56,6 +55,7 @@ public class CallReceiver2 extends BroadcastReceiver {
                 String state = extras.getString("state");// 현재 폰 상태 가져옴
 
 
+
                 if (!intent.getExtras().containsKey(TelephonyManager.EXTRA_INCOMING_NUMBER)) {
                     Log.i("Call receiver", "skipping intent=" + intent + ", extras=" + intent.getExtras() + " - no number was supplied");
                     return;
@@ -66,6 +66,7 @@ public class CallReceiver2 extends BroadcastReceiver {
 //                } else {
 //                    phonestate = state;
 //                }
+
                 if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
                     String phoneNo = "111";
                     Log.d("qqq", phoneNo + "currentNumber");
@@ -89,9 +90,13 @@ public class CallReceiver2 extends BroadcastReceiver {
 
 
                     //
+
                     String callNumber = extras.getString("incoming_number"); // 폰반호~
+
+
                     Data.Builder data = new Data.Builder();
                     data.putString("callNumber", callNumber);
+
 
 
 
@@ -117,7 +122,6 @@ public class CallReceiver2 extends BroadcastReceiver {
 
 
     }
-
 
 
 

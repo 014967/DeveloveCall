@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -53,7 +54,9 @@ public class MemoAdapter extends BaseAdapter {
 
         TextView title = (TextView)view.findViewById(R.id.name_profile);
         TextView memoDate = (TextView) view.findViewById(R.id.number_profile);
+
         ImageButton btn_memo = (ImageButton) view.findViewById(R.id.btn_chat);
+
 
 
         if(sample.get(position).getMemo().equals(""))
