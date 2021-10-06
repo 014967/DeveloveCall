@@ -1,14 +1,17 @@
 package com.example.developCall.Adapter;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.developCall.Fragment.Fragment2;
 import com.example.developCall.Object.Ob_Friend;
 import com.example.developCall.R;
 
@@ -48,6 +51,20 @@ public class Home_FriendListAdapter extends RecyclerView.Adapter<Home_FriendList
             String url = END_POINT+friend.getFriendImg();
             Glide.with(holder.itemView.getContext()).load(url).into(holder.img_profile);
         }
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("ob_friend", friend);
+
+        holder.img_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                Fragment2 profile = new Fragment2();
+                profile.setArguments(bundle);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.home_frame, profile).addToBackStack(null).commit();
+                //바텀 네비게이션 움직이지않
+            }
+        });
     }
 
     @Override

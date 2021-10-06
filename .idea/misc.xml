@@ -57,7 +57,7 @@
         <entry key="app/src/main/res/layout/home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/home_friend_list_card.xml" value="1.1586315336990098" />
         <entry key="app/src/main/res/layout/item_contact.xml" value="0.2264720793287343" />
-        <entry key="app/src/main/res/layout/item_friend.xml" value="0.5100969781491577" />
+        <entry key="app/src/main/res/layout/item_friend.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_group.xml" value="0.125" />
         <entry key="app/src/main/res/layout/list_design.xml" value="0.2045045045045045" />
         <entry key="app/src/main/res/layout/listview_custom.xml" value="0.21693840579710144" />

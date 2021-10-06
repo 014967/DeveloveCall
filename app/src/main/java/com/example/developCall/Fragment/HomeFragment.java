@@ -8,16 +8,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,18 +30,13 @@ import com.amplifyframework.datastore.generated.model.Friend;
 import com.amplifyframework.datastore.generated.model.Group;
 import com.amplifyframework.datastore.generated.model.User;
 import com.example.developCall.Adapter.Home_FriendListAdapter;
-
 import com.example.developCall.Alarm.Alarm_ListData;
 import com.example.developCall.Alarm.Alarm_Receiver;
 import com.example.developCall.Object.Ob_Friend;
 import com.example.developCall.Object.Ob_lastCall;
-
 import com.example.developCall.R;
 import com.example.developCall.Search.SearchActivity;
 import com.example.developCall.Service.serviceImpl;
-
-
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,7 +49,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -130,7 +120,19 @@ public class HomeFragment extends Fragment {
                             for(Friend friend: group.getFriend())
                             {
                                 Ob_Friend ob_friend = new Ob_Friend();
+                                ob_friend.setId(friend.getId());
                                 ob_friend.setName(friend.getName());
+                                ob_friend.setNumber(friend.getNumber());
+                                ob_friend.setGroupId(friend.getGroupId());
+                                ob_friend.setGroupName(group.getName());
+                                ob_friend.setRemindDate(friend.getLastContact());
+                                ob_friend.setFriendImg(friend.getFriendImg());
+                                if (friend.getFavorite() == null) {
+                                    ob_friend.setFavorite(false);
+                                } else {
+                                    ob_friend.setFavorite(friend.getFavorite());
+                                }
+
                                 ob_friend.setFriendImg(friend.getFriendImg());
                                 friendListArray.add(ob_friend);
                             }
