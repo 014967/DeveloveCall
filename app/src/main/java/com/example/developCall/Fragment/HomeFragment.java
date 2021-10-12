@@ -8,18 +8,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import android.widget.Toast;
-
-
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,15 +30,14 @@ import com.amplifyframework.datastore.generated.model.Friend;
 import com.amplifyframework.datastore.generated.model.Group;
 import com.amplifyframework.datastore.generated.model.User;
 import com.example.developCall.Adapter.Home_FriendListAdapter;
-
 import com.example.developCall.Alarm.Alarm_ListData;
 import com.example.developCall.Alarm.Alarm_Receiver;
 import com.example.developCall.Object.Ob_Friend;
 import com.example.developCall.Object.Ob_lastCall;
-
 import com.example.developCall.R;
-import com.example.developCall.Search.SearchActivity;
+import com.example.developCall.Search.Search_Fragment;
 import com.example.developCall.Service.serviceImpl;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,7 +50,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -89,6 +81,9 @@ public class HomeFragment extends Fragment {
 
     serviceImpl service = new serviceImpl();
 
+    Search_Fragment search_fragment;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -98,15 +93,23 @@ public class HomeFragment extends Fragment {
 
         searchbtn = (ImageView) view.findViewById(R.id.img_btn_search_white);
 
+
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent searchIntent = new Intent(getActivity().getApplicationContext(), SearchActivity.class);
-                startActivity(searchIntent);
+               // Intent searchIntent = new Intent(getActivity().getApplicationContext(), SearchActivity.class);
+                //startActivity(searchIntent);
+
+                 search_fragment= new Search_Fragment();
+                BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+                bottomNavigationView.setVisibility(View.INVISIBLE);
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_frame, search_fragment).addToBackStack(null).commit();
+
             }
         });
 
-        imageView = view.findViewById(R.id.img_btn_search_white);
+
+
         txt_user_name = view.findViewById(R.id.txt_user_name);
         home_rv_friend = view.findViewById(R.id.home_rv_friend);
         userId = Amplify.Auth.getCurrentUser().getUserId();
@@ -292,14 +295,6 @@ public class HomeFragment extends Fragment {
         home_rv_friend.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         home_rv_friend.setAdapter(friendListAdapter);
        // setUserAndFriend(userId);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent in = new Intent(getActivity(), SearchActivity.class);
-                startActivity(in);
-
-            }
-        });
 
 
         return view;

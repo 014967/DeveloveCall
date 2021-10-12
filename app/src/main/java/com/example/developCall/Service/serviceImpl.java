@@ -4,17 +4,24 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.amplifyframework.api.aws.GsonVariablesSerializer;
+import com.amplifyframework.api.graphql.GraphQLRequest;
 import com.amplifyframework.api.graphql.GraphQLResponse;
 import com.amplifyframework.api.graphql.PaginatedResult;
+import com.amplifyframework.api.graphql.SimpleGraphQLRequest;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Chat;
 import com.amplifyframework.datastore.generated.model.DetailChat;
+import com.amplifyframework.datastore.generated.model.Friend;
 import com.amplifyframework.datastore.generated.model.User;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.rxjava3.core.Single;
 
@@ -360,16 +367,15 @@ public class serviceImpl implements service {
         });
     }
 
-    public Single<GraphQLResponse<PaginatedResult<User>>> getUserName(String userId)
-    {
+    public Single<GraphQLResponse<PaginatedResult<User>>> getUserName(String userId) {
         return Single.create(singleSubscriber ->
         {
             Amplify.API.query(
                     ModelQuery.list(User.class, User.ID.contains(userId))
-                    ,response ->
+                    , response ->
                     {
                         singleSubscriber.onSuccess(response);
-                    },error ->
+                    }, error ->
                     {
 
                     }
@@ -379,13 +385,49 @@ public class serviceImpl implements service {
     }
 
 
-    public Single<GraphQLResponse<PaginatedResult<User>>> getFriendList(String userId)
-    {
+    public Single<GraphQLResponse<PaginatedResult<User>>> getFriendList(String userId) {
 
         return Single.create(singleSubscriber ->
         {
             Amplify.API.query(
                     ModelQuery.list(User.class, User.ID.contains(userId))
+                    , response ->
+                    {
+                        singleSubscriber.onSuccess(response);
+                    }
+                    , error ->
+                    {
+                    }
+
+            );
+        });
+
+    }
+
+    public Single<GraphQLResponse<PaginatedResult<Chat>>> getChat(String userId) {
+        return Single.create(singleSubscriber ->
+        {
+            Amplify.API.query(
+                    ModelQuery.list(Chat.class, Chat.USER_ID.contains(userId))
+                    , response ->
+                    {
+                        singleSubscriber.onSuccess(response);
+                    }
+                    , error ->
+                    {
+                    }
+
+            );
+        });
+
+    }
+
+    public Single<GraphQLResponse<PaginatedResult<Friend>>> getFriendName(String friendId)
+    {
+        return Single.create(singleSubscriber ->
+        {
+            Amplify.API.query(
+                    ModelQuery.list(Friend.class, Friend.ID.contains(friendId))
                     ,response ->
                     {
                         singleSubscriber.onSuccess(response);
@@ -394,32 +436,116 @@ public class serviceImpl implements service {
                     {}
 
             );
-        });
+        }) ;
 
     }
 
 
 
 
+    public GraphQLRequest<User> getUserRequest(String userId,String content) {
+        String document = "query getUser($id: ID! , $data : String!) { "
+                + "getUser(id: $id) { "
+                + "chat {"
+                + "items {"
+                + "friendID "
+                + "detailChat(filter: {content : {contains : $data}}) {"
+                + "items {"
+                + "id "
+                + "chatID "
+                + "speaker_label "
+                + "createdAt "
+                + "updatedAt "
+                + "content "
+                + "}"
+                + "}"
+                + "date "
+                + "s3_url"
+                + "}"
+                + "}"
+                + "}"
+                + "}";
+        Map<String , Object> variables = new HashMap<>();
+        variables.put("id", userId);
+        variables.put("data", content);
+        return new SimpleGraphQLRequest<>(
+                document,
+                variables,
+                User.class,
+                new GsonVariablesSerializer());
+    }
 
-    public Single<GraphQLResponse<PaginatedResult<DetailChat>>> getChatList(String chatId)
+
+
+    public GraphQLRequest<User> getSearchChat(String userId,String content) {
+        String document = "query getUser($id: ID! , $data : String!) { "
+                + "getUser(id: $id) { "
+                + "group {"
+                + "items {"
+                + "id "
+                + "friend {"
+                + "items {"
+                + "id "
+                + "chat {"
+                + "items {"
+                + "detailChat(filter: {content : {contains : $data}}) {"
+                + "items {"
+                + "id "
+                + "chatID "
+                + "speaker_label "
+                + "createdAt "
+                + "updatedAt "
+                + "content "
+                + "}"
+                + "}"
+                + "}"
+                + "}"
+                + "}"
+                + "}"
+                + "}"
+                + "}"
+                + "}"
+                + "}";
+        Map<String , Object> variables = new HashMap<>();
+        variables.put("id", userId);
+        variables.put("data", content);
+        return new SimpleGraphQLRequest<>(
+                document,
+                variables,
+                User.class,
+                new GsonVariablesSerializer());
+    }
+
+    public Single<GraphQLResponse<PaginatedResult<DetailChat>>> getChatList(String chatId) {
+        return Single.create(singleSubscriber ->
+        {
+            Amplify.API.query(
+                    ModelQuery.list(DetailChat.class, DetailChat.CHAT_ID.contains(chatId))
+                    , response ->
+                    {
+                        singleSubscriber.onSuccess(response);
+                    }, error -> {
+
+                    }
+            );
+        });
+    }
+
+    public Single<GraphQLResponse<User>> getdummy(String userId, String searchKey)
     {
         return Single.create(singleSubscriber ->
         {
-           Amplify.API.query(
-                   ModelQuery.list(DetailChat.class, DetailChat.CHAT_ID.contains(chatId))
-                   ,response ->
-                   {
-                       singleSubscriber.onSuccess(response);
-                   },error ->{
+            Amplify.API.query(getUserRequest(userId, searchKey)
+                    , response ->
+                    {
+                        singleSubscriber.onSuccess(response);
+                    }
+                    ,error ->
+                    {
 
-                   }
-           );
+                    });
         });
     }
-
-
-
 
 
 

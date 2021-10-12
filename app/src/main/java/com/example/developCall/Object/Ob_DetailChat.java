@@ -5,6 +5,16 @@ public class Ob_DetailChat {
     String content;
     String spk;
     String id;
+    String chat_Id;
+
+    public String getChat_Id() {
+        return chat_Id;
+    }
+
+    public void setChat_Id(String chat_Id) {
+        this.chat_Id = chat_Id;
+    }
+
     String created_at;
 
     public String getCreated_at() {

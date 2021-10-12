@@ -2,29 +2,22 @@ package com.example.developCall.Search;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
-
 import android.widget.ImageView;
 
-import android.widget.ListView;
-
-
-
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-
-import com.example.developCall.Calendar.CalendarAdapter;
-import com.example.developCall.Calendar.CalendarData;
-import com.example.developCall.HomeActivity;
 import com.example.developCall.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +29,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 
-public class SearchActivity extends AppCompatActivity {
+public class Search_Fragment extends Fragment implements Search_HistoryFragment.OnHistoryClickListener {
 
     FragmentManager searchFragment;
     FragmentTransaction searchTransaction;
@@ -51,18 +44,23 @@ public class SearchActivity extends AppCompatActivity {
 
     ImageView iv_back;
 
-
+    View view;
 
     EditText searchContents;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_result);
 
-        searchFragment = getSupportFragmentManager();
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        //setContentView(R.layout.search_result);
+
+
+        view = inflater.inflate(R.layout.search_result, container, false);
+
+
+        searchFragment = getActivity().getSupportFragmentManager();
         searchTransaction = searchFragment.beginTransaction();
-        search_historyFragment = new Search_HistoryFragment();
+        search_historyFragment = new Search_HistoryFragment(this::onHistoryClick);
         search_addressFragment = new Search_AddressFragment();
 
         Bundle bundle = new Bundle();
@@ -73,27 +71,34 @@ public class SearchActivity extends AppCompatActivity {
         jsonParsing(searchTempName);
 
 
-        searchTransaction.replace(R.id.search_frame, search_historyFragment).commitAllowingStateLoss();
 
-        searchContents = (EditText) findViewById(R.id.search_contents);
+        searchTransaction.replace(R.id.search_frame, search_historyFragment).commitAllowingStateLoss(); // 검색 목록 보여주는 frame
 
-        iv_back = findViewById(R.id.iv_back);
+        searchContents = (EditText) view.findViewById(R.id.search_contents);
+
+        iv_back = view.findViewById(R.id.iv_back);
 
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                onBackPressed();
+            public void onClick(View v) {
+                BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+                bottomNavigationView.setVisibility(View.VISIBLE);
+                getActivity().onBackPressed();
             }
         });
         searchContents.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_ENTER){
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+
+
+                    Bundle d = new Bundle();
+                    d.putSerializable("searchKey", searchContents.getText().toString());
 
                     Search_HistoryListData data = new Search_HistoryListData();
                     data.setContent(searchContents.getText().toString());
                     dataList.add(0, data);
-                    if(check == 0) {
+                    if (check == 0) {
                         try {
                             writeFile(dataList);
                         } catch (IOException e) {
@@ -103,14 +108,15 @@ public class SearchActivity extends AppCompatActivity {
                     check = 1;
 
                     searchTransaction = searchFragment.beginTransaction();
-                    searchTransaction.replace(R.id.search_frame, search_addressFragment).commitAllowingStateLoss();
+                    search_addressFragment.setArguments(d);
+                    searchTransaction.replace(R.id.search_frame, search_addressFragment).commitAllowingStateLoss(); //만약 작성이 된다면 search_addressFragment로 이동
                 }
                 return false;
             }
         });
+
+        return view;
     }
-
-
 
 
     public void writeFile(ArrayList<Search_HistoryListData> dataList) throws IOException {
@@ -130,16 +136,15 @@ public class SearchActivity extends AppCompatActivity {
 
         String JsonData = obj.toString();
 
-        OutputStreamWriter calendarWriter = new OutputStreamWriter(openFileOutput("SearchHistory.json", Context.MODE_PRIVATE));
+        OutputStreamWriter calendarWriter = new OutputStreamWriter(getActivity().openFileOutput("SearchHistory.json", Context.MODE_PRIVATE));
         calendarWriter.write(JsonData);
         calendarWriter.close();
     }
 
-    private String getJsonString(String fileName)
-    {
+    private String getJsonString(String fileName) {
         String json = "";
         try {
-            InputStream calendarStream = openFileInput(fileName);
+            InputStream calendarStream = getActivity().openFileInput(fileName);
             int fileSize = calendarStream.available();
 
             byte[] buffer = new byte[fileSize];
@@ -147,26 +152,22 @@ public class SearchActivity extends AppCompatActivity {
             calendarStream.close();
 
             json = new String(buffer, "UTF-8");
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
 
         return json;
     }
 
-    private void jsonParsing(String json)
-    {
-        try{
+    private void jsonParsing(String json) {
+        try {
             JSONObject jsonObject = new JSONObject(json);
 
             JSONArray dataArray = jsonObject.getJSONArray("Search");
 
             dataList.clear();
 
-            for(int i=0; i<dataArray.length(); i++)
-            {
+            for (int i = 0; i < dataArray.length(); i++) {
                 JSONObject dataObject = dataArray.getJSONObject(i);
 
                 Search_HistoryListData data = new Search_HistoryListData();
@@ -175,10 +176,16 @@ public class SearchActivity extends AppCompatActivity {
 
                 dataList.add(data);
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
+    public void onHistoryClick(String value)
+    {
+        searchContents.setText(value);
+    }
+
 
 }
 

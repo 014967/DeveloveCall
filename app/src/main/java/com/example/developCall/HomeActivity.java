@@ -3,14 +3,12 @@ package com.example.developCall;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -61,6 +59,9 @@ public class HomeActivity extends AppCompatActivity {
     String userId;
 
 
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,8 @@ public class HomeActivity extends AppCompatActivity {
         mReceiveer = new CallReceiver2();
 
         userId = Amplify.Auth.getCurrentUser().getUserId();
+
+
 
 
 
@@ -90,6 +93,8 @@ public class HomeActivity extends AppCompatActivity {
         tabFragment1 = new TabFragment1();
         tabFragment2 = new TabFragment2();
         tabFragment3 = new TabFragment3();
+
+
         transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.home_frame, home_fragment).commitAllowingStateLoss();
 
@@ -131,6 +136,8 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                     case R.id.navigation_3:
                         item.setChecked(true);
+
+
                         transaction.replace(R.id.home_frame, home_fragment).commitAllowingStateLoss();
                         break;
                     case R.id.navigation_4:
