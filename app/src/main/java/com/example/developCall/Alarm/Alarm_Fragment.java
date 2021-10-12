@@ -48,16 +48,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class Alarm_Fragment extends Fragment {
 
     ArrayList<Alarm_ListData> alarm_listData;
+    ArrayList<Alarm_ListData> alarm_tempListData;
     ListView alarm_listView;
     Alarm_ListAdapter alarm_listAdapter;
     //Alarm_ListData listData;
-    String alarmFileName, alarmTempName;
+    String alarmFileName, alarmTempName, alarmTempFileName;
 
     String userId;
 
     AlarmManager alarm_manager;
     Context context;
-
     View view;
 
 
@@ -67,12 +67,12 @@ public class Alarm_Fragment extends Fragment {
     AlarmSet_Fragment alarmSet_fragment;
     Bundle bundle;
     int onoff, timeresult, cycleresult, calendarresult, check;
+    int alarmCount;
     String alarmName, alarmMsg;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         view = inflater.inflate(R.layout.alarm_layout, container, false);
         context = container.getContext();
 
@@ -93,6 +93,7 @@ public class Alarm_Fragment extends Fragment {
         alarm_manager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
 
         alarmFileName = "alarmFileName";
+        alarmTempFileName = "alarmTempFileName";
         alarmName = "임시 이름";
 
         userId = Amplify.Auth.getCurrentUser().getUserId();
@@ -113,6 +114,8 @@ public class Alarm_Fragment extends Fragment {
 
             if(check == 1){
                 alarm_listData = new ArrayList<Alarm_ListData>();
+                alarmTempName = alarmGetJsonString(alarmTempFileName);
+                alarmJsonParsing(alarmTempName);
                 alarmTempName = alarmGetJsonString(alarmFileName);
                 alarmJsonParsing(alarmTempName);
 
@@ -136,6 +139,11 @@ public class Alarm_Fragment extends Fragment {
                     e.printStackTrace();
                 }
 
+                alarm_listData = new ArrayList<Alarm_ListData>();
+                Alarm_ListData listData = new Alarm_ListData();
+                alarmTempName = alarmGetJsonString(alarmFileName);
+                alarmJsonParsing(alarmTempName);
+
 
                 ArrayList<Ob_lastCall> ob = new ArrayList<>();
                 service.getData(userId).subscribeOn(Schedulers.io())
@@ -154,14 +162,14 @@ public class Alarm_Fragment extends Fragment {
                             }
                             String getDate = "";
 
-                            for(int i = 0; i < ob.size(); i++){
-                                if(ob.get(i).getLastCall() == null)
+                            for(alarmCount = 0; alarmCount < ob.size(); alarmCount++){
+                                if(ob.get(alarmCount).getLastCall() == null)
                                 {
 
                                 }else
                                 {
-                                    String tempName = ob.get(i).getFriendName();
-                                    String tempCall = ob.get(i).getLastCall();
+                                    String tempName = ob.get(alarmCount).getFriendName();
+                                    String tempCall = ob.get(alarmCount).getLastCall();
                                     PendingIntent pendingIntent = PendingIntent.getBroadcast(view.getContext(), tempName.charAt(0), alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                                     //임시로 현재 날짜를 지정
@@ -226,43 +234,40 @@ public class Alarm_Fragment extends Fragment {
                                     alarmCalendar.set(Calendar.MINUTE, 0);
                                     alarmCalendar.set(Calendar.SECOND, 0);
 
-                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
                                     Date tempDate = new Date(alarmCalendar.getTimeInMillis());
                                     getDate = dateFormat.format(tempDate);
 
-                                    Intent intent = new Intent(view.getContext(), Alarm_Receiver.class);
-                                    intent.putExtra("alarmContent", getDate);
-
-
                                     //Toast.makeText(view.getContext(), tempDate + " ", Toast.LENGTH_LONG).show();
                                     Log.d("tag",tempDate + " ");
+                                    alarm_tempListData = AddData(alarm_listData, listData, alarmName, getDate, 0);
 
-                                    //alarm_manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
-
+                                    /*if(alarmCount == 0) {
+                                        alarm_manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+20000, pendingIntent);
+                                    }
+                                    else if(alarmCount == 1){
+                                        alarm_manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+80000, pendingIntent);
+                                    }
+                                    else{
+                                        alarm_manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+160000, pendingIntent);
+                                    }*/
                                     alarm_manager.set(AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(), pendingIntent);
                                 }
 
                             }
 
-
                             Toast.makeText(view.getContext(),  "알람 설정 완료", Toast.LENGTH_LONG).show();
-                            
-                            alarm_listData = new ArrayList<Alarm_ListData>();
-                            Alarm_ListData listData = new Alarm_ListData();
-                            alarmTempName = alarmGetJsonString(alarmFileName);
-                            alarmJsonParsing(alarmTempName);
+
                             alarm_listView = (ListView) view.findViewById(R.id.alarmlist);
                             alarm_listAdapter = new Alarm_ListAdapter(view.getContext(), alarm_listData);
                             alarm_listView.setAdapter(alarm_listAdapter);
                             setListViewHeightBasedOnItems(alarm_listView);
-                            alarm_listData = AddData(alarm_listData, listData, alarmName, getDate, 0);
+
                             try {
-                                writeFile(alarmFileName, alarm_listData);
-                                Log.d("tag", "저장성공");
+                                writeFile(alarmTempFileName, alarm_tempListData);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
-
 
 
                         }, error ->
@@ -287,14 +292,17 @@ public class Alarm_Fragment extends Fragment {
         return view;
     }
 
-    public ArrayList<Alarm_ListData> AddData(ArrayList<Alarm_ListData> alarm_listData, Alarm_ListData listData, String Name, String Content, int Profile){
+    public ArrayList<Alarm_ListData> AddData(ArrayList<Alarm_ListData> alarm_addListData, Alarm_ListData listData, String Name, String Content, int Profile){
+        if(alarmCount == 0){
+            alarm_addListData.clear();
+        }
         listData.setProfile(Profile);
         listData.setName(Name);
         listData.setContent(Content);
 
-        alarm_listData.add(0, listData);
+        alarm_addListData.add(0, listData);
 
-        return alarm_listData;
+        return alarm_addListData;
     }
 
     public void writeFile(String fileName, ArrayList<Alarm_ListData> dataList) throws IOException {
@@ -316,9 +324,7 @@ public class Alarm_Fragment extends Fragment {
 
         String JsonData = obj.toString();
 
-
         OutputStreamWriter calendarWriter = new OutputStreamWriter(view.getContext().openFileOutput(fileName, Context.MODE_PRIVATE));
-
         calendarWriter.write(JsonData);
         calendarWriter.close();
     }
@@ -340,9 +346,7 @@ public class Alarm_Fragment extends Fragment {
 
         String JsonData = obj.toString();
 
-
         OutputStreamWriter calendarWriter = new OutputStreamWriter(view.getContext().openFileOutput("AlarmSetting.json", Context.MODE_PRIVATE));
-
         calendarWriter.write(JsonData);
         calendarWriter.close();
     }
@@ -371,9 +375,7 @@ public class Alarm_Fragment extends Fragment {
     {
         String json = "";
         try {
-
             InputStream calendarStream = view.getContext().openFileInput(fileName);
-
             int fileSize = calendarStream.available();
 
             byte[] buffer = new byte[fileSize];
@@ -423,7 +425,7 @@ public class Alarm_Fragment extends Fragment {
     }
 
 
-    private int alarmJsonLastCallParsing(String json, String userName)
+    /*private int alarmJsonLastCallParsing(String json, String userName)
     {
         int tempLastCall = 0;
         try{
@@ -454,7 +456,7 @@ public class Alarm_Fragment extends Fragment {
         }catch (JSONException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
     public static boolean setListViewHeightBasedOnItems(ListView listView) {

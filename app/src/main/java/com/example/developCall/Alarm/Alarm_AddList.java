@@ -18,11 +18,13 @@ public class Alarm_AddList extends Activity {
 
         Intent intent = getIntent();
         String tag = "0";
-        String getName, getContent;
+        String getContent;
         tag = intent.getStringExtra("tag");
+        getContent = intent.getStringExtra("target");
         Intent openMain = new Intent(this, HomeActivity.class);
         if(tag.equals("1")){
             openMain.putExtra("check", "1");
+            openMain.putExtra("target", getContent);
         }
         startActivity(openMain);
     }
