@@ -8,12 +8,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +32,8 @@ import com.amplifyframework.datastore.generated.model.User;
 import com.example.developCall.Adapter.Home_FriendListAdapter;
 import com.example.developCall.Alarm.Alarm_ListData;
 import com.example.developCall.Alarm.Alarm_Receiver;
+import com.example.developCall.Calendar.Home_Recycler_Adapter;
+import com.example.developCall.Calendar.Home_Recycler_Data;
 import com.example.developCall.Object.Ob_Friend;
 import com.example.developCall.Object.Ob_lastCall;
 import com.example.developCall.R;
@@ -70,9 +72,16 @@ public class HomeFragment extends Fragment {
 
     AlarmManager alarm_manager;
     ArrayList<Alarm_ListData> alarm_listData;
+    ArrayList<Alarm_ListData> alarm_tempListData;
     String alarmName;
-    int timeresult, cycleresult, calendarresult;
+    int timeresult, cycleresult, calendarresult, alarmCount;
 
+
+
+    RecyclerView recyclerView;
+    ArrayList<Home_Recycler_Data> recycler_data;
+    Home_Recycler_Adapter recycler_adapter;
+    int recyleCount;
 
     View view;
 
@@ -117,10 +126,38 @@ public class HomeFragment extends Fragment {
         friendListAdapter = new Home_FriendListAdapter(friendListArray);
 
 
+
         final Intent alarm_intent = new Intent(view.getContext(), Alarm_Receiver.class);
         final Calendar alarmCalendar = Calendar.getInstance();
         alarm_manager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
         alarmName = "임시 이름";
+
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat onlyDayFromat = new SimpleDateFormat("dd");
+        String todayDate = dateFormat.format(date);
+        String onlyDay = onlyDayFromat.format(date);
+        int todayInt = Integer.parseInt(todayDate);
+        int dayInt = Integer.parseInt(onlyDay);
+
+        firstInit();
+        recyleCount = 0;
+
+        for(int i = dayInt; i < 31; i++){
+            String tempDate = Integer.toString(todayInt);
+            String tempName = tempDate + ".json";
+            Log.d("tag",tempName);
+            String cycleTempName = cycleGetJsonString(tempName);
+            cycleJsonParsing(cycleTempName);
+            todayInt++;
+        }
+
+        recycler_adapter = new Home_Recycler_Adapter(recycler_data);
+        recyclerView.setAdapter(recycler_adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), RecyclerView.HORIZONTAL, false));
+
 
 
         service.getUserName(userId).subscribeOn(Schedulers.io())
@@ -168,7 +205,15 @@ public class HomeFragment extends Fragment {
                 });
 
 
+
+        alarm_listData = new ArrayList<Alarm_ListData>();
+        Alarm_ListData listData = new Alarm_ListData();
+        String alarmTempName = alarmGetJsonString("AlarmSetting.json");
+        alarmJsonParsing(alarmTempName);
+
+
         ArrayList<Ob_lastCall> ob = new ArrayList<>();
+
         service.getData(userId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data ->
@@ -184,17 +229,16 @@ public class HomeFragment extends Fragment {
                         }
                     }
 
-
                     String getDate = "";
 
-                    for(int i = 0; i < ob.size(); i++){
-                        if(ob.get(i).getLastCall() == null)
+                    for(alarmCount = 0; alarmCount < ob.size(); alarmCount++){
+                        if(ob.get(alarmCount).getLastCall() == null)
                         {
 
                         }else
                         {
-                            String tempName = ob.get(i).getFriendName();
-                            String tempCall = ob.get(i).getLastCall();
+                            String tempName = ob.get(alarmCount).getFriendName();
+                            String tempCall = ob.get(alarmCount).getLastCall();
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(view.getContext(), tempName.charAt(0), alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                             //임시로 현재 날짜를 지정
@@ -257,34 +301,23 @@ public class HomeFragment extends Fragment {
                             alarmCalendar.set(Calendar.MINUTE, 0);
                             alarmCalendar.set(Calendar.SECOND, 0);
 
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                            Date tempDate = new Date(alarmCalendar.getTimeInMillis());
-                            getDate = dateFormat.format(tempDate);
-
-                            Intent intent = new Intent(view.getContext(), Alarm_Receiver.class);
-                            intent.putExtra("alarmContent", getDate);
-
-                            Toast.makeText(view.getContext(), tempDate + " ", Toast.LENGTH_LONG).show();
-
+                            alarm_tempListData = AddData(alarm_listData, listData, alarmName, getDate, 0);
 
                             alarm_manager.set(AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(), pendingIntent);
                         }
 
                     }
 
+                    /*alarm_listData = new ArrayList<Alarm_ListData>();
+                    String alarmListName = alarmGetJsonString("alarmTempFileName");
+                    alarmListJsonParsing(alarmListName);*/
 
-
-                    alarm_listData = new ArrayList<Alarm_ListData>();
-                    Alarm_ListData listData = new Alarm_ListData();
-                    String alarmTempName = alarmGetJsonString("AlarmSetting.json");
-                    alarmJsonParsing(alarmTempName);
-                    String alarmListName = alarmGetJsonString("alarmFileName");
-                    alarmListJsonParsing(alarmListName);
                     try {
-                        writeFile("alarmFileName", alarm_listData);
+                        writeFile("alarmTempFileName", alarm_tempListData);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
 
                 }, error ->
                 {
@@ -348,6 +381,92 @@ public class HomeFragment extends Fragment {
 
         return friendListArray;
     }
+
+    private String cycleGetJsonString(String fileName)
+    {
+        String json = "";
+        try {
+            InputStream calendarStream = getActivity().openFileInput(fileName);
+            int fileSize = calendarStream.available();
+
+            byte[] buffer = new byte[fileSize];
+            calendarStream.read(buffer);
+            calendarStream.close();
+
+            json = new String(buffer, "UTF-8");
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+
+        return json;
+    }
+
+    private void cycleJsonParsing(String json)
+    {
+        try{
+            JSONObject jsonObject = new JSONObject(json);
+
+            JSONArray dataArray = jsonObject.getJSONArray("Calendar");
+
+            if(recyleCount == 0) {
+                recycler_data.clear();
+            }
+
+            for(int i=0; i<dataArray.length(); i++)
+            {
+                if(recyleCount < 5) {
+                    JSONObject dataObject = dataArray.getJSONObject(i);
+
+                    Home_Recycler_Data data = new Home_Recycler_Data();
+
+                    data.setRecycleName(dataObject.getString("title"));
+                    data.setRecycleTarget(dataObject.getString("name"));
+                    try {
+                        data.setRecycleTime(dataObject.getString("time"));
+                    } catch (JSONException e) {
+                        data.setRecycleTime("Testing");
+                    }
+
+                    recycler_data.add(data);
+                }
+                recyleCount++;
+            }
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void firstInit(){
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recycler_data = new ArrayList<>();
+    }
+
+    public void addItem(String recycle_Title, String recycle_Target, String recycle_Time){
+        Home_Recycler_Data item = new Home_Recycler_Data();
+
+        item.setRecycleName(recycle_Title);
+        item.setRecycleTarget(recycle_Target);
+        item.setRecycleTime(recycle_Time);
+
+        recycler_data.add(item);
+    }
+
+    public ArrayList<Alarm_ListData> AddData(ArrayList<Alarm_ListData> alarm_addListData, Alarm_ListData listData, String Name, String Content, int Profile){
+        if(alarmCount == 0){
+            alarm_addListData.clear();
+        }
+        listData.setProfile(Profile);
+        listData.setName(Name);
+        listData.setContent(Content);
+
+        alarm_addListData.add(0, listData);
+
+        return alarm_addListData;
+    }
+
+
 
 
     public void writeFile(String fileName, ArrayList<Alarm_ListData> dataList) throws IOException {

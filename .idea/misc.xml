@@ -59,6 +59,7 @@
         <entry key="app/src/main/res/layout/fragment_tab3.xml" value="0.240625" />
         <entry key="app/src/main/res/layout/home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/home_friend_list_card.xml" value="1.1586315336990098" />
+        <entry key="app/src/main/res/layout/home_recycler_item.xml" value="0.22567567567567567" />
         <entry key="app/src/main/res/layout/item_contact.xml" value="0.2264720793287343" />
         <entry key="app/src/main/res/layout/item_detail_chat.xml" value="0.20315315315315316" />
         <entry key="app/src/main/res/layout/item_friend.xml" value="0.1" />

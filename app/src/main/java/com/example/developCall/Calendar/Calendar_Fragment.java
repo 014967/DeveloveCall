@@ -280,29 +280,6 @@ public class Calendar_Fragment extends Fragment {
         return view;
     }
 
-    public void InitializeData()
-    {
-        dataList = new ArrayList<CalendarData>();
-        CalendarData data1 = new CalendarData();
-        CalendarData data2 = new CalendarData();
-        CalendarData data3 = new CalendarData();
-
-        data1.setName("김현국");
-        data1.setTime("14:00pm");
-
-        dataList.add(data1);
-
-        data2.setName("김용학");
-        data1.setTime("16:00pm");
-
-        dataList.add(data2);
-
-        data3.setName("박하나");
-        data1.setTime("18:00pm");
-
-        dataList.add(data3);
-    }
-
     public final View.OnTouchListener btnTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent motionEvent)  {
