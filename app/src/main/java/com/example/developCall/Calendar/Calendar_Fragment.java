@@ -81,12 +81,14 @@ public class Calendar_Fragment extends Fragment {
                             Intent data = result.getData();
                             String titleresult = data.getStringExtra("title");
                             String nameresult = data.getStringExtra("name");
+                            String timeresult = data.getStringExtra("time");
 
                             if(!nameresult.equals("") && !titleresult.equals("")) {
                                 CalendarData adddata = new CalendarData();
 
                                 adddata.setTitle(titleresult);
                                 adddata.setName(nameresult);
+                                adddata.setTime(timeresult);
 
                                 dataList.add(adddata);
 
@@ -103,12 +105,14 @@ public class Calendar_Fragment extends Fragment {
                             Intent data = result.getData();
                             String retitle = data.getStringExtra("title");
                             String rename = data.getStringExtra("name");
+                            String retime = data.getStringExtra("time");
                             int position = data.getIntExtra("position",0);
 
                             CalendarData redata = new CalendarData();
 
                             redata.setTitle(retitle);
                             redata.setName(rename);
+                            redata.setTime(retime);
 
                             dataList.set(position, redata);
                             listView.setAdapter(calendarAdapter);

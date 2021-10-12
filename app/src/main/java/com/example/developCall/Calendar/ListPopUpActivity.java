@@ -9,8 +9,12 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 import com.example.developCall.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ListPopUpActivity extends Activity {
 
@@ -18,6 +22,9 @@ public class ListPopUpActivity extends Activity {
     Button rewrite, delete, close;
     String listtitle, listname;
     int listposition;
+    TimePicker timePicker;
+    String hourmin;
+    int hour, min;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +43,26 @@ public class ListPopUpActivity extends Activity {
         rewrite = (Button)findViewById(R.id.rewrite);
         delete = (Button)findViewById(R.id.delete);
         close = (Button)findViewById(R.id.close);
+        timePicker = (TimePicker)findViewById(R.id.reTimePicker);
+
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat hourFormat = new SimpleDateFormat("hh");
+        SimpleDateFormat minFormat = new SimpleDateFormat("mm");
+        String tempHour = hourFormat.format(date);
+        String tempMin = minFormat.format(date);
+
+        hourmin = tempHour + ":" + tempMin;
+
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+
+            @Override
+            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
+                hour = i;
+                min = i1;
+                hourmin = hour + ":" + min;
+            }
+        });
 
         String test = String.valueOf(listposition);
         Log.d("tag",test);
@@ -51,6 +78,7 @@ public class ListPopUpActivity extends Activity {
                 Intent intent = new Intent();
                 intent.putExtra("title", listtitle);
                 intent.putExtra("name", listname);
+                intent.putExtra("time", hourmin);
                 intent.putExtra("position", listposition);
                 setResult(1, intent);
 

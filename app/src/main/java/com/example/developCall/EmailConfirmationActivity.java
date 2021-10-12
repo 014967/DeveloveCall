@@ -29,20 +29,14 @@ public class EmailConfirmationActivity extends AppCompatActivity {
     String name;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_confirmation);
 
 
-
-        Confirmation_Code = (EditText)findViewById(R.id.Confirmation_Code);
-        btn_Confirm = (Button)findViewById(R.id.btn_Confirm);
-
-
-
-
+        Confirmation_Code = (EditText) findViewById(R.id.Confirmation_Code);
+        btn_Confirm = (Button) findViewById(R.id.btn_Confirm);
 
 
         btn_Confirm.setOnClickListener(new View.OnClickListener() {
@@ -55,23 +49,27 @@ public class EmailConfirmationActivity extends AppCompatActivity {
                         this::onError
                 );
             }
-            private void onError(AuthException e )
-            {
+
+            private void onError(AuthException e) {
 
                 e.printStackTrace();
-                runOnUiThread(()->
+                runOnUiThread(() ->
                 {
-                    Toast.makeText(getApplicationContext(),"Email Auth error",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Email Auth error", Toast.LENGTH_LONG).show();
                 });
 
             }
-            private void onSuccess(AuthSignUpResult authSignUpResult)
-            {
-                reLogin();
+
+            private void onSuccess(AuthSignUpResult authSignUpResult) {
+                System.out.println(authSignUpResult);
+                if (authSignUpResult.isSignUpComplete()) {
+                    reLogin();
+                }
+
+
             }
 
-            private void reLogin()
-            {
+            private void reLogin() {
                 username = getEmail();
                 password = getPassWord();
 
@@ -82,20 +80,16 @@ public class EmailConfirmationActivity extends AppCompatActivity {
                         this::onError
                 );
             }
+
             private void onLoginSuccess(AuthSignInResult authSignInResult) {
 
-                if(!Amplify.Auth.getCurrentUser().getUserId().equals(""))
-                {
+                if (!Amplify.Auth.getCurrentUser().getUserId().equals("")) {
                     String userId = Amplify.Auth.getCurrentUser().getUserId();  //name = null userId="asfasdf"
 
                     name = getName();
 
 
-
-
-
                     User user = User.builder().name(name).id(userId).owner(userId).userImg("").build();
-
 
 
                     Amplify.DataStore.save(
@@ -105,46 +99,48 @@ public class EmailConfirmationActivity extends AppCompatActivity {
                     );
 
 
-
                 }
-
 
 
             }
 
             private void onError(DataStoreException e) {
-                runOnUiThread(()->
-                        {
-                            System.out.println(e.toString());
-                            Toast.makeText(getApplicationContext(), "DataStoreError", Toast.LENGTH_LONG).show();
-                        });
+                runOnUiThread(() ->
+                {
+                    System.out.println(e.toString());
+                    Toast.makeText(getApplicationContext(), "DataStoreError", Toast.LENGTH_LONG).show();
+                });
 
 
             }
 
-            private <T extends Model> void onSavedSuccess(DataStoreItemChange<T> tDataStoreItemChange)
-            {
+            private <T extends Model> void onSavedSuccess(DataStoreItemChange<T> tDataStoreItemChange) {
 
                 System.out.println(tDataStoreItemChange);
-                Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-                startActivity(intent);
+
+                if(tDataStoreItemChange.type().name().equals("CREATE"))
+                {
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
+                }
+
             }
-            private String getEmail(){
+
+            private String getEmail() {
                 return getIntent().getStringExtra("email");
             }
-            private String getPassWord(){
+
+            private String getPassWord() {
                 return getIntent().getStringExtra("password");
             }
-            private String getName(){
+
+            private String getName() {
                 return getIntent().getStringExtra("name");
             }
         });
 
 
-
     }
-
-
 
 
 }

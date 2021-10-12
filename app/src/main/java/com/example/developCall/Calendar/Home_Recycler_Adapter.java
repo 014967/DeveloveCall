@@ -43,7 +43,7 @@ public class Home_Recycler_Adapter extends RecyclerView.Adapter<Home_Recycler_Ad
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.home_recycler_item, parent, false);
-        Home_Recycler_Adapter.ViewHolder vh = new Home_Recycler_Adapter.ViewHolder(view);
+        ViewHolder vh = new ViewHolder(view);
         return vh;
     }
 
