@@ -21,6 +21,8 @@ public interface service {
     public Single<GraphQLResponse<PaginatedResult<Friend>>> getFriendName(String friendId);
     public GraphQLRequest<User> getSearchChat(String userId,String content);
     public Single<GraphQLResponse<User>> getdummy(String userId, String searchKey);
-
+    public GraphQLRequest<User> getMemo(String userId, String memo);
+    public Single<GraphQLResponse<User>> getMemoList(String userId, String searchKey);
+    public Single<GraphQLResponse<Friend>> getFriendDataList(String friendId);
 
 }

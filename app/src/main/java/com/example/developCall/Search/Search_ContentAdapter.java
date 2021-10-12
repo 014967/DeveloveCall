@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amplifyframework.datastore.generated.model.DetailChat;
 import com.bumptech.glide.Glide;
 import com.example.developCall.ChatActivity;
 import com.example.developCall.Object.Ob_SearchChat;
@@ -30,7 +29,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Search_ContentAdapter extends RecyclerView.Adapter<Search_ContentAdapter.ViewHolder>{
 
-    List<DetailChat> detailChatList = new ArrayList<>();
+
 
     List<Ob_SearchChat> searchChat = new ArrayList<>();
 
@@ -63,43 +62,60 @@ public class Search_ContentAdapter extends RecyclerView.Adapter<Search_ContentAd
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
 
-        simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
-        newDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
-
-        try {
-            date = simpleDateFormat.parse(searchChat.get(position).getDate());
-            newDate = newDateFormat.format(date);
-            holder.txt_date.setText(newDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
 
-        String END_POINT = "https://developcallfriendimg.s3.ap-northeast-2.amazonaws.com/";
-
-        if(searchChat.get(position).getFriendImg() !=null)
+        if(searchChat.get(position).getChatList().size() != 0)
         {
-            String url = END_POINT+searchChat.get(position).getFriendImg();
-            Glide.with(holder.itemView.getContext()).load(url).into(holder.friendImg);
-        }
-        holder.friendName.setText(searchChat.get(position).getFriendName());
-        holder.txt_content.setText(searchChat.get(position).getChatList().get(0).getContent());
 
-        String[] url = searchChat.get(position).getS3_url().split("/");
-        String httpUrl = "developcall-transcribe-output.s3.ap-northeast-2.amazonaws.com/" + url[3];
+            simpleDateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
+            newDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 
-        holder.detailLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ChatActivity.class);
-                intent.putExtra("chatId",searchChat.get(position).getChatList().get(0).getChat_Id());
-                intent.putExtra("name",searchChat.get(position).getFriendName());
-                intent.putExtra("friendId", searchChat.get(position).getFriendId());
-                intent.putExtra("url",httpUrl);
-                context.startActivity(intent);
-
+            try {
+                date = simpleDateFormat.parse(searchChat.get(position).getDate());
+                newDate = newDateFormat.format(date);
+                holder.txt_date.setText(newDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        });
+
+
+            String END_POINT = "https://developcallfriendimg.s3.ap-northeast-2.amazonaws.com/";
+
+            if(searchChat.get(position).getFriendImg() !=null)
+            {
+                String url = END_POINT+searchChat.get(position).getFriendImg();
+                Glide.with(holder.itemView.getContext()).load(url).into(holder.friendImg);
+            }
+
+            holder.friendName.setText(searchChat.get(position).getFriendName());
+
+            holder.txt_content.setText(searchChat.get(position).getChatList().get(0).getContent());
+
+
+
+            String[] url = searchChat.get(position).getS3_url().split("/");
+            String httpUrl = "developcall-transcribe-output.s3.ap-northeast-2.amazonaws.com/" + url[3];
+
+            holder.detailLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ChatActivity.class);
+                    intent.putExtra("chatId",searchChat.get(position).getChatList().get(0).getChat_Id());
+                    intent.putExtra("name",searchChat.get(position).getFriendName());
+                    intent.putExtra("friendId", searchChat.get(position).getFriendId());
+                    intent.putExtra("url",httpUrl);
+                    context.startActivity(intent);
+
+                }
+            });
+        }
+        else
+        {
+
+        }
+
+
+
 
 
     }

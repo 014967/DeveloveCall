@@ -53,6 +53,7 @@
         <entry key="app/src/main/res/layout/fragment_search__contact.xml" value="0.22567567567567567" />
         <entry key="app/src/main/res/layout/fragment_search__contect.xml" value="0.22567567567567567" />
         <entry key="app/src/main/res/layout/fragment_search__content.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_search__memo.xml" value="0.13500439753737906" />
         <entry key="app/src/main/res/layout/fragment_setting.xml" value="0.2269021739130435" />
         <entry key="app/src/main/res/layout/fragment_tab1.xml" value="0.240625" />
         <entry key="app/src/main/res/layout/fragment_tab2.xml" value="0.240625" />
@@ -64,6 +65,7 @@
         <entry key="app/src/main/res/layout/item_detail_chat.xml" value="0.20315315315315316" />
         <entry key="app/src/main/res/layout/item_friend.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_group.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/item_memo.xml" value="0.13500439753737906" />
         <entry key="app/src/main/res/layout/list_design.xml" value="0.2045045045045045" />
         <entry key="app/src/main/res/layout/listview_custom.xml" value="0.21693840579710144" />
         <entry key="app/src/main/res/layout/listview_popup.xml" value="0.21693840579710144" />

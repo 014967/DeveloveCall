@@ -61,7 +61,7 @@ public class Search_ContentFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        search_contentAdapter = new Search_ContentAdapter(getActivity(),searchList);
+        search_contentAdapter = new Search_ContentAdapter(getActivity(), searchList);
         recyclerView.setAdapter(search_contentAdapter);
         userId = Amplify.Auth.getCurrentUser().getUserId();
 
@@ -82,23 +82,29 @@ public class Search_ContentFragment extends Fragment {
                                 ob_searchChat.setS3_url(chat.getS3Url());
 
 
-
                                 chatList = new ArrayList<>();
 
 
-                                for (DetailChat detailChat : chat.getDetailChat()) {
+                                if (chat.getDetailChat().size() != 0) {
+                                    for (DetailChat detailChat : chat.getDetailChat()) {
 
-                                    Ob_DetailChat ob_detailChat = new Ob_DetailChat();
-                                    ob_detailChat.setId(detailChat.getId());
-                                    ob_detailChat.setContent(detailChat.getContent());
-                                    ob_detailChat.setSpk(detailChat.getSpeakerLabel());
-                                    ob_detailChat.setCreated_at(detailChat.getCreatedAt());
-                                    ob_detailChat.setChat_Id(detailChat.getChatId());
-                                    chatList.add(ob_detailChat);
+
+                                        Ob_DetailChat ob_detailChat = new Ob_DetailChat();
+                                        ob_detailChat.setId(detailChat.getId());
+                                        ob_detailChat.setContent(detailChat.getContent());
+                                        ob_detailChat.setSpk(detailChat.getSpeakerLabel());
+                                        ob_detailChat.setCreated_at(detailChat.getCreatedAt());
+                                        ob_detailChat.setChat_Id(detailChat.getChatId());
+                                        chatList.add(ob_detailChat);
+
+                                    }
+                                    ob_searchChat.setChatList(chatList);
+                                    searchList.add(ob_searchChat);
+
+                                } else {
+
 
                                 }
-                                ob_searchChat.setChatList(chatList);
-                                searchList.add(ob_searchChat);
 
 
                             }
@@ -126,8 +132,8 @@ public class Search_ContentFragment extends Fragment {
 
 
                             }
-                          //  search_contentAdapter.initList(searchList);
-                           // search_contentAdapter.notifyDataSetChanged();
+                            //  search_contentAdapter.initList(searchList);
+                            // search_contentAdapter.notifyDataSetChanged();
 
                         }
                         , error ->
@@ -135,12 +141,8 @@ public class Search_ContentFragment extends Fragment {
                         });
 
 
-
-
         return view;
     }
-
-
 
 
 }
