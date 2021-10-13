@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
             Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.MANAGE_OWN_CALLS,
             Manifest.permission.FOREGROUND_SERVICE,
+            Manifest.permission.CALL_PHONE,
 
 
 

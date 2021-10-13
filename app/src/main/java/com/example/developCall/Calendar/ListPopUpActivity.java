@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.developCall.FriendPopUp;
 import com.example.developCall.R;
 
 import java.text.SimpleDateFormat;
@@ -18,7 +20,8 @@ import java.util.Date;
 
 public class ListPopUpActivity extends Activity {
 
-    EditText title, name;
+    EditText title;
+    TextView name;
     Button rewrite, delete, close;
     String listtitle, listname;
     int listposition;
@@ -39,7 +42,7 @@ public class ListPopUpActivity extends Activity {
         listposition = intent.getIntExtra("position",0);
 
         title = (EditText)findViewById(R.id.listview_title);
-        name = (EditText)findViewById(R.id.listview_content);
+        name = (TextView) findViewById(R.id.listview_content);
         rewrite = (Button)findViewById(R.id.rewrite);
         delete = (Button)findViewById(R.id.delete);
         close = (Button)findViewById(R.id.close);
@@ -69,6 +72,15 @@ public class ListPopUpActivity extends Activity {
 
         title.setText(listtitle);
         name.setText(listname);
+
+
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FriendPopUp.class);
+                startActivityForResult(intent,1);
+            }
+        });
 
         rewrite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +127,27 @@ public class ListPopUpActivity extends Activity {
     public void onBackPressed() {
         //안드로이드 백버튼 막기
         return;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+
+        String friendName = (String) data.getExtras().get("friendName").toString();
+        name.setText(friendName);
+        System.out.println(friendName);
+
+
+
+
+
+
     }
 
 }

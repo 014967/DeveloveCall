@@ -111,13 +111,22 @@ public class Alarm_Fragment extends Fragment {
             onoff = bundle.getInt("onoff");
             check = bundle.getInt("check");
 
+            alarm_tempListData = new ArrayList<Alarm_ListData>();
+            alarm_listData = new ArrayList<Alarm_ListData>();
+            Alarm_ListData listData = new Alarm_ListData();
+            alarmTempName = alarmGetJsonString(alarmFileName);
+            alarmJsonParsing(alarmTempName);
+
+            alarm_listView = (ListView) view.findViewById(R.id.alarmlist);
+            alarm_listAdapter = new Alarm_ListAdapter(view.getContext(), alarm_listData);
+            alarm_listView.setAdapter(alarm_listAdapter);
+            setListViewHeightBasedOnItems(alarm_listView);
+
 
             if(check == 1){
-                alarm_listData = new ArrayList<Alarm_ListData>();
-                alarmTempName = alarmGetJsonString(alarmTempFileName);
-                alarmJsonParsing(alarmTempName);
+                /*alarm_listData = new ArrayList<Alarm_ListData>();
                 alarmTempName = alarmGetJsonString(alarmFileName);
-                alarmJsonParsing(alarmTempName);
+                alarmJsonParsing(alarmTempName);*/
 
                 alarm_listView = (ListView) view.findViewById(R.id.alarmlist);
                 alarm_listAdapter = new Alarm_ListAdapter(view.getContext(), alarm_listData);
@@ -138,11 +147,6 @@ public class Alarm_Fragment extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                alarm_listData = new ArrayList<Alarm_ListData>();
-                Alarm_ListData listData = new Alarm_ListData();
-                alarmTempName = alarmGetJsonString(alarmFileName);
-                alarmJsonParsing(alarmTempName);
 
 
                 ArrayList<Ob_lastCall> ob = new ArrayList<>();
@@ -240,7 +244,7 @@ public class Alarm_Fragment extends Fragment {
 
                                     //Toast.makeText(view.getContext(), tempDate + " ", Toast.LENGTH_LONG).show();
                                     Log.d("tag",tempDate + " ");
-                                    alarm_tempListData = AddData(alarm_listData, listData, alarmName, getDate, 0);
+                                    alarm_tempListData = AddData(alarm_tempListData, listData, alarmName, getDate, 0);
 
                                     /*if(alarmCount == 0) {
                                         alarm_manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+20000, pendingIntent);

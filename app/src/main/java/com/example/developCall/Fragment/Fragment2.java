@@ -119,6 +119,18 @@ public class Fragment2 extends Fragment {
         txt_category.setText(ob_friend.getGroupName());
 
 
+
+        txt_pf_number.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                String call_number = txt_pf_number.getText().toString();
+                callIntent.setData(Uri.parse("tel:"+call_number));
+                startActivity(callIntent);
+            }
+        });
+
+
         txt_category2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

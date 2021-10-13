@@ -100,6 +100,8 @@ public class Calendar_Fragment extends Fragment {
                                     e.printStackTrace();
                                 }
                             }
+
+                            listView.setAdapter(calendarAdapter);
                         }
                         else if (result.getResultCode() == 1){
                             Intent data = result.getData();
