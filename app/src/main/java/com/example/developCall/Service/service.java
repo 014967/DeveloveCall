@@ -3,6 +3,7 @@ package com.example.developCall.Service;
 import com.amplifyframework.api.graphql.GraphQLRequest;
 import com.amplifyframework.api.graphql.GraphQLResponse;
 import com.amplifyframework.api.graphql.PaginatedResult;
+import com.amplifyframework.datastore.DataStoreItemChange;
 import com.amplifyframework.datastore.generated.model.Chat;
 import com.amplifyframework.datastore.generated.model.DetailChat;
 import com.amplifyframework.datastore.generated.model.Friend;
@@ -24,5 +25,6 @@ public interface service {
     public GraphQLRequest<User> getMemo(String userId, String memo);
     public Single<GraphQLResponse<User>> getMemoList(String userId, String searchKey);
     public Single<GraphQLResponse<Friend>> getFriendDataList(String friendId);
+    public Single<DataStoreItemChange<User>> putUser(String userId, String name);
 
 }

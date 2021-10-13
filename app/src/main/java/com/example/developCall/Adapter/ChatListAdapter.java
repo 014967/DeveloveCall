@@ -139,6 +139,7 @@ public class ChatListAdapter extends BaseAdapter implements Filterable {
 
                 } else {
 
+                    indexArray = new ArrayList<>();
                     for (Ob_DetailChat ob : chatData) {
 
                         if (ob.getContent().contains(charString)) {

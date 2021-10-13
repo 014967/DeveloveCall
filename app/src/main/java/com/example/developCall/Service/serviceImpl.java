@@ -11,6 +11,7 @@ import com.amplifyframework.api.graphql.PaginatedResult;
 import com.amplifyframework.api.graphql.SimpleGraphQLRequest;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.DataStoreItemChange;
 import com.amplifyframework.datastore.generated.model.Chat;
 import com.amplifyframework.datastore.generated.model.DetailChat;
 import com.amplifyframework.datastore.generated.model.Friend;
@@ -614,6 +615,25 @@ public class serviceImpl implements service {
 
         });
 
+    }
+
+    public Single<DataStoreItemChange<User>> putUser(String userId, String name) {
+        return Single.create(singleSubscriber ->
+        {
+            User user = User.builder().name(name).id(userId).owner(userId).userImg("").build();
+            Amplify.DataStore.save(
+                    user,
+                    response ->
+                    {
+                        singleSubscriber.onSuccess(response);
+                    }
+                    , error ->
+                    {
+                    }
+            );
+
+
+        });
     }
 
 

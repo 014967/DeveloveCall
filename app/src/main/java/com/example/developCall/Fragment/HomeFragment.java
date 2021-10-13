@@ -414,25 +414,28 @@ public class HomeFragment extends Fragment {
                 recycler_data.clear();
             }
 
-            for(int i=0; i<dataArray.length(); i++)
-            {
-                if(recyleCount < 5) {
-                    JSONObject dataObject = dataArray.getJSONObject(i);
 
-                    Home_Recycler_Data data = new Home_Recycler_Data();
+                for(int i=0; i<dataArray.length(); i++)
+                {
+                    if(recyleCount < 5) {
+                        JSONObject dataObject = dataArray.getJSONObject(i);
 
-                    data.setRecycleName(dataObject.getString("title"));
-                    data.setRecycleTarget(dataObject.getString("name"));
-                    try {
-                        data.setRecycleTime(dataObject.getString("time"));
-                    } catch (JSONException e) {
-                        data.setRecycleTime("Testing");
+                        Home_Recycler_Data data = new Home_Recycler_Data();
+
+                        data.setRecycleName(dataObject.getString("title"));
+                        data.setRecycleTarget(dataObject.getString("name"));
+                        try {
+                            data.setRecycleTime(dataObject.getString("time"));
+                        } catch (JSONException e) {
+                            data.setRecycleTime("Testing");
+                        }
+
+                        recycler_data.add(data);
                     }
-
-                    recycler_data.add(data);
+                    recyleCount++;
                 }
-                recyleCount++;
-            }
+
+
         }catch (JSONException e) {
             e.printStackTrace();
         }
@@ -473,15 +476,22 @@ public class HomeFragment extends Fragment {
         JSONObject obj = new JSONObject();
         try {
             JSONArray jArray = new JSONArray();//배열이 필요할때
-            for (int i = 0; i < dataList.size(); i++)//배열
-            {
-                JSONObject sObject = new JSONObject();//배열 내에 들어갈 json
-                sObject.put("profile", dataList.get(i).getProfile());
-                sObject.put("name", dataList.get(i).getName());
-                sObject.put("content", dataList.get(i).getContent());
-                jArray.put(sObject);
+            try{
+                for (int i = 0; i < dataList.size(); i++)//배열
+                {
+                    JSONObject sObject = new JSONObject();//배열 내에 들어갈 json
+                    sObject.put("profile", dataList.get(i).getProfile());
+                    sObject.put("name", dataList.get(i).getName());
+                    sObject.put("content", dataList.get(i).getContent());
+                    jArray.put(sObject);
+                }
+                obj.put("Alarm", jArray);//배열을 넣음
             }
-            obj.put("Alarm", jArray);//배열을 넣음
+            catch(NullPointerException e )
+            {
+                e.printStackTrace();
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

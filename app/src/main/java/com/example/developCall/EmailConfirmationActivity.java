@@ -16,7 +16,10 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.model.Model;
 import com.amplifyframework.datastore.DataStoreException;
 import com.amplifyframework.datastore.DataStoreItemChange;
-import com.amplifyframework.datastore.generated.model.User;
+import com.example.developCall.Service.serviceImpl;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class EmailConfirmationActivity extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class EmailConfirmationActivity extends AppCompatActivity {
     String password;
     String name;
 
+    com.example.developCall.Service.service service = new serviceImpl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,20 +87,43 @@ public class EmailConfirmationActivity extends AppCompatActivity {
 
             private void onLoginSuccess(AuthSignInResult authSignInResult) {
 
-                if (!Amplify.Auth.getCurrentUser().getUserId().equals("")) {
+
+                if (authSignInResult.isSignInComplete() && !Amplify.Auth.getCurrentUser().getUserId().equals("")) {
                     String userId = Amplify.Auth.getCurrentUser().getUserId();  //name = null userId="asfasdf"
 
                     name = getName();
 
 
-                    User user = User.builder().name(name).id(userId).owner(userId).userImg("").build();
 
+                  //  User user = User.builder().name(name).id(userId).owner(userId).userImg("").build();
 
-                    Amplify.DataStore.save(
-                            user,
-                            this::onSavedSuccess,
-                            this::onError
-                    );
+                    service.putUser(userId,name)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    data ->
+                                    {
+                                        if(data.type().name().equals("CREATE"))
+                                        {
+                                            Intent intent = new Intent(getApplicationContext(), AssginCompleteActivity.class);
+                                            startActivity(intent);
+                                        }
+
+                                    }, err ->
+                                    {
+                                        runOnUiThread(() ->
+                                        {
+                                            System.out.println(err.toString());
+                                            Toast.makeText(getApplicationContext(), "DataStoreError", Toast.LENGTH_LONG).show();
+                                        });
+                                    }
+                            );
+
+//                    Amplify.DataStore.save(
+//                            user,
+//                            this::onSavedSuccess,
+//                            this::onError
+//                    );
 
 
                 }
@@ -105,12 +132,12 @@ public class EmailConfirmationActivity extends AppCompatActivity {
             }
 
             private void onError(DataStoreException e) {
+
                 runOnUiThread(() ->
                 {
                     System.out.println(e.toString());
                     Toast.makeText(getApplicationContext(), "DataStoreError", Toast.LENGTH_LONG).show();
                 });
-
 
             }
 

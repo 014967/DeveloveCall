@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class AssignActivity extends AppCompatActivity {
     EditText sign_Name;
     AuthSignUpOptions options;
 
+    TextView tv_Account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +34,18 @@ public class AssignActivity extends AppCompatActivity {
         sign_Email = (EditText)findViewById(R.id.sign_Email);
         sign_Password = (EditText)findViewById(R.id.sign_PassWord);
         sign_Name = (EditText)findViewById(R.id.sign_Name);
+        tv_Account = (TextView)findViewById(R.id.tv_Account);
 
 
         btn_Join = (Button)findViewById(R.id.btn_Join);
 
+
+        tv_Account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         btn_Join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

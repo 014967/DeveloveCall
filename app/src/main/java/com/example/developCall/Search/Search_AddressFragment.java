@@ -26,6 +26,9 @@ public class Search_AddressFragment extends Fragment {
     FragmentTransaction fragmentTransaction;
 
     Context activity;
+    Search_ContactFragment contactFragment;
+    Search_ContentFragment contentFragment;
+    Search_MemoFragment memoFragment;
 
     @Nullable
     @Override
@@ -35,9 +38,9 @@ public class Search_AddressFragment extends Fragment {
         searchKey =(String) getArguments().getSerializable("searchKey");
         activity = (Context) getArguments().getSerializable("rootActivity");
         TabLayout tabs = (TabLayout) view.findViewById(R.id.tab);
-        Search_ContactFragment contactFragment = new Search_ContactFragment(searchKey);
-        Search_ContentFragment contentFragment = new Search_ContentFragment(searchKey);
-        Search_MemoFragment memoFragment = new Search_MemoFragment(searchKey);
+        contactFragment = new Search_ContactFragment(searchKey);
+        contentFragment = new Search_ContentFragment(searchKey);
+        memoFragment = new Search_MemoFragment(searchKey);
 
 
 
@@ -58,15 +61,18 @@ public class Search_AddressFragment extends Fragment {
                 int position = tab.getPosition();
                 fragmentTransaction = fragmentManager.beginTransaction();
                 if (position == 0) {
+                    contactFragment = new Search_ContactFragment(searchKey);
                     contactFragment.setArguments(d);
+
                     fragmentTransaction.replace(R.id.search_tabframe, contactFragment).commit();
 
                 } else if (position == 1) {
 
+                    contentFragment = new Search_ContentFragment(searchKey);
                     fragmentTransaction.replace(R.id.search_tabframe, contentFragment).commit();
 
                 } else if (position == 2) {
-
+                    memoFragment = new Search_MemoFragment(searchKey);
                     fragmentTransaction.replace(R.id.search_tabframe, memoFragment).commit();
                 }
             }

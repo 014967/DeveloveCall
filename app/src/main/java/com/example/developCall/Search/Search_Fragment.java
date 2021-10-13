@@ -106,7 +106,7 @@ public class Search_Fragment extends Fragment implements Search_HistoryFragment.
                         }
                     }
                     check = 1;
-
+                    search_addressFragment = new Search_AddressFragment();
                     searchTransaction = searchFragment.beginTransaction();
                     search_addressFragment.setArguments(d);
                     searchTransaction.replace(R.id.search_frame, search_addressFragment).commitAllowingStateLoss(); //만약 작성이 된다면 search_addressFragment로 이동

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +31,7 @@ public class Search_ContentFragment extends Fragment {
     String searchKey;
     String userId;
     RecyclerView recyclerView;
+    ProgressBar progressBar;
     Search_ContentAdapter search_contentAdapter;
 
     com.example.developCall.Service.service service = new serviceImpl();
@@ -57,6 +59,8 @@ public class Search_ContentFragment extends Fragment {
 
 
         searchList = new ArrayList<>();
+
+        progressBar = view.findViewById(R.id.progressBar2);
 
 
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -122,6 +126,7 @@ public class Search_ContentFragment extends Fragment {
                                                         ob_searchChat.setFriendName(friend.getName());
                                                         ob_searchChat.setGroupId(friend.getGroupId());
                                                     }
+                                                    progressBar.setVisibility(View.GONE);
                                                     search_contentAdapter.initList(searchList);
                                                     search_contentAdapter.notifyDataSetChanged();
 

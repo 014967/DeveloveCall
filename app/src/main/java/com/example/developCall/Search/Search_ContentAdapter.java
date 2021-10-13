@@ -42,6 +42,8 @@ public class Search_ContentAdapter extends RecyclerView.Adapter<Search_ContentAd
     String newDate;
 
     Context context;
+
+    String imgUrl;
     public Search_ContentAdapter(Context context, List<Ob_SearchChat> searchChat) {
         this.searchChat = searchChat;
         this.context = context;
@@ -81,10 +83,12 @@ public class Search_ContentAdapter extends RecyclerView.Adapter<Search_ContentAd
 
             String END_POINT = "https://developcallfriendimg.s3.ap-northeast-2.amazonaws.com/";
 
+
             if(searchChat.get(position).getFriendImg() !=null)
             {
                 String url = END_POINT+searchChat.get(position).getFriendImg();
                 Glide.with(holder.itemView.getContext()).load(url).into(holder.friendImg);
+                imgUrl = url;
             }
 
             holder.friendName.setText(searchChat.get(position).getFriendName());
@@ -104,6 +108,7 @@ public class Search_ContentAdapter extends RecyclerView.Adapter<Search_ContentAd
                     intent.putExtra("name",searchChat.get(position).getFriendName());
                     intent.putExtra("friendId", searchChat.get(position).getFriendId());
                     intent.putExtra("url",httpUrl);
+                    intent.putExtra("imgUrl", imgUrl);
                     context.startActivity(intent);
 
                 }

@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +24,7 @@ import androidx.appcompat.widget.SearchView;
 import com.amazonaws.mobile.auth.core.internal.util.ThreadUtils;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.DetailChat;
+import com.bumptech.glide.Glide;
 import com.example.developCall.Adapter.ChatListAdapter;
 import com.example.developCall.Adapter.ChatListAdapter.OnTextClickListener;
 import com.example.developCall.Object.AmazonTranscription;
@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -99,6 +100,9 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
     int index = 0;
 
 
+    CircleImageView img_profile;
+
+
     service sv = new serviceImpl();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -114,6 +118,7 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
         chatListAdapter = new ChatListAdapter(this, chatList, this::onTextClick);
         chatListView.setAdapter(chatListAdapter);
 
+        img_profile = findViewById(R.id.img_profile_01);
         btn_addMemo = findViewById(R.id.addMemo);
         nonechat = findViewById(R.id.noneText);
         btn_back = findViewById(R.id.btn_back);
@@ -133,8 +138,17 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
 
         String url = getIntent().getStringExtra("url");
 
+        String imgUrl = getIntent().getStringExtra("imgUrl");
 
-        String expression = "(developcall-transcribe-output.s3.ap-northeast-2.amazonaws.com/)(.*)(.m4a.json)";
+
+
+        if(imgUrl !=null)
+        {
+            Glide.with(getApplicationContext()).load(imgUrl).into(img_profile);
+        }
+
+
+        String expression = "(developcall-transcribe-output.s3.ap-northeast-2.amazonaws.com/)(.*)(.)(.*?)(.json)";
         Pattern pattern = Pattern.compile(expression);
         Matcher matcher = pattern.matcher(url);
 

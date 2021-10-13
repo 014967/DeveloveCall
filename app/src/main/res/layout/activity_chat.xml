@@ -98,8 +98,10 @@
         <ImageButton
             android:id="@+id/up"
             android:text="up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_down"
+            android:background="@color/white"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             >
 
 
@@ -107,8 +109,10 @@
         <ImageButton
             android:text="down"
             android:id="@+id/down"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:background="@color/white"
+            android:src="@drawable/ic_arrow_up"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
 
         </ImageButton>
 
