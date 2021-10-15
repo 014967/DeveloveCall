@@ -23,15 +23,16 @@ public class ListAdapter extends BaseAdapter {
     LayoutInflater mLayoutInflater = null;
     ArrayList<Ob_Chat> sample;
     String username;
+    String friendImg;
 
 
 
-
-    public ListAdapter(Context context, ArrayList<Ob_Chat> data, String username) {
+    public ListAdapter(Context context, ArrayList<Ob_Chat> data, String username, String friendImg) {
         mContext = context;
         sample = data;
         mLayoutInflater = LayoutInflater.from(mContext);
         this.username = username;
+        this.friendImg = friendImg;
     }
 
     @Override
@@ -76,6 +77,7 @@ public class ListAdapter extends BaseAdapter {
                 in.putExtra("name",username);
                 in.putExtra("friendId", sample.get(position).getFriendID());
                 in.putExtra("url",httpUrl);
+                in.putExtra("imgUrl", friendImg);
                 mContext.startActivity(in);
 
             }

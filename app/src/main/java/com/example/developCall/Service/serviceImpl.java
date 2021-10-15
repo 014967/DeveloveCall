@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,46 @@ import io.reactivex.rxjava3.core.Single;
 
 
 public class serviceImpl implements service {
+
+
+    public static String getDateDay(String date, String dateType, Calendar cal) throws Exception {
+
+        String day = "";
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat(dateType);
+        Date nDate = dateFormat.parse(date);
+
+        cal.setTime(nDate);
+
+        int dayNum = cal.get(Calendar.DAY_OF_WEEK);
+
+        switch (dayNum) {
+            case 1:
+                day = "일요일";
+                break;
+            case 2:
+                day = "월요일";
+                break;
+            case 3:
+                day = "화요일";
+                break;
+            case 4:
+                day = "수요일";
+                break;
+            case 5:
+                day = "목요일";
+                break;
+            case 6:
+                day = "금요일";
+                break;
+            case 7:
+                day = "토요일";
+                break;
+
+        }
+
+        return day;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String findScheduleFormat(String str) {
@@ -39,10 +80,14 @@ public class serviceImpl implements service {
 
         String scheduleStr = "";
 
+        Map<String, String> weekMap = new HashMap<>();
+
+        String[] today = {"오늘", "있다가", "조금 있다가", "조금있다가"};
         String[] tmrw = {"내일"};
         String[] dayTmrw = {"모레", "내일 모레", "이틀 뒤", "이틀 후"};
         String[] thrDayNow = {"글피", "모레 모레", "삼일 뒤", "삼일 후"};
 
+        String[] weekDay = {"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"};
         int chk1 = 0, chk2 = 0, chk3 = 0, chk4 = 0; //달,시,일,분
 
         String[] aftrNmths = {"달 후", "달 뒤"};
@@ -68,6 +113,43 @@ public class serviceImpl implements service {
 
         if (tmp > last) last = tmp;
 
+        for (String form : today) { // 오늘
+            if ((tmp = str.indexOf(form)) != -1) {
+                if (tmp > last) last = tmp;
+                ret = sdf.format(cal.getTime());
+            }
+        }
+
+        for (int i = 0; i < 7; i++) {  // 요일 매치
+            if (i == 0) {
+
+            } else {
+                cal.add(cal.DATE, 1);
+            }
+
+            String date = sdf.format(cal.getTime());
+            String dateType = "yyyy/MM/dd HH:mm";
+
+            try {
+                String s = getDateDay(date, dateType, cal);
+                weekMap.put(s, date);
+                //System.out.println(date + " " + s);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        for (String form : weekDay) {  //요일을 어떻게 할
+            if ((tmp = str.indexOf(form)) != -1) {
+                if (tmp > last) last = tmp;
+
+                String k = weekMap.get(form);
+
+                //ret = sdf.format(cal.getTime());
+                ret = k;
+            }
+
+        }
         for (String form : tmrw) {
             if ((tmp = str.indexOf(form)) != -1) {
                 if (tmp > last) last = tmp;
@@ -224,7 +306,8 @@ public class serviceImpl implements service {
         if (tmp > scdIdx) scdIdx = tmp;
         tmp = str.indexOf("시 반에", last) + 4;
         if (tmp > scdIdx) scdIdx = tmp;
-        return ret + str.substring(scdIdx);
+        //return ret + str.substring(scdIdx);
+        return ret + "_" + str;
     }
 
 
@@ -516,6 +599,11 @@ public class serviceImpl implements service {
 
     }
 
+//    public GraphQLRequest<Chat> copyChat(String chatId)
+//    {
+//        String document = "query getChat("
+//    }
+
 
     public GraphQLRequest<User> getSearchChat(String userId, String content) {
         String document = "query getUser($id: ID! , $data : String!) { "
@@ -631,6 +719,22 @@ public class serviceImpl implements service {
                     {
                     }
             );
+
+
+        });
+    }
+
+    public Single<DataStoreItemChange<Chat>> putMemo(Chat c, String st_memo) {
+        return Single.create(singleSubscriber ->
+        {
+            Amplify.DataStore.save(c,
+                    response ->
+                    {
+                        singleSubscriber.onSuccess(response);
+                    }, error ->
+                    {
+
+                    });
 
 
         });

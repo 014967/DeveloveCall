@@ -23,6 +23,8 @@ import com.example.developCall.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 public class TabFragment2 extends Fragment {
@@ -67,6 +69,27 @@ public class TabFragment2 extends Fragment {
                 {
                     try {
                         profileDataList = addChatList(response, friendId);
+                        Collections.sort(profileDataList, new Comparator<Ob_Chat>() {
+                            @Override
+                            public int compare(Ob_Chat lDate, Ob_Chat rDate) {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+                                Date leftDate = null;
+                                Date rightDate = null;
+
+
+                                try {
+                                    leftDate = dateFormat.parse(lDate.getDate());
+                                    rightDate = dateFormat.parse(rDate.getDate());
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                return leftDate.getTime() > rightDate.getTime() ? -1 : (leftDate.getTime() < rightDate.getTime()) ? 1 : 0;
+                            }
+                        });
+
+
                         ThreadUtils.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

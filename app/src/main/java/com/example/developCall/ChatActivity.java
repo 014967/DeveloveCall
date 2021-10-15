@@ -113,10 +113,6 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
 
         loading = findViewById(R.id.loading);
 
-        userId = Amplify.Auth.getCurrentUser().getUserId();
-        chatListView = findViewById(R.id.chatListView);
-        chatListAdapter = new ChatListAdapter(this, chatList, this::onTextClick);
-        chatListView.setAdapter(chatListAdapter);
 
         img_profile = findViewById(R.id.img_profile_01);
         btn_addMemo = findViewById(R.id.addMemo);
@@ -142,9 +138,11 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
 
 
 
-        if(imgUrl !=null)
-        {
-            Glide.with(getApplicationContext()).load(imgUrl).into(img_profile);
+
+
+        if (imgUrl != null) {
+            String END_POINT = "https://developcallfriendimg.s3.ap-northeast-2.amazonaws.com/";
+            Glide.with(getApplicationContext()).load(END_POINT+imgUrl).into(img_profile);
         }
 
 
@@ -202,6 +200,7 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
 
                         //startActivity(intent);
                         Intent intent = new Intent(getApplicationContext(), CalendarMenuActivity.class);
+                        intent.putExtra("username", username.getText().toString());
                         startActivity(intent);
 
                         return false;
@@ -235,6 +234,14 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
         });
 
 
+        userId = Amplify.Auth.getCurrentUser().getUserId();
+        chatListView = findViewById(R.id.chatListView);
+
+        String[] intentArray  = {tv_date.getText().toString(), userId, username.getText().toString(),chat_Id, friendId};
+        chatListAdapter = new ChatListAdapter(this, chatList, this::onTextClick, intentArray);
+        chatListView.setAdapter(chatListAdapter);
+
+
         sv.getChatList(chat_Id).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data ->
@@ -248,6 +255,7 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
                         ob_detailChat.setCreated_at(chat.getCreatedAt());
                         chatList.add(ob_detailChat);
                     }
+
                     chatListAdapter.passData(chatList);
                     chatListAdapter.notifyDataSetChanged();
 
@@ -269,12 +277,8 @@ public class ChatActivity extends AppCompatActivity implements OnTextClickListen
                 int max = data.size();
 
 
-
-
                 chatListView.setSelection(0);
                 chatListView.setSelection(data.get(index).getIndex());
-
-
 
 
                 btn_up.setOnClickListener(new View.OnClickListener() {

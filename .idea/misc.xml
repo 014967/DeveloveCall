@@ -6,14 +6,22 @@
         <entry key="../../../layout/custom_preview.xml" value="0.22135416666666666" />
         <entry key="..\:/Android Project/21_hf012-0915-finalmerge/app/src/main/res/layout/search_history_list.xml" value="0.2957427536231884" />
         <entry key="..\:/Android Project/21_hf012-0915-finalmerge/app/src/main/res/layout/search_result.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/ic_bell.xml" value="0.25675675675675674" />
+        <entry key="app/src/main/res/drawable-v24/ic_chat.xml" value="0.25675675675675674" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.25675675675675674" />
         <entry key="app/src/main/res/drawable-v24/nav_menu_selector_color.xml" value="0.32135416666666666" />
         <entry key="app/src/main/res/drawable-v24/round_rec_bg.xml" value="0.21846846846846846" />
         <entry key="app/src/main/res/drawable-v24/round_rec_fill.xml" value="0.2756756756756757" />
+        <entry key="app/src/main/res/drawable-v24/round_search.xml" value="0.25675675675675674" />
+        <entry key="app/src/main/res/drawable-v24/round_tag_fill.xml" value="0.25675675675675674" />
         <entry key="app/src/main/res/drawable/assign_complete_bg.xml" value="0.2713541666666667" />
         <entry key="app/src/main/res/drawable/ic_arrow_bottom.xml" value="0.331981981981982" />
         <entry key="app/src/main/res/drawable/ic_arrow_down.xml" value="0.331981981981982" />
         <entry key="app/src/main/res/drawable/ic_arrow_top.xml" value="0.331981981981982" />
         <entry key="app/src/main/res/drawable/ic_arrow_up.xml" value="0.331981981981982" />
+        <entry key="app/src/main/res/drawable/ic_call.xml" value="0.25675675675675674" />
+        <entry key="app/src/main/res/drawable/ic_heart.xml" value="0.25675675675675674" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.25675675675675674" />
         <entry key="app/src/main/res/drawable/ic_navi_alarm_line.xml" value="0.3875" />
         <entry key="app/src/main/res/drawable/ic_toggle_2_brown.xml" value="0.331981981981982" />
         <entry key="app/src/main/res/drawable/round_rec_fill.xml" value="0.2756756756756757" />

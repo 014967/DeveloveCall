@@ -236,7 +236,7 @@ public class Fragment2 extends Fragment {
 
 
 
-        fragment1 = new TabFragment1(userId, ob_friend.getId());
+        fragment1 = new TabFragment1(userId, ob_friend.getId(), ob_friend.getFriendImg());
         fragment2 = new TabFragment2(userId, ob_friend.getId());
         fragment3 = new TabFragment3();
 

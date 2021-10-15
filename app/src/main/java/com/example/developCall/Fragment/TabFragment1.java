@@ -23,6 +23,8 @@ import com.example.developCall.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 
@@ -32,6 +34,7 @@ public class TabFragment1 extends Fragment {
 
     String userId;
     String friendId;
+    String friendImg;
 
 
 
@@ -39,9 +42,10 @@ public class TabFragment1 extends Fragment {
     public TabFragment1()
     {}
 
-    public TabFragment1(String userId, String friendId) {
+    public TabFragment1(String userId, String friendId, String friendImg) {
         this.userId = userId;
         this.friendId = friendId;
+        this.friendImg = friendImg;
     }
 
     @Nullable
@@ -52,9 +56,11 @@ public class TabFragment1 extends Fragment {
 
         this.InitializeProfileData();
 
+
+
         String username =  getArguments().getSerializable("name").toString();
         ListView listView = (ListView) view.findViewById(R.id.listView1);
-        myAdapter = new ListAdapter(getActivity(), profileDataList, username);
+        myAdapter = new ListAdapter(getActivity(), profileDataList, username, friendImg);
 
         listView.setAdapter(myAdapter);
 
@@ -72,6 +78,27 @@ public class TabFragment1 extends Fragment {
                 {
                     try {
                         profileDataList = addChatList(response, friendId);
+
+                        Collections.sort(profileDataList, new Comparator<Ob_Chat>() {
+                            @Override
+                            public int compare(Ob_Chat lDate, Ob_Chat rDate) {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+                                Date leftDate = null;
+                                Date rightDate = null;
+
+
+                                try {
+                                    leftDate = dateFormat.parse(lDate.getDate());
+                                    rightDate = dateFormat.parse(rDate.getDate());
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                return leftDate.getTime() > rightDate.getTime() ? -1 : (leftDate.getTime() < rightDate.getTime()) ? 1 : 0;
+                            }
+                        });
+
                         ThreadUtils.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

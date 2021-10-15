@@ -44,7 +44,8 @@ public class CalendarMenuActivity extends Activity {
     ArrayList<CalendarData> dataList;
     Boolean flag;
     String exTime;
-
+    String filterDate;
+    String userName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +58,9 @@ public class CalendarMenuActivity extends Activity {
         btn_save = findViewById(R.id.btn_save);
 
 
+        userName= getIntent().getStringExtra("username");
+
+
         Date d = calendar.getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
         String time = simpleDateFormat.format(d);
@@ -65,6 +69,25 @@ public class CalendarMenuActivity extends Activity {
         String time2 = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
         datetime = time + " / " + time2;
         tv_date.setText(datetime);
+
+
+
+        try{
+            filterDate = getIntent().getStringExtra("filterDate");
+            if(!filterDate.equals(null))
+            {
+                datetime = filterDate + " / " + time2;
+                tv_date.setText(datetime);
+            }
+
+
+        }
+        catch(NullPointerException e )
+        {
+            //e.printStackTrace();
+
+        }
+
 
 
         sw_alarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -83,7 +106,7 @@ public class CalendarMenuActivity extends Activity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (et_date.getText().toString() == "") {
+                if (et_date.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "제목을 입력해주세요", Toast.LENGTH_LONG).show();
                     return;
                 } else {
@@ -118,7 +141,7 @@ public class CalendarMenuActivity extends Activity {
                         jsonParsing(calJson);
                         CalendarData data = new CalendarData();
                         data.setTitle(et_date.getText().toString());
-                        data.setName("더미");
+                        data.setName(userName);
                         data.setTime(exTime);
                         dataList.add(data);
                         try {
@@ -218,7 +241,7 @@ public class CalendarMenuActivity extends Activity {
             dataList= new ArrayList<>();
             CalendarData data = new CalendarData();
             data.setTitle(et_date.getText().toString());
-            data.setName("더미");
+            data.setName(userName);
             data.setTime(exTime);
             dataList.add(data);
             try{

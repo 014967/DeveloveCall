@@ -26,5 +26,6 @@ public interface service {
     public Single<GraphQLResponse<User>> getMemoList(String userId, String searchKey);
     public Single<GraphQLResponse<Friend>> getFriendDataList(String friendId);
     public Single<DataStoreItemChange<User>> putUser(String userId, String name);
+    public Single<DataStoreItemChange<Chat>> putMemo(Chat c, String st_memo);
 
 }
