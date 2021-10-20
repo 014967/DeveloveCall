@@ -27,6 +27,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -36,21 +38,34 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.model.Model;
 import com.amplifyframework.datastore.DataStoreException;
 import com.amplifyframework.datastore.DataStoreItemChange;
+import com.amplifyframework.datastore.generated.model.Chat;
 import com.amplifyframework.datastore.generated.model.Friend;
 import com.amplifyframework.datastore.generated.model.Group;
 import com.amplifyframework.datastore.generated.model.User;
 import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 import com.bumptech.glide.Glide;
+import com.example.developCall.Adapter.KeyWordAdapter;
 import com.example.developCall.Alarm.AlarmSet_Fragment;
 import com.example.developCall.LoginActivity;
+import com.example.developCall.Object.Ob_Chat;
 import com.example.developCall.Object.Ob_Friend;
 import com.example.developCall.R;
+import com.example.developCall.Service.service;
+import com.example.developCall.Service.serviceImpl;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -61,6 +76,9 @@ public class Fragment2 extends Fragment {
     Fragment fragment1, fragment2, fragment3;
     TextView logout;
     Ob_Friend ob_friend;
+
+    RecyclerView keyWordView;
+    KeyWordAdapter keyWordAdapter;
 
 
     TextView txt_pf_name;
@@ -89,7 +107,11 @@ public class Fragment2 extends Fragment {
 
     AlarmSet_Fragment alarmSet_fragment;
 
+
+    List<Ob_Chat> keyWordList = new ArrayList<>();
     String userId;
+    String friendId;
+    service service = new serviceImpl();
 
     @Nullable
     @Override
@@ -102,7 +124,7 @@ public class Fragment2 extends Fragment {
 
         fragmentManager = getActivity().getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
-        alarmSet_fragment  = new AlarmSet_Fragment();
+        alarmSet_fragment = new AlarmSet_Fragment();
 
 
         txt_pf_name = view.findViewById(R.id.txt_pf_name);
@@ -112,11 +134,19 @@ public class Fragment2 extends Fragment {
         tv_edit = view.findViewById(R.id.tv_edit);
         img_profile = view.findViewById(R.id.img_profile);
 
+        keyWordView = view.findViewById(R.id.keyWordView);
+
+        keyWordAdapter = new KeyWordAdapter();
+        keyWordView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        keyWordView.setAdapter(keyWordAdapter);
 
         ob_friend = (Ob_Friend) getArguments().getSerializable("ob_friend");
+        friendId = ob_friend.getId();
         txt_pf_name.setText(ob_friend.getName());
         txt_pf_number.setText(ob_friend.getNumber());
         txt_category.setText(ob_friend.getGroupName());
+
+
 
 
 
@@ -125,7 +155,7 @@ public class Fragment2 extends Fragment {
             public void onClick(View v) {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 String call_number = txt_pf_number.getText().toString();
-                callIntent.setData(Uri.parse("tel:"+call_number));
+                callIntent.setData(Uri.parse("tel:" + call_number));
                 startActivity(callIntent);
             }
         });
@@ -138,6 +168,53 @@ public class Fragment2 extends Fragment {
                 transaction.replace(R.id.home_frame, alarmSet_fragment).commit();
             }
         });
+
+
+        service.getKeyWordList(userId, friendId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(data ->
+                {
+                    System.out.println(data);
+
+                    keyWordList = new ArrayList<>();
+                    for(Chat chat : data.getData().getChat())
+                    {
+                        Ob_Chat ob_chat = new Ob_Chat();
+                        ob_chat.setId(chat.getId());
+                        ob_chat.setFriendID(chat.getFriendId());
+                        ob_chat.setKeyWord(chat.getKeyWord());
+                        ob_chat.setMemo(chat.getMemo());
+                        ob_chat.setS3_url(chat.getS3Url());
+                        ob_chat.setDate(chat.getDate());
+                        keyWordList.add(ob_chat);
+
+
+                    }
+                    Collections.sort(keyWordList, new Comparator<Ob_Chat>() {
+                        @Override
+                        public int compare(Ob_Chat o1, Ob_Chat o2) {
+                            SimpleDateFormat beforeFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
+                            Date o1Date = null;
+                            Date o2Date = null;
+
+                            try{
+                                o1Date = beforeFormat.parse(o1.getDate());
+                                o2Date = beforeFormat.parse(o2.getDate());
+                            }catch (ParseException e )
+                            {
+                                e.printStackTrace();
+                            }
+
+                            return o1Date.getTime() > o2Date.getTime() ? -1 : o1Date.getTime() < o2Date.getTime() ? 1 : 0;
+
+                        }
+                    });
+                    keyWordAdapter.initList(keyWordList);
+                    keyWordAdapter.notifyDataSetChanged();
+                }, error ->
+                {
+                });
 
         if (ob_friend.getFriendImg() != null) {
             String END_POINT = "https://developcallfriendimg.s3.ap-northeast-2.amazonaws.com/";
@@ -167,6 +244,7 @@ public class Fragment2 extends Fragment {
                     }
                 });
 
+
                 btn_edit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -175,24 +253,20 @@ public class Fragment2 extends Fragment {
                                 ModelQuery.list(User.class, User.ID.contains(userId)),
                                 response ->
                                 {
-                                    for(User user : response.getData())
-                                    {
-                                        for(Group group : user.getGroup())
-                                        {
-                                            for(Friend f : group.getFriend())
-                                            {
-                                                if(f.getNumber().equals(ob_friend.getNumber()))
-                                                {
+                                    for (User user : response.getData()) {
+                                        for (Group group : user.getGroup()) {
+                                            for (Friend f : group.getFriend()) {
+                                                if (f.getNumber().equals(ob_friend.getNumber())) {
                                                     Friend newF = f.copyOfBuilder().name(name).build();
                                                     Amplify.DataStore.save(newF
-                                                    ,this::onSavedSuccess
-                                                    ,this::onError);
+                                                            , this::onSavedSuccess
+                                                            , this::onError);
                                                 }
                                             }
                                         }
                                     }
 
-                                },error ->
+                                }, error ->
                                 {
 
                                 }
@@ -215,6 +289,7 @@ public class Fragment2 extends Fragment {
 
                         /// 업데이트는 되었으나 response에서 업데이트가 된것을 반영하지 않음.
                     }
+
                     private void onError(DataStoreException e) {
                         getActivity().runOnUiThread(() ->
                                 Toast.makeText(getActivity(), "이름수정 에러", Toast.LENGTH_LONG).show());
@@ -235,20 +310,17 @@ public class Fragment2 extends Fragment {
         });
 
 
-
         fragment1 = new TabFragment1(userId, ob_friend.getId(), ob_friend.getFriendImg());
         fragment2 = new TabFragment2(userId, ob_friend.getId());
         fragment3 = new TabFragment3();
-
-
 
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("name", ob_friend.getName());
         fragment1.setArguments(bundle);
         fragment2.setArguments(bundle);
-        transaction.replace(R.id.tabFrame,fragment1).commit();
-       // requireActivity().getSupportFragmentManager().beginTransaction().add(R.id.tabFrame, fragment1).commit();
+        transaction.replace(R.id.tabFrame, fragment1).commit();
+        // requireActivity().getSupportFragmentManager().beginTransaction().add(R.id.tabFrame, fragment1).commit();
 
         TabLayout tabs = (TabLayout) view.findViewById(R.id.tab);
 

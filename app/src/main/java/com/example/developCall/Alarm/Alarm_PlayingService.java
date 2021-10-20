@@ -102,6 +102,7 @@ public class Alarm_PlayingService extends Service {
         String alarmTempFileName = alarmGetJsonString("alarmTempFileName");
         alarmAddJsonParsing(alarmTempFileName);
 
+
         for(int i = 0; i < dateContent.length; i++){
             dateInt[i] = Long.parseLong(dateContent[i]);
             defer = dateInt[i] - nowDateInt;

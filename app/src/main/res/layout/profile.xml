@@ -114,48 +114,10 @@
 
 
                     <!--태그 리스트-->
-
-                    <TextView
-                        android:id="@+id/profile_tag_01"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="28dp"
-                        android:background="@drawable/round_profile_tag_bg"
-                        android:paddingLeft="15dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="15dp"
-                        android:paddingBottom="5dp"
-                        android:text="과제"
-                        android:textColor="@color/profile_tag" />
-
-                    <TextView
-                        android:id="@+id/profile_tag_02"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:background="@drawable/round_profile_tag_bg"
-                        android:paddingLeft="15dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="15dp"
-                        android:paddingBottom="5dp"
-                        android:text="떡볶이"
-                        android:textColor="@color/profile_tag" />
-
-                    <TextView
-                        android:id="@+id/profile_tag_03"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:background="@drawable/rouund_profile_old_tag_bg"
-                        android:paddingLeft="15dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="15dp"
-                        android:paddingBottom="5dp"
-                        android:text="취업"
-                        android:textColor="@color/profile_old_tag" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/keyWordView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
                 </LinearLayout>
 
 

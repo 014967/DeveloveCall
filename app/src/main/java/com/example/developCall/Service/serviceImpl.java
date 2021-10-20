@@ -599,11 +599,60 @@ public class serviceImpl implements service {
 
     }
 
-//    public GraphQLRequest<Chat> copyChat(String chatId)
-//    {
-//        String document = "query getChat("
-//    }
+    public GraphQLRequest<User> queryKeyWordList(String userId, String friendId) {
+        String document = "query getUser($id: ID! , $friendId : ID!) { "
+                + "getUser(id: $id) { "
+                + "chat(filter: {friendID: {contains: $friendId}}) { "
+                + "items { "
+                + "keyWord "
+                + "id "
+                + "memo "
+                + "s3_url "
+                + "userID "
+                + "date "
+                + "friendID "
+                + "} "
+                + "} "
+                + "} "
+                + "} ";
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("id", userId);
+        variables.put("friendId", friendId);
+        return new SimpleGraphQLRequest<>(
+                document,
+                variables,
+                User.class,
+                new GsonVariablesSerializer());
 
+
+    }
+
+    public GraphQLRequest<User> queryFirstKeyWord(String userId)
+    {
+        String document = "query getUser($id : ID!) { "
+                + "getUser(id: $id) { "
+                + "chat { "
+                + "items { "
+                + "keyWord "
+                + "id "
+                + "memo "
+                + "s3_url "
+                + "userID "
+                + "date "
+                + "friendID "
+                + "} "
+                + "} "
+                + "} "
+                + "} ";
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("id", userId);
+        return new SimpleGraphQLRequest<>(
+                document,
+                variables,
+                User.class,
+                new GsonVariablesSerializer());
+
+    }
 
     public GraphQLRequest<User> getSearchChat(String userId, String content) {
         String document = "query getUser($id: ID! , $data : String!) { "
@@ -674,6 +723,38 @@ public class serviceImpl implements service {
         });
     }
 
+    public Single<GraphQLResponse<User>> getKeyWordList(String userId, String friendId) {
+        return Single.create(singleSubscriber ->
+        {
+            Amplify.API.query(queryKeyWordList(userId, friendId)
+                    , response ->
+                    {
+                        singleSubscriber.onSuccess(response);
+                    },
+                    error ->
+                    {
+                        System.out.println(error);
+                    });
+
+
+        });
+    }
+
+    public Single<GraphQLResponse<User>> getFirstKeyWord(String userId) {
+        return Single.create(singleSubscriber -> {
+            Amplify.API.query(queryFirstKeyWord(userId)
+                    ,response ->
+                    {
+                        singleSubscriber.onSuccess(response);
+                    }
+                    ,error ->
+                    {
+
+                    }
+            );
+        });
+    }
+
     public Single<GraphQLResponse<User>> getMemoList(String userId, String searchKey) {
         return Single.create(singleSubscriber ->
         {
@@ -704,6 +785,8 @@ public class serviceImpl implements service {
         });
 
     }
+
+
 
     public Single<DataStoreItemChange<User>> putUser(String userId, String name) {
         return Single.create(singleSubscriber ->

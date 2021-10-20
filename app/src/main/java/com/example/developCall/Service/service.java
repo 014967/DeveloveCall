@@ -27,5 +27,8 @@ public interface service {
     public Single<GraphQLResponse<Friend>> getFriendDataList(String friendId);
     public Single<DataStoreItemChange<User>> putUser(String userId, String name);
     public Single<DataStoreItemChange<Chat>> putMemo(Chat c, String st_memo);
+    public Single<GraphQLResponse<User>> getKeyWordList(String userId, String friendId);
+    public GraphQLRequest<User> queryKeyWordList(String userId, String friendId);
+    public Single<GraphQLResponse<User>> getFirstKeyWord(String userId);
 
 }
