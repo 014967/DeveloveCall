@@ -78,6 +78,7 @@
         <entry key="app/src/main/res/layout/item_detail_chat.xml" value="0.20315315315315316" />
         <entry key="app/src/main/res/layout/item_friend.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_group.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/item_keyword.xml" value="0.10092592592592593" />
         <entry key="app/src/main/res/layout/item_memo.xml" value="0.13500439753737906" />
         <entry key="app/src/main/res/layout/list_design.xml" value="0.2045045045045045" />
         <entry key="app/src/main/res/layout/listview_custom.xml" value="0.21693840579710144" />

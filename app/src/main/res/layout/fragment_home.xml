@@ -208,7 +208,6 @@
                     android:layout_below="@+id/txt_recent_keyword"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="35dp"
-                    android:text="공부"
                     android:textSize="20dp" />
             </RelativeLayout>
         </LinearLayout>

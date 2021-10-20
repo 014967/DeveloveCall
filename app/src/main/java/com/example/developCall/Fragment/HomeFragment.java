@@ -26,6 +26,7 @@ import com.amplifyframework.api.graphql.GraphQLResponse;
 import com.amplifyframework.api.graphql.PaginatedResult;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Chat;
 import com.amplifyframework.datastore.generated.model.Friend;
 import com.amplifyframework.datastore.generated.model.Group;
 import com.amplifyframework.datastore.generated.model.User;
@@ -34,6 +35,7 @@ import com.example.developCall.Alarm.Alarm_ListData;
 import com.example.developCall.Alarm.Alarm_Receiver;
 import com.example.developCall.Calendar.Home_Recycler_Adapter;
 import com.example.developCall.Calendar.Home_Recycler_Data;
+import com.example.developCall.Object.Ob_Chat;
 import com.example.developCall.Object.Ob_Friend;
 import com.example.developCall.Object.Ob_lastCall;
 import com.example.developCall.R;
@@ -48,9 +50,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -62,6 +67,8 @@ public class HomeFragment extends Fragment {
 
     ImageView imageView;
     TextView txt_user_name;
+    TextView data_keyword;
+
     String username;
     String userId;
 
@@ -75,7 +82,6 @@ public class HomeFragment extends Fragment {
     ArrayList<Alarm_ListData> alarm_tempListData;
     String alarmName;
     int timeresult, cycleresult, calendarresult, alarmCount;
-
 
 
     RecyclerView recyclerView;
@@ -106,10 +112,10 @@ public class HomeFragment extends Fragment {
         searchbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Intent searchIntent = new Intent(getActivity().getApplicationContext(), SearchActivity.class);
+                // Intent searchIntent = new Intent(getActivity().getApplicationContext(), SearchActivity.class);
                 //startActivity(searchIntent);
 
-                 search_fragment= new Search_Fragment();
+                search_fragment = new Search_Fragment();
                 BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
                 bottomNavigationView.setVisibility(View.INVISIBLE);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_frame, search_fragment).addToBackStack(null).commit();
@@ -118,13 +124,58 @@ public class HomeFragment extends Fragment {
         });
 
 
-
         txt_user_name = view.findViewById(R.id.txt_user_name);
         home_rv_friend = view.findViewById(R.id.home_rv_friend);
+        data_keyword = view.findViewById(R.id.data_keyword);
+
         userId = Amplify.Auth.getCurrentUser().getUserId();
         friendListArray = new ArrayList<>();
         friendListAdapter = new Home_FriendListAdapter(friendListArray);
 
+
+        service.getFirstKeyWord(userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(data ->
+                        {
+
+                            List<Ob_Chat> firstKeyList = new ArrayList<>();
+                            for(Chat chat : data.getData().getChat())
+                            {
+                                Ob_Chat ob_chat = new Ob_Chat();
+                                ob_chat.setId(chat.getId());
+                                ob_chat.setFriendID(chat.getFriendId());
+                                ob_chat.setKeyWord(chat.getKeyWord());
+                                ob_chat.setMemo(chat.getMemo());
+                                ob_chat.setS3_url(chat.getS3Url());
+                                ob_chat.setDate(chat.getDate());
+                                firstKeyList.add(ob_chat);
+                            }
+                            Collections.sort(firstKeyList, new Comparator<Ob_Chat>() {
+                                @Override
+                                public int compare(Ob_Chat o1, Ob_Chat o2) {
+                                    SimpleDateFormat beforeFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
+                                    Date o1Date = null;
+                                    Date o2Date = null;
+
+                                    try{
+                                        o1Date = beforeFormat.parse(o1.getDate());
+                                        o2Date = beforeFormat.parse(o2.getDate());
+                                    }catch (ParseException e )
+                                    {
+                                        e.printStackTrace();
+                                    }
+
+                                    return o1Date.getTime() > o2Date.getTime() ? -1 : o1Date.getTime() < o2Date.getTime() ? 1 : 0;
+
+                                }
+                            });
+                            data_keyword.setText(firstKeyList.get(0).getKeyWord());
+                        }
+                        , error ->
+                        {
+
+                        });
 
 
         final Intent alarm_intent = new Intent(view.getContext(), Alarm_Receiver.class);
@@ -144,10 +195,10 @@ public class HomeFragment extends Fragment {
         firstInit();
         recyleCount = 0;
 
-        for(int i = dayInt; i < 31; i++){
+        for (int i = dayInt; i < 31; i++) {
             String tempDate = Integer.toString(todayInt);
             String tempName = tempDate + ".json";
-            Log.d("tag",tempName);
+            Log.d("tag", tempName);
             String cycleTempName = cycleGetJsonString(tempName);
             cycleJsonParsing(cycleTempName);
             todayInt++;
@@ -159,20 +210,16 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), RecyclerView.HORIZONTAL, false));
 
 
-
         service.getUserName(userId).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data ->
                 {
 
-                    for(User user : data.getData())
-                    {
+                    for (User user : data.getData()) {
                         username = user.getName();
                         txt_user_name.setText(username);
-                        for(Group group : user.getGroup())
-                        {
-                            for(Friend friend: group.getFriend())
-                            {
+                        for (Group group : user.getGroup()) {
+                            for (Friend friend : group.getFriend()) {
                                 Ob_Friend ob_friend = new Ob_Friend();
 
                                 ob_friend.setId(friend.getId());
@@ -205,7 +252,6 @@ public class HomeFragment extends Fragment {
                 });
 
 
-
         alarm_listData = new ArrayList<Alarm_ListData>();
         Alarm_ListData listData = new Alarm_ListData();
         String alarmTempName = alarmGetJsonString("AlarmSetting.json");
@@ -231,12 +277,10 @@ public class HomeFragment extends Fragment {
 
                     String getDate = "";
 
-                    for(alarmCount = 0; alarmCount < ob.size(); alarmCount++){
-                        if(ob.get(alarmCount).getLastCall() == null)
-                        {
+                    for (alarmCount = 0; alarmCount < ob.size(); alarmCount++) {
+                        if (ob.get(alarmCount).getLastCall() == null) {
 
-                        }else
-                        {
+                        } else {
                             String tempName = ob.get(alarmCount).getFriendName();
                             String tempCall = ob.get(alarmCount).getLastCall();
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(view.getContext(), tempName.charAt(0), alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -249,39 +293,37 @@ public class HomeFragment extends Fragment {
                                 String getMonth = monthFormat.format(date);
                                 String getDay = dayFormat.format(date);*/
 
-                            String getMonth = tempCall.substring(2,4);
-                            String getDay = tempCall.substring(0,2);
-                            int addMonth = Integer.parseInt(getMonth)+cycleresult-1;
-                            int addOneWeekMonth = Integer.parseInt(getMonth)-1;
-                            int addTwoWeekMonth = Integer.parseInt(getMonth)-1;
+                            String getMonth = tempCall.substring(2, 4);
+                            String getDay = tempCall.substring(0, 2);
+                            int addMonth = Integer.parseInt(getMonth) + cycleresult - 1;
+                            int addOneWeekMonth = Integer.parseInt(getMonth) - 1;
+                            int addTwoWeekMonth = Integer.parseInt(getMonth) - 1;
                             int addOneWeek = Integer.parseInt(getDay) + 7;
                             int addTwoWeek = Integer.parseInt(getDay) + 14;
-                            if(getMonth == "01" || getMonth == "03" || getMonth == "05" || getMonth == "07" || getMonth == "08" || getMonth == "10" || getMonth == "12"){
-                                if(addOneWeek > 31){
+                            if (getMonth == "01" || getMonth == "03" || getMonth == "05" || getMonth == "07" || getMonth == "08" || getMonth == "10" || getMonth == "12") {
+                                if (addOneWeek > 31) {
                                     addOneWeek = addOneWeek - 31;
                                     addOneWeekMonth++;
                                 }
-                                if(addTwoWeek > 31){
+                                if (addTwoWeek > 31) {
                                     addTwoWeek = addTwoWeek - 31;
                                     addTwoWeekMonth++;
                                 }
-                            }
-                            else if(getMonth == "02"){
-                                if(addOneWeek > 28){
+                            } else if (getMonth == "02") {
+                                if (addOneWeek > 28) {
                                     addOneWeek = addOneWeek - 28;
                                     addOneWeekMonth++;
                                 }
-                                if(addTwoWeek > 28){
+                                if (addTwoWeek > 28) {
                                     addTwoWeek = addTwoWeek - 28;
                                     addTwoWeekMonth++;
                                 }
-                            }
-                            else{
-                                if(addOneWeek > 30){
+                            } else {
+                                if (addOneWeek > 30) {
                                     addOneWeek = addOneWeek - 30;
                                     addOneWeekMonth++;
                                 }
-                                if(addTwoWeek > 30){
+                                if (addTwoWeek > 30) {
                                     addTwoWeek = addTwoWeek - 30;
                                     addTwoWeekMonth++;
                                 }
@@ -300,6 +342,10 @@ public class HomeFragment extends Fragment {
                             alarmCalendar.set(Calendar.HOUR_OF_DAY, timeresult);
                             alarmCalendar.set(Calendar.MINUTE, 0);
                             alarmCalendar.set(Calendar.SECOND, 0);
+
+                            SimpleDateFormat getDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+                            Date tempDate = new Date(alarmCalendar.getTimeInMillis());
+                            getDate = getDateFormat.format(tempDate);
 
                             alarm_tempListData = AddData(alarm_listData, listData, alarmName, getDate, 0);
 
@@ -327,7 +373,7 @@ public class HomeFragment extends Fragment {
 
         home_rv_friend.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         home_rv_friend.setAdapter(friendListAdapter);
-       // setUserAndFriend(userId);
+        // setUserAndFriend(userId);
 
 
         return view;
@@ -382,8 +428,7 @@ public class HomeFragment extends Fragment {
         return friendListArray;
     }
 
-    private String cycleGetJsonString(String fileName)
-    {
+    private String cycleGetJsonString(String fileName) {
         String json = "";
         try {
             InputStream calendarStream = getActivity().openFileInput(fileName);
@@ -394,59 +439,55 @@ public class HomeFragment extends Fragment {
             calendarStream.close();
 
             json = new String(buffer, "UTF-8");
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
 
         return json;
     }
 
-    private void cycleJsonParsing(String json)
-    {
-        try{
+    private void cycleJsonParsing(String json) {
+        try {
             JSONObject jsonObject = new JSONObject(json);
 
             JSONArray dataArray = jsonObject.getJSONArray("Calendar");
 
-            if(recyleCount == 0) {
+            if (recyleCount == 0) {
                 recycler_data.clear();
             }
 
 
-                for(int i=0; i<dataArray.length(); i++)
-                {
-                    if(recyleCount < 5) {
-                        JSONObject dataObject = dataArray.getJSONObject(i);
+            for (int i = 0; i < dataArray.length(); i++) {
+                if (recyleCount < 5) {
+                    JSONObject dataObject = dataArray.getJSONObject(i);
 
-                        Home_Recycler_Data data = new Home_Recycler_Data();
+                    Home_Recycler_Data data = new Home_Recycler_Data();
 
-                        data.setRecycleName(dataObject.getString("title"));
-                        data.setRecycleTarget(dataObject.getString("name"));
-                        try {
-                            data.setRecycleTime(dataObject.getString("time"));
-                        } catch (JSONException e) {
-                            data.setRecycleTime("Testing");
-                        }
-
-                        recycler_data.add(data);
+                    data.setRecycleName(dataObject.getString("title"));
+                    data.setRecycleTarget(dataObject.getString("name"));
+                    try {
+                        data.setRecycleTime(dataObject.getString("time"));
+                    } catch (JSONException e) {
+                        data.setRecycleTime("Testing");
                     }
-                    recyleCount++;
+
+                    recycler_data.add(data);
                 }
+                recyleCount++;
+            }
 
 
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public void firstInit(){
+    public void firstInit() {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recycler_data = new ArrayList<>();
     }
 
-    public void addItem(String recycle_Title, String recycle_Target, String recycle_Time){
+    public void addItem(String recycle_Title, String recycle_Target, String recycle_Time) {
         Home_Recycler_Data item = new Home_Recycler_Data();
 
         item.setRecycleName(recycle_Title);
@@ -456,8 +497,8 @@ public class HomeFragment extends Fragment {
         recycler_data.add(item);
     }
 
-    public ArrayList<Alarm_ListData> AddData(ArrayList<Alarm_ListData> alarm_addListData, Alarm_ListData listData, String Name, String Content, int Profile){
-        if(alarmCount == 0){
+    public ArrayList<Alarm_ListData> AddData(ArrayList<Alarm_ListData> alarm_addListData, Alarm_ListData listData, String Name, String Content, int Profile) {
+        if (alarmCount == 0) {
             alarm_addListData.clear();
         }
         listData.setProfile(Profile);
@@ -470,13 +511,11 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-
     public void writeFile(String fileName, ArrayList<Alarm_ListData> dataList) throws IOException {
         JSONObject obj = new JSONObject();
         try {
             JSONArray jArray = new JSONArray();//배열이 필요할때
-            try{
+            try {
                 for (int i = 0; i < dataList.size(); i++)//배열
                 {
                     JSONObject sObject = new JSONObject();//배열 내에 들어갈 json
@@ -486,9 +525,7 @@ public class HomeFragment extends Fragment {
                     jArray.put(sObject);
                 }
                 obj.put("Alarm", jArray);//배열을 넣음
-            }
-            catch(NullPointerException e )
-            {
+            } catch (NullPointerException e) {
                 e.printStackTrace();
             }
 
@@ -505,8 +542,7 @@ public class HomeFragment extends Fragment {
         calendarWriter.close();
     }
 
-    private String alarmGetJsonString(String fileName)
-    {
+    private String alarmGetJsonString(String fileName) {
         String json = "";
         try {
 
@@ -519,18 +555,15 @@ public class HomeFragment extends Fragment {
             calendarStream.close();
 
             json = new String(buffer, "UTF-8");
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
 
         return json;
     }
 
-    private void alarmJsonParsing(String json)
-    {
-        try{
+    private void alarmJsonParsing(String json) {
+        try {
             JSONObject jsonObject = new JSONObject(json);
 
             JSONArray dataArray = jsonObject.getJSONArray("AlarmSetting");
@@ -540,15 +573,14 @@ public class HomeFragment extends Fragment {
             cycleresult = dataObject.getInt("cycle");
             calendarresult = dataObject.getInt("calendar");
 
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
 
-    private void alarmListJsonParsing(String json)
-    {
-        try{
+    private void alarmListJsonParsing(String json) {
+        try {
             JSONObject jsonObject = new JSONObject(json);
 
             JSONArray dataArray = jsonObject.getJSONArray("Alarm");
@@ -559,8 +591,7 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            for(int i=0; i<dataArray.length(); i++)
-            {
+            for (int i = 0; i < dataArray.length(); i++) {
                 JSONObject dataObject = dataArray.getJSONObject(i);
 
                 Alarm_ListData data = new Alarm_ListData();
@@ -573,7 +604,7 @@ public class HomeFragment extends Fragment {
                 alarm_listData.add(data);
 
             }
-        }catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
