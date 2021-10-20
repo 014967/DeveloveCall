@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:background="@color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="메모 만들기"
+            android:textColor="@color/dark_black" />
+
+        <Button
+            android:id="@+id/btn_save"
+
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="#00FF0000"
+            android:text="완료"
+            android:textColor="@color/dark_black"
+
+            />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:ems="25"
+        android:hint="메모 제목"
+
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@null"
+
+        android:textColorHint="@color/dark_gray"
+        android:inputType="text" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/text_gray"/>
+
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="40dp"
+        android:background="@null"
+        android:textColorHint="@color/dark_gray"
+        android:ems="10"
+        android:hint="내용"
+        android:inputType="text|textMultiLine"
+        android:maxLines="4"
+        android:minHeight="48dp"
+        android:textColor="@color/black"
+        android:textSize="15dp" />
+
+
+</LinearLayout>

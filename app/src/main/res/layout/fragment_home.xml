@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragment.MainFragment"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/home_frame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginBottom="20dp"
+        android:paddingTop="15dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/bg_line_heart">
+
+            <TextView
+                android:id="@+id/txt_hello"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/notosans_regular"
+                android:text="안녕하세요,"
+                android:textColor="@color/dark_black"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/txt_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_hello"
+                android:layout_marginLeft="21dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/notosans_bold"
+
+                android:text=""
+
+                android:textSize="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_hello"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="15dp"
+                android:layout_toRightOf="@+id/txt_user_name"
+                android:fontFamily="@font/notosans_light"
+                android:text="님"
+                android:textSize="30dp" />
+
+            <ImageView
+                android:id="@+id/img_btn_search_white"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="35dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_search_white" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_person_gray"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="연락처"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="13dp"
+                    android:textColor="@color/dark_black"
+                    />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_rv_friend"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                >
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/img_heart"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_heart"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_toRightOf="@+id/img_heart"
+                android:text="미션 달성도"
+                android:textColor="@color/dark_black"
+
+                android:textSize="13dp" />
+
+            <ImageView
+                android:layout_width="160dp"
+                android:layout_height="200dp"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/graph_5" />
+            <TextView
+                android:id="@+id/txt_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                android:layout_marginTop="80dp"
+                android:layout_centerHorizontal="true"
+                android:textSize="13dp"
+                />
+            <TextView
+                android:id="@+id/total_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="75%"
+                android:layout_marginTop="2dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/txt_total"
+                android:textSize="27dp"
+                />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="200dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/round_rec_fill"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:id="@+id/txt_recent_keyword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="최근 키워드"
+                    android:layout_marginTop="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="14dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#"
+                    android:layout_marginTop="35dp"
+                    android:layout_below="@+id/txt_recent_keyword"
+                    android:layout_toLeftOf="@+id/data_keyword"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/data_keyword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_recent_keyword"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="35dp"
+                    android:textSize="20dp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_person_gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:text="다가오는 일정"
+                android:textColor="@color/dark_black"
+
+                android:textSize="13dp" />
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scrollbars="horizontal"/>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

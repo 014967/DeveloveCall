@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
+
+            <Button
+                android:id="@+id/alarmcalendar1"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="10분 전"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmcalendar2"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="30분 전"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmcalendar3"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="1시간 전"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmcalendar4"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="2시간 전"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmcalendar5"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="3시간 전"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmcalendar6"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="6시간 전"/>
+            <View style="@style/Divider_list_white" />
+
+            <Button
+                android:id="@+id/alarmcalendar7"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:background="#00FF0000"
+                android:textColor="@color/white"
+                android:text="하루 전"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

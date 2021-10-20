@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/alarmsetback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right"
+            android:background="#00FF0000"
+            android:text="back" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="알림 설정"
+            android:textColor="@color/dark_gray"
+            android:textSize="15dp" />
+
+
+        <Button
+            android:id="@+id/setfinish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right"
+            android:layout_marginRight="8dp"
+            android:background="#00FF0000"
+            android:text="저장"
+            android:textColor="@color/dark_gray"
+            android:textSize="15dp" />
+
+    </RelativeLayout>
+
+    <!--회색 구분선-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Switch
+            android:id="@+id/pushonoff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="푸시 알림 설정"
+            android:checked="true"
+            android:textSize="18dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="20dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알람 시간 설정"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="2dp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/alarmtimeset"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="40dp"
+            android:gravity="right"
+            android:text="15:00"
+            android:textSize="18dp"
+            android:textColor="@color/pink_orange"
+            android:background="#00FF0000"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="연락 추천 주기"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="2dp"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/alarmcycle"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@color/pink_orange"
+            android:background="#00FF0000"
+            android:layout_marginRight="40dp"
+            android:gravity="right"
+            android:text="1개월 마다"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일정 알림 시간"
+            android:textSize="18dp"
+            android:textColor="@color/black"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="2dp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/calendartimeset"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textColor="@color/pink_orange"
+            android:background="#00FF0000"
+            android:layout_marginRight="40dp"
+            android:gravity="right"
+            android:text="1시간 전"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

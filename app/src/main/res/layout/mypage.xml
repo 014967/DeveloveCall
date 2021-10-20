@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HomeActivity"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="MY PAGE"
+            android:textSize="15dp" />
+
+    </RelativeLayout>
+
+    <!--회색 구분선-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_color"/>
+
+
+
+    <!--인간관계현황 타이틀-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/txt_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/notosans_bold"
+
+                android:textColor="@color/dark_black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="님"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/notosans_light"
+                android:textSize="20dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/notosans_bold"
+                android:text="의 인간관계 현황"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+
+
+        <!--인간관계현황 emoji-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="90dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:gravity="center">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_profile_01"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:src="@drawable/emoji_good" />
+                <TextView
+                    android:id="@+id/txt_profile_name_01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12명"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="12dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="90dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:gravity="center">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_profile_02"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:src="@drawable/emoji_soso" />
+                <TextView
+                    android:id="@+id/txt_profile_name_02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12명"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="12dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="90dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:gravity="center">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_profile_03"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:src="@drawable/emoji_sad" />
+                <TextView
+                    android:id="@+id/txt_profile_name_03"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12명"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="12dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!--미션 달성도-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="59dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:background="@drawable/round_rec_fill_gray">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="20dp"
+                android:textColor="@color/dark_black"
+
+                android:text="미션 달성도"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="23dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/pink_orange"
+                android:textSize="20dp"
+                android:text="75%"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="17dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/line_color"/>
+    </LinearLayout>
+
+    <!--회색 구분선-->
+
+
+
+
+
+    <!--공지사항 등-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="100dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/txt_notice"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+
+                android:src="@drawable/ic_notifi"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/dark_black"
+
+                android:text="공지사항"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/FAQ"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/dark_black"
+
+            android:text="FAQ"/>
+        <TextView
+            android:id="@+id/onebyone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/dark_black"
+            android:text="1:1 문의"/>
+        <TextView
+            android:id="@+id/alarmSetting"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/dark_black"
+
+            android:gravity="center_vertical"
+            android:text="알림 설정"/>
+
+
+        <TextView
+            android:id="@+id/tv_logout"
+            android:layout_width="match_parent"
+
+            android:layout_height="50dp"
+
+            android:gravity="center_vertical"
+            android:text="로그 아웃"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

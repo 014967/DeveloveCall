@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.Fragment1"
+    android:background="@color/home_keyword">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="270dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title"
+                    android:textColor="#8EC5B4"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/jalnan"
+                    android:textSize="22dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/round_search">
+
+                    <TextView
+                        android:id="@+id/txt_search"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:text="Search keyword"
+                        android:textColor="@color/line_color"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dp" />
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+                    <ImageView
+                        android:id="@+id/btn_add"
+                        android:layout_width="25dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:layout_gravity="right"
+                        android:src="@drawable/ic_search" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Favorite"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="15dp"
+                    android:textSize="13dp"
+                    android:textColor="@color/light_gray"
+                    />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/ex1"
+                            android:background="@drawable/home_profile_round"/>
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_profile02"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/img_google" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_profile03"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/img_google" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_profile04"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/img_google" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_profile05"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/img_google" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/img_profile06"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginLeft="30dp"
+                            android:src="@drawable/img_google" />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+
+
+            </LinearLayout>
+            <!--구분선-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color"/>
+
+            <CalendarView
+                android:id="@+id/h_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="10dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center">
+                <!--Low-->
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="5dp"
+                    android:background="@drawable/fc_high"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="High AF"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="12dp"/>
+
+                <!--Medium-->
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/fc_medium"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Medium"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="12dp"/>
+
+                <!--High-->
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="5dp"
+                    android:layout_marginLeft="20dp"
+
+                    android:background="@drawable/fc_low"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Low"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="12dp"/>
+
+            </LinearLayout>
+
+            <!--구분선-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color"/>
+
+            <!--최근키워드-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                >
+
+                <TextView
+                    android:id="@+id/h_rc_keyword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recent Keyword"
+                    android:textColor="@color/light_gray"
+                    android:textSize="13dp" />
+                <TextView
+                    android:id="@+id/txt_keyword_01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#공부"
+                    android:textSize="15dp"
+                    android:textColor="@color/green"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/h_rc_keyword"
+                    />
+                <TextView
+                    android:id="@+id/txt_keyword_02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#야구"
+                    android:textSize="15dp"
+                    android:textColor="@color/green"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+
+                    android:layout_toRightOf="@+id/txt_keyword_01"
+                    android:layout_below="@+id/h_rc_keyword"
+                    />
+                <TextView
+                    android:id="@+id/txt_keyword_03"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#과제"
+                    android:textSize="15dp"
+                    android:textColor="@color/green"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+
+                    android:layout_toRightOf="@+id/txt_keyword_02"
+                    android:layout_below="@+id/h_rc_keyword"
+                    />
+            </RelativeLayout>
+
+
+
+            <!--구분선-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color"/>
+            <!--최근통화-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                >
+
+                <TextView
+                    android:id="@+id/h_rc_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recent Call"
+                    android:textSize="13dp"
+                    android:textColor="@color/light_gray"
+                    />
+                <TextView
+                    android:id="@+id/txt_h_bf_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3달 전"
+                    android:textSize="15dp"
+                    android:textColor="@color/green"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/h_rc_call"
+                    />
+                <TextView
+                    android:id="@+id/txt_h_t_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="통화 시간 30분"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="50dp"
+                    android:textColor="@color/light_gray"
+                    android:layout_below="@+id/h_rc_call"
+                    />
+            </RelativeLayout>
+
+
+            <!--구분선-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color"/>
+
+            <!--최근통화-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                >
+
+                <TextView
+                    android:id="@+id/h_recommend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Recommend"
+                    android:textSize="13dp"
+                    android:textColor="@color/light_gray"
+                    />
+                <TextView
+                    android:id="@+id/txt_h_rc_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="홍길동"
+                    android:textSize="15dp"
+                    android:textColor="@color/green"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/h_recommend"
+                    />
+                <TextView
+                    android:id="@+id/txt_h_rc_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="일주일 내에 통화해보세요."
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="50dp"
+                    android:textColor="@color/light_gray"
+                    android:layout_below="@+id/h_recommend"
+                    />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

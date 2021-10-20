@@ -14,10 +14,19 @@ public class Speaker { //speaker Label
         this.segments = segments;
     }
 
+    private int speakers;
+
+    public void setSpeakers(int speakers) {
+        this.speakers = speakers;
+    }
+
+    public int getSpeakers() {
+        return speakers;
+    }
 
 
     @Override
     public String toString() {
-        return ""+segments;
+        return "" + segments;
     }
 }

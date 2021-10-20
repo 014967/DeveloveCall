@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.GroupListFragment">
+
+    <RelativeLayout
+        android:id="@+id/group_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/group_progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/cb_checkAllGroup"
+                    android:layout_width="wrap_content"
+
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"/>
+
+                <SearchView
+                    android:id="@+id/group_searchFriend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toLeftOf="@+id/group_title"
+                    android:layout_weight="3" />
+                <TextView
+                    android:id="@+id/group_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="그룹"
+                    android:textSize="15dp" />
+
+                <Button
+                    android:id="@+id/btn_addGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="#00FF0000"
+                    android:text="추가"
+                    android:textColor="#C7C7C7"
+                    android:textSize="15dp" />
+
+            </RelativeLayout>
+
+            <!--회색 구분선-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/line_color"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/group_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</FrameLayout>

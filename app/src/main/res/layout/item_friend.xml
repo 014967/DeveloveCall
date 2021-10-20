@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:id="@+id/rv_friendItem"
+
+   >
+
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_profile_03"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/ic_baseline_person_24" />
+
+        <TextView
+            android:id="@+id/search_result_adrress_name_01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/img_profile_03"
+            android:layout_marginTop="25dp"
+            android:text=""
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/lastConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#999999"
+            android:layout_below="@+id/search_result_adrress_name_01"
+            android:layout_toRightOf="@+id/img_profile_03"
+            android:text="" />
+
+
+
+
+
+</RelativeLayout>

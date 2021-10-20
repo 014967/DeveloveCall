@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="147dp"
+    android:orientation="horizontal"
+    >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/Profile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/ic_baseline_person_24" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="25dp"
+        android:orientation="vertical"
+        android:layout_marginRight="25dp"
+
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/Name"
+            android:text="[류정욱]님에게 연락해보세요!"/>
+
+
+        <TextView
+            android:id="@+id/Content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="#999999"
+            android:text="류정욱님과 연락을 안 한 지 6개월이 넘었습니다. 지난 대화 키워드는 #야구 입니다."/>
+        <TextView
+            android:id="@+id/lastConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/text_gray"
+            android:text="1시간 전"/>
+
+
+        <!--회색 구분선-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="18dp"
+            android:background="@color/text_gray"/>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

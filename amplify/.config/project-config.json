@@ -2,7 +2,7 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "DevelopCall",
+  "projectName": "dev",
   "version": "3.1",
   "frontend": "android",
   "android": {

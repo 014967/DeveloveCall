@@ -33,5 +33,10 @@ public class Result {
         this.items = items;
     }
 
-
+    @Override
+    public String toString() {
+        return "Result{" +
+                "transcripts=" + transcripts +
+                '}';
+    }
 }
