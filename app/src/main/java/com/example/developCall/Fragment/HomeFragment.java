@@ -301,6 +301,10 @@ public class HomeFragment extends Fragment {
                             alarmCalendar.set(Calendar.MINUTE, 0);
                             alarmCalendar.set(Calendar.SECOND, 0);
 
+                            SimpleDateFormat getDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+                            Date tempDate = new Date(alarmCalendar.getTimeInMillis());
+                            getDate = getDateFormat.format(tempDate);
+
                             alarm_tempListData = AddData(alarm_listData, listData, alarmName, getDate, 0);
 
                             alarm_manager.set(AlarmManager.RTC_WAKEUP, alarmCalendar.getTimeInMillis(), pendingIntent);
@@ -459,6 +463,7 @@ public class HomeFragment extends Fragment {
     public ArrayList<Alarm_ListData> AddData(ArrayList<Alarm_ListData> alarm_addListData, Alarm_ListData listData, String Name, String Content, int Profile){
         if(alarmCount == 0){
             alarm_addListData.clear();
+            Log.d("tag", "확인");
         }
         listData.setProfile(Profile);
         listData.setName(Name);
