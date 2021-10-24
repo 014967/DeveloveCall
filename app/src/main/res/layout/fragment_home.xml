@@ -143,13 +143,14 @@
                 android:textSize="13dp" />
 
             <ImageView
+                android:id="@+id/total_img"
                 android:layout_width="160dp"
                 android:layout_height="200dp"
                 android:layout_marginLeft="17dp"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/graph_5" />
             <TextView
-                android:id="@+id/txt_total"
+                android:id="@+id/txt_mission"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total"
@@ -158,13 +159,13 @@
                 android:textSize="13dp"
                 />
             <TextView
-                android:id="@+id/total_percent"
+                android:id="@+id/txt_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="75%"
                 android:layout_marginTop="2dp"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/txt_total"
+                android:layout_below="@+id/txt_mission"
                 android:textSize="27dp"
                 />
         </RelativeLayout>
@@ -186,23 +187,13 @@
                     android:id="@+id/txt_recent_keyword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="최근 키워드"
+                    android:text="연락 추천"
                     android:layout_marginTop="20dp"
                     android:layout_centerHorizontal="true"
                     android:textSize="14dp"
                     />
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="#"
-                    android:layout_marginTop="35dp"
-                    android:layout_below="@+id/txt_recent_keyword"
-                    android:layout_toLeftOf="@+id/data_keyword"
-                    android:textSize="20dp"
-                    />
-
-                <TextView
-                    android:id="@+id/data_keyword"
+                    android:id="@+id/txt_recommend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_recent_keyword"

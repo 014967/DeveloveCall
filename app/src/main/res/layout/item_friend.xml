@@ -6,7 +6,7 @@
     android:layout_height="100dp"
     android:orientation="horizontal"
     android:id="@+id/rv_friendItem"
-
+    android:background="@drawable/selector"
    >
 
 

@@ -31,6 +31,9 @@
     <color name="text_gray">#DADADA</color>
     <color name="text_dark_gray">#575757</color>
     <color name="home_keyword">#FEE5A5</color>
+    <color name="pressed_color">#6BA694</color>
+    <color name="selected_color">#B3D4CB</color>
+    <color name="focused_color">#2E3E5C</color>
 
 
 
