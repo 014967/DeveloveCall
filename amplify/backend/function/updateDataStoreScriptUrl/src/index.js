@@ -270,8 +270,6 @@ console.log(event)
          result[i].fill("");
         }
 
-
-
         count =0;
         var newContent = "";
 
@@ -289,8 +287,6 @@ console.log(event)
             }
             else {
 
-
-
                 pre = array[i].spk;
 
                 count++;
@@ -298,7 +294,6 @@ console.log(event)
                 result[count][0] = pre;
 
                 result[count][1] += array[i].content;
-
             }
         }
 
