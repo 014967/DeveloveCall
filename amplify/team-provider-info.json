@@ -22,9 +22,7 @@
         },
         "updateDataStoreScriptUrl": {
           "deploymentBucketName": "amplify-dev-dev-144123-deployment",
-
           "s3Key": "amplify-builds/updateDataStoreScriptUrl-556e61635163414d346f-build.zip"
-
         },
         "updatefriendimg": {
           "deploymentBucketName": "amplify-dev-dev-144123-deployment",

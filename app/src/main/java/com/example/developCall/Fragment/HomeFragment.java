@@ -3,6 +3,7 @@ package com.example.developCall.Fragment;
 
 import static android.content.Context.ALARM_SERVICE;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -15,11 +16,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.Data;
 
 import com.amazonaws.mobile.auth.core.internal.util.ThreadUtils;
 import com.amplifyframework.api.graphql.GraphQLResponse;
@@ -33,8 +39,11 @@ import com.amplifyframework.datastore.generated.model.User;
 import com.example.developCall.Adapter.Home_FriendListAdapter;
 import com.example.developCall.Alarm.Alarm_ListData;
 import com.example.developCall.Alarm.Alarm_Receiver;
+import com.example.developCall.Calendar.CalendarData;
 import com.example.developCall.Calendar.Home_Recycler_Adapter;
 import com.example.developCall.Calendar.Home_Recycler_Data;
+import com.example.developCall.FriendMultiPopUp;
+import com.example.developCall.FriendPopUp;
 import com.example.developCall.Object.Ob_Chat;
 import com.example.developCall.Object.Ob_Friend;
 import com.example.developCall.Object.Ob_lastCall;
@@ -47,9 +56,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -65,7 +79,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class HomeFragment extends Fragment {
 
 
-    ImageView imageView;
+    ImageView total_img;
+    TextView total_txt;
+    TextView recommend_txt;
     TextView txt_user_name;
     TextView data_keyword;
 
@@ -82,6 +98,13 @@ public class HomeFragment extends Fragment {
     ArrayList<Alarm_ListData> alarm_tempListData;
     String alarmName;
     int timeresult, cycleresult, calendarresult, alarmCount;
+
+    String[] choiceNameArray;
+    String getYear;
+    String getMonth;
+    String getDay;
+    String recommendFriend;
+    int missionCount;
 
 
     RecyclerView recyclerView;
@@ -126,12 +149,50 @@ public class HomeFragment extends Fragment {
 
         txt_user_name = view.findViewById(R.id.txt_user_name);
         home_rv_friend = view.findViewById(R.id.home_rv_friend);
-        data_keyword = view.findViewById(R.id.data_keyword);
+        total_img = view.findViewById(R.id.total_img);
+        total_txt = view.findViewById(R.id.txt_total);
+        recommend_txt = view.findViewById(R.id.txt_recommend);
 
         userId = Amplify.Auth.getCurrentUser().getUserId();
         friendListArray = new ArrayList<>();
         friendListAdapter = new Home_FriendListAdapter(friendListArray);
 
+        ActivityResultLauncher<Intent> startActivityResult = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Intent data = result.getData();
+                            String choiceName = data.getStringExtra("choicename");
+                            try {
+                                OutputBufferedStreamEX(choiceName);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            choiceNameArray = choiceName.split(" ");
+                        }
+                    }
+                });
+
+        String choiceName = null;
+        missionCount = 0;
+        try {
+            choiceName = InputBufferedStreamEx();
+        } catch (IOException e) {
+        }
+        try {
+            choiceNameArray = choiceName.split(" ");
+        } catch (Exception e) {
+        }
+
+        total_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(view.getContext(), FriendMultiPopUp.class);
+                startActivityResult.launch(intent);
+            }
+        });
 
         service.getFirstKeyWord(userId)
                 .subscribeOn(Schedulers.io())
@@ -140,8 +201,7 @@ public class HomeFragment extends Fragment {
                         {
 
                             List<Ob_Chat> firstKeyList = new ArrayList<>();
-                            for(Chat chat : data.getData().getChat())
-                            {
+                            for (Chat chat : data.getData().getChat()) {
                                 Ob_Chat ob_chat = new Ob_Chat();
                                 ob_chat.setId(chat.getId());
                                 ob_chat.setFriendID(chat.getFriendId());
@@ -158,11 +218,10 @@ public class HomeFragment extends Fragment {
                                     Date o1Date = null;
                                     Date o2Date = null;
 
-                                    try{
+                                    try {
                                         o1Date = beforeFormat.parse(o1.getDate());
                                         o2Date = beforeFormat.parse(o2.getDate());
-                                    }catch (ParseException e )
-                                    {
+                                    } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
 
@@ -170,7 +229,7 @@ public class HomeFragment extends Fragment {
 
                                 }
                             });
-                            data_keyword.setText(firstKeyList.get(0).getKeyWord());
+
                         }
                         , error ->
                         {
@@ -186,10 +245,16 @@ public class HomeFragment extends Fragment {
         long now = System.currentTimeMillis();
         Date date = new Date(now);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat onlyYearFormat = new SimpleDateFormat("yyyy");
+        SimpleDateFormat onlyMonthFormat = new SimpleDateFormat("MM");
         SimpleDateFormat onlyDayFromat = new SimpleDateFormat("dd");
         String todayDate = dateFormat.format(date);
+        String onlyYear = onlyYearFormat.format(date);
+        String onlyMonth = onlyMonthFormat.format(date);
         String onlyDay = onlyDayFromat.format(date);
         int todayInt = Integer.parseInt(todayDate);
+        int yearInt = Integer.parseInt(onlyYear);
+        int monthInt = Integer.parseInt(onlyMonth);
         int dayInt = Integer.parseInt(onlyDay);
 
         firstInit();
@@ -198,7 +263,6 @@ public class HomeFragment extends Fragment {
         for (int i = dayInt; i < 31; i++) {
             String tempDate = Integer.toString(todayInt);
             String tempName = tempDate + ".json";
-            Log.d("tag", tempName);
             String cycleTempName = cycleGetJsonString(tempName);
             cycleJsonParsing(cycleTempName);
             todayInt++;
@@ -285,16 +349,39 @@ public class HomeFragment extends Fragment {
                             String tempCall = ob.get(alarmCount).getLastCall();
                             PendingIntent pendingIntent = PendingIntent.getBroadcast(view.getContext(), tempName.charAt(0), alarm_intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-                            //임시로 현재 날짜를 지정
-                                /*long now = System.currentTimeMillis();
-                                Date date = new Date(now);
-                                SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
-                                SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
-                                String getMonth = monthFormat.format(date);
-                                String getDay = dayFormat.format(date);*/
+                            getYear = tempCall.substring(4, 8);
+                            getMonth = tempCall.substring(2, 4);
+                            getDay = tempCall.substring(0, 2);
+                            int getDayInt = Integer.parseInt(getDay);
+                            int twoWeekCheck = getDayInt + 14;
+                            int twoWeekSub = dayInt - 14;
+                            String fStringDate = getYear + "-" + getMonth + "-" + getDay;
+                            Date fDate = new SimpleDateFormat("yyyy-MM-dd").parse(fStringDate);
+                            Calendar friendDate = Calendar.getInstance();
+                            friendDate.setTime(fDate);
 
-                            String getMonth = tempCall.substring(2, 4);
-                            String getDay = tempCall.substring(0, 2);
+                            long diffSec = (System.currentTimeMillis() - friendDate.getTimeInMillis())/1000;
+                            long diffDay = diffSec/(60*60*24);
+                            long max = 0;
+
+                            Log.d("tag", "일차이" + " " + diffDay);
+
+                            try {
+                                for (int i = 0; i < choiceNameArray.length; i++) {
+                                    if (tempName.equals(choiceNameArray[i])) {
+                                        if(diffDay < 14){
+                                            missionCount++;
+                                        }
+                                        if(max < diffDay){
+                                            max = diffDay;
+                                            recommendFriend = tempName;
+                                        }
+                                        break;
+                                    }
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             int addMonth = Integer.parseInt(getMonth) + cycleresult - 1;
                             int addOneWeekMonth = Integer.parseInt(getMonth) - 1;
                             int addTwoWeekMonth = Integer.parseInt(getMonth) - 1;
@@ -364,11 +451,43 @@ public class HomeFragment extends Fragment {
                         e.printStackTrace();
                     }
 
+                    recommend_txt.setText(recommendFriend);
+
+                    if(choiceNameArray != null) {
+                        double missonResult = (double)missionCount / (double)choiceNameArray.length;
+                        double missionResult100 = missonResult * 100;
+                        int missionInt = (int)missionResult100;
+                        String missionTxt = Integer.toString(missionInt);
+                        String missionSetTxt = missionTxt + "%";
+                        total_txt.setText(missionSetTxt);
+                        if (missonResult <= 0.2) {
+                            total_img.setImageResource(R.drawable.graph_1);
+                        } else if (missonResult <= 0.34) {
+                            total_img.setImageResource(R.drawable.graph_2);
+                        } else if (missonResult <= 0.4) {
+                            total_img.setImageResource(R.drawable.graph_3);
+                        } else if (missonResult <= 0.5) {
+                            total_img.setImageResource(R.drawable.graph_4);
+                        } else if (missonResult <= 0.6) {
+                            total_img.setImageResource(R.drawable.graph_5);
+                        } else if (missonResult <= 0.74) {
+                            total_img.setImageResource(R.drawable.graph_6);
+                        } else if (missonResult <= 0.9) {
+                            total_img.setImageResource(R.drawable.graph_7);
+                        } else {
+                            total_img.setImageResource(R.drawable.graph_8);
+                        }
+                    } else{
+                        total_img.setImageResource(R.drawable.graph_1);
+                    }
+
 
                 }, error ->
                 {
 
                 });
+
+
 
 
         home_rv_friend.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
@@ -578,38 +697,32 @@ public class HomeFragment extends Fragment {
         }
     }
 
-
-    private void alarmListJsonParsing(String json) {
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-
-            JSONArray dataArray = jsonObject.getJSONArray("Alarm");
-
-            try {
-                alarm_listData.clear();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            for (int i = 0; i < dataArray.length(); i++) {
-                JSONObject dataObject = dataArray.getJSONObject(i);
-
-                Alarm_ListData data = new Alarm_ListData();
-
-                data.setProfile(dataObject.getInt("profile"));
-                data.setName(dataObject.getString("name"));
-                data.setContent(dataObject.getString("content"));
-
-
-                alarm_listData.add(data);
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+    private void OutputBufferedStreamEX(String str) throws IOException {
+        File file = new File(view.getContext().getFilesDir(), "MissionList");
+        BufferedOutputStream bs = new BufferedOutputStream(new FileOutputStream(file));
+        bs.write(str.getBytes()); //Byte형으로만 넣을 수 있음
+        bs.close();
     }
 
+
+    private String InputBufferedStreamEx() throws IOException {
+        String result = "";
+        // 바이트 단위로 파일읽기
+        File file = new File(view.getContext().getFilesDir(), "MissionList");
+        FileInputStream fileStream = null; // 파일 스트림
+
+        fileStream = new FileInputStream(file);
+        byte[] readBuffer = new byte[fileStream.available()];
+        while((fileStream.read(readBuffer))!= -1){
+        }
+        result = new String(readBuffer);
+        fileStream.close(); //스트림 닫기
+        return result;
+    }
 }
+
+
+
 
 
 

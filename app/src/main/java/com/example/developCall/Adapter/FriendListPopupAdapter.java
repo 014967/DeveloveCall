@@ -1,5 +1,6 @@
 package com.example.developCall.Adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ public class FriendListPopupAdapter extends RecyclerView.Adapter<FriendListPopup
     List<Ob_Friend> filterFriend;
     OnTextClickListener listener;
 
+    private int selectedPos = RecyclerView.NO_POSITION;
+
     String charString;
     public FriendListPopupAdapter(List<Ob_Friend> friendList, OnTextClickListener listener)
     {
@@ -47,7 +50,7 @@ public class FriendListPopupAdapter extends RecyclerView.Adapter<FriendListPopup
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        holder.itemView.setSelected(selectedPos == position);
 
         Ob_Friend friend = friendListArray.get(position);
         holder.txt_friendName.setText(friend.getName());
@@ -62,6 +65,9 @@ public class FriendListPopupAdapter extends RecyclerView.Adapter<FriendListPopup
         holder.rv_friendItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                notifyItemChanged(selectedPos);
+                selectedPos = holder.getLayoutPosition();
+                notifyItemChanged(selectedPos);
                 listener.onTextClick(friend);
             }
         });
