@@ -47,6 +47,8 @@ public class CallReceiver2 extends BroadcastReceiver {
         if (Amplify.Auth.getCurrentUser()==null) {
 
         } else {
+
+
             userId = Amplify.Auth.getCurrentUser().getUserId();
             Bundle extras = intent.getExtras(); // intent에서 state와 incoming_number만 가져올 수 있음
             Log.d("extras : ", extras.toString());

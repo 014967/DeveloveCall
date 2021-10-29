@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 
@@ -50,6 +50,7 @@ public class FriendListFragment extends Fragment {
     List<Ob_Friend> passFriendList = new ArrayList<>();
     Ob_Group ob_group;
 
+    ImageView btn_back;
 
     SearchView friendSearchView;
 
@@ -88,6 +89,15 @@ public class FriendListFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         friendSearchView = view.findViewById(R.id.friendSeacrhView);
+
+        btn_back = view.findViewById(R.id.btn_back);
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
 
 
 

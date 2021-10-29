@@ -27,7 +27,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amazonaws.AmazonServiceException;
@@ -38,7 +37,6 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.model.Model;
 import com.amplifyframework.datastore.DataStoreException;
 import com.amplifyframework.datastore.DataStoreItemChange;
-import com.amplifyframework.datastore.generated.model.Chat;
 import com.amplifyframework.datastore.generated.model.Friend;
 import com.amplifyframework.datastore.generated.model.Group;
 import com.amplifyframework.datastore.generated.model.User;
@@ -56,16 +54,10 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -134,11 +126,11 @@ public class Fragment2 extends Fragment {
         tv_edit = view.findViewById(R.id.tv_edit);
         img_profile = view.findViewById(R.id.img_profile);
 
-        keyWordView = view.findViewById(R.id.keyWordView);
-
-        keyWordAdapter = new KeyWordAdapter();
-        keyWordView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        keyWordView.setAdapter(keyWordAdapter);
+//        keyWordView = view.findViewById(R.id.keyWordView);
+//
+//        keyWordAdapter = new KeyWordAdapter();
+//        keyWordView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+//        keyWordView.setAdapter(keyWordAdapter);
 
         ob_friend = (Ob_Friend) getArguments().getSerializable("ob_friend");
         friendId = ob_friend.getId();
@@ -170,51 +162,51 @@ public class Fragment2 extends Fragment {
         });
 
 
-        service.getKeyWordList(userId, friendId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(data ->
-                {
-                    System.out.println(data);
-
-                    keyWordList = new ArrayList<>();
-                    for(Chat chat : data.getData().getChat())
-                    {
-                        Ob_Chat ob_chat = new Ob_Chat();
-                        ob_chat.setId(chat.getId());
-                        ob_chat.setFriendID(chat.getFriendId());
-                        ob_chat.setKeyWord(chat.getKeyWord());
-                        ob_chat.setMemo(chat.getMemo());
-                        ob_chat.setS3_url(chat.getS3Url());
-                        ob_chat.setDate(chat.getDate());
-                        keyWordList.add(ob_chat);
-
-
-                    }
-                    Collections.sort(keyWordList, new Comparator<Ob_Chat>() {
-                        @Override
-                        public int compare(Ob_Chat o1, Ob_Chat o2) {
-                            SimpleDateFormat beforeFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
-                            Date o1Date = null;
-                            Date o2Date = null;
-
-                            try{
-                                o1Date = beforeFormat.parse(o1.getDate());
-                                o2Date = beforeFormat.parse(o2.getDate());
-                            }catch (ParseException e )
-                            {
-                                e.printStackTrace();
-                            }
-
-                            return o1Date.getTime() > o2Date.getTime() ? -1 : o1Date.getTime() < o2Date.getTime() ? 1 : 0;
-
-                        }
-                    });
-                    keyWordAdapter.initList(keyWordList);
-                    keyWordAdapter.notifyDataSetChanged();
-                }, error ->
-                {
-                });
+//        service.getKeyWordList(userId, friendId)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(data ->
+//                {
+//                    System.out.println(data);
+//
+//                    keyWordList = new ArrayList<>();
+//                    for(Chat chat : data.getData().getChat())
+//                    {
+//                        Ob_Chat ob_chat = new Ob_Chat();
+//                        ob_chat.setId(chat.getId());
+//                        ob_chat.setFriendID(chat.getFriendId());
+//                        ob_chat.setKeyWord(chat.getKeyWord());
+//                        ob_chat.setMemo(chat.getMemo());
+//                        ob_chat.setS3_url(chat.getS3Url());
+//                        ob_chat.setDate(chat.getDate());
+//                        keyWordList.add(ob_chat);
+//
+//
+//                    }
+//                    Collections.sort(keyWordList, new Comparator<Ob_Chat>() {
+//                        @Override
+//                        public int compare(Ob_Chat o1, Ob_Chat o2) {
+//                            SimpleDateFormat beforeFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
+//                            Date o1Date = null;
+//                            Date o2Date = null;
+//
+//                            try{
+//                                o1Date = beforeFormat.parse(o1.getDate());
+//                                o2Date = beforeFormat.parse(o2.getDate());
+//                            }catch (ParseException e )
+//                            {
+//                                e.printStackTrace();
+//                            }
+//
+//                            return o1Date.getTime() > o2Date.getTime() ? -1 : o1Date.getTime() < o2Date.getTime() ? 1 : 0;
+//
+//                        }
+//                    });
+//                    keyWordAdapter.initList(keyWordList);
+//                    keyWordAdapter.notifyDataSetChanged();
+//                }, error ->
+//                {
+//                });
 
         if (ob_friend.getFriendImg() != null) {
             String END_POINT = "https://developcallfriendimg.s3.ap-northeast-2.amazonaws.com/";

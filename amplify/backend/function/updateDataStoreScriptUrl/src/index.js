@@ -6,7 +6,7 @@ var docClient = new aws.DynamoDB.DocumentClient();
 const { randomUUID } = require('crypto');
 
 const s3 = new aws.S3({ apiVersion: '2006-03-01' });
-
+const lambda = new aws.Lambda();
 
 Items = function(start_time, end_time, spk, content){
 this.start_time = start_time;
@@ -40,6 +40,7 @@ console.log(event)
 
     //var dirtyNumber =  /(.*)(-.+)(-.+)(?<=$)/.exec(removeFormatString[0]);
     var dirtyNumber = removeFormatString[0].split("_");
+    var getScript ="";
 
     var uid = context.awsRequestId;
     var userId = dirtyNumber[0];
@@ -145,7 +146,7 @@ console.log(event)
         const  data = await s3.getObject(transcriptParams).promise();
         let parseJson = JSON.parse(data.Body.toString());
         var script  = parseJson.results.transcripts[0].transcript;
-
+        getScript = script;
         var segment = parseJson.results.speaker_labels.segments;
         var mainitem = parseJson.results.items;
 
@@ -266,6 +267,8 @@ console.log(event)
          result[i].fill("");
         }
 
+
+
         count =0;
         var newContent = "";
         pre = array[0].spk;
@@ -281,6 +284,8 @@ console.log(event)
             }
             else {
 
+
+
                 pre = array[i].spk;
 
                 count++;
@@ -288,6 +293,7 @@ console.log(event)
                 result[count][0] = pre;
 
                 result[count][1] += array[i].content;
+
             }
         }
 
@@ -357,12 +363,45 @@ console.log(event)
 
 
 
+    async function callLambda()
+    {
+        try{
+
+             const newEvent = {
+                url : fileUrl,
+                summary : getScript,
+                job : jobName,
+                id : uid
+
+             };
+
+                var callLambdaParams = {
+                FunctionName : 'getkeywordtest',
+                  InvocationType : 'Event',
+             LogType : 'None' ,
+             Payload : JSON.stringify(newEvent, null, 4)
+             };
+            await lambda.invoke(callLambdaParams).promise();
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+    }
+
+
+
+
 
     try{
         await createItem();
         await updateContact();
         await updateScript();
+        await callLambda();
         console.log("success");
+
+
+
 
     }
     catch(err)
