@@ -57,7 +57,8 @@ public class ListAdapter extends BaseAdapter {
 
         TextView chatDate = (TextView)view.findViewById(R.id.name_profile);
         //TextView grade = (TextView)view.findViewById(R.id.number_profile);
-
+        TextView keyWord = (TextView)view.findViewById(R.id.duration);
+        keyWord.setText(sample.get(position).getKeyWord());
         ImageButton btn_chat = (ImageButton) view.findViewById(R.id.btn_chat);
 
         chatDate.setText(sample.get(position).getDate());
@@ -99,3 +100,4 @@ public class ListAdapter extends BaseAdapter {
 
 
 }
+
